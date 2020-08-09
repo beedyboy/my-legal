@@ -1,13 +1,16 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
+import React, { Fragment } from 'react';
+import ReactDOM from 'react-dom'; 
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-fancybox/lib/fancybox.css'
+import 'font-awesome/css/font-awesome.min.css';
+import 'aos/dist/aos.css'; 
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+ReactDOM.render( 
+   <Fragment>
+      <App />
+   </Fragment>,
   document.getElementById('root')
 );
 
