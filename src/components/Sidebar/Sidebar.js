@@ -1,7 +1,6 @@
 import React from 'react'
 // import PropTypes from 'prop-types'
 import { Nav, NavItem, NavLink } from "reactstrap";
-import './sidebar.css';
 
 const Sidebar = props => {
     return (

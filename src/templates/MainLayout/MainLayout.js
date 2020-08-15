@@ -2,11 +2,11 @@ import React, { Fragment } from 'react';
 import { Container, Row, Col } from 'reactstrap'; 
 import Sidebar from '../../components/Sidebar/Sidebar';
 import TopBar from '../../components/TopBar/TopBar';
+import './styles.css';
 
 
 const MainLayout = props => {
-    const { children } = props;
-console.log(props)
+    const { children } = props; 
     return (
         <Fragment>
             <Container fluid={true}>
@@ -14,12 +14,12 @@ console.log(props)
                     <Col xs={2} lg="2" id="sidebar-wrapper">
                         <Sidebar />
                     </Col>
-                    <Col xs={10} lg="10" id="page-content-wrapper" className="p-0 m-0" style={{background: 'red', width: '100%'}}>
+                    <Col xs={10} lg="10" id="page-content-wrapper" className="p-0 m-0">
                         <TopBar />
                         <Row>
                         
                             <Col md="12">
-                                Hello
+                                 
                             <main>{children}</main>
                             </Col>
                         </Row>
