@@ -4,7 +4,10 @@ import Sidebar from '../../components/Sidebar/Sidebar';
 import TopBar from '../../components/TopBar/TopBar';
 import './styles.css';
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/honey
 const MainLayout = props => {
     const { children } = props; 
     return (
@@ -18,8 +21,12 @@ const MainLayout = props => {
                         <TopBar />
                         <Row>
                         
+<<<<<<< HEAD
                             <Col md="12">
                                  
+=======
+                            <Col md="12"> 
+>>>>>>> origin/honey
                             <main>{children}</main>
                             </Col>
                         </Row>

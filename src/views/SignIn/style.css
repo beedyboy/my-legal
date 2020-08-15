@@ -2,7 +2,11 @@ body {
     color: #000;
     overflow-x: hidden;
     height: 100%;
+<<<<<<< HEAD
     /* background-color: #B0BEC5; */
+=======
+    background-color: #B0BEC5;
+>>>>>>> origin/honey
     background-repeat: no-repeat
 }
 

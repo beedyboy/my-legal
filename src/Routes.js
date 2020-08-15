@@ -5,10 +5,21 @@ import NormalLayout from './templates/NormalLayout/NormalLayout';
 import { 
     Dashboard as DashboardView,
     SignIn as SignInView,
+<<<<<<< HEAD
     NotFound as NotFoundView
  } from './views';
 import { PrivateRoute, NormalRoute } from './HOC';
 
+=======
+    NotFound as NotFoundView,
+    Department as DepartmentView,
+    Category as CategoryView
+   
+ } from './views';
+import { PrivateRoute, NormalRoute } from './HOC';
+
+
+>>>>>>> origin/honey
 const Routes = () => {
     return (
         <Switch>
@@ -23,6 +34,21 @@ const Routes = () => {
                 layout={MainLayout}
                 path="/dashboard"
           />
+<<<<<<< HEAD
+=======
+           <PrivateRoute
+                component={CategoryView}
+                exact
+                layout={MainLayout}
+                path="/Category"
+          />
+            <PrivateRoute
+                component={DepartmentView}
+                exact
+                layout={MainLayout}
+                path="/Department"
+          />
+>>>>>>> origin/honey
            <NormalRoute
                 component={SignInView}
                 exact

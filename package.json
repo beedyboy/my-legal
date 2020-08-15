@@ -37,6 +37,10 @@
     "react-scripts": "3.4.1",
     "react-scroll-to-bottom": "*",
     "react-select": "^3.1.0",
+<<<<<<< HEAD
+=======
+    "react-strap-table": "^1.0.7",
+>>>>>>> origin/honey
     "react-table": "^7.2.1",
     "reactstrap": "^8.5.1",
     "styled-components": "^5.1.1",
@@ -63,5 +67,13 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+<<<<<<< HEAD
   }
+=======
+  },
+  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
+  "main": "index.js",
+  "author": "",
+  "license": "ISC"
+>>>>>>> origin/honey
 }

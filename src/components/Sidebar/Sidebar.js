@@ -6,6 +6,7 @@ const Sidebar = props => {
     return (
         <>
             {/* <Nav className="col-md-12 d-none d-md-block bg-light sidebar"> */}
+<<<<<<< HEAD
             <p>Menu</p>
             <Nav vertical color="light" light expand="md" className="sidebar">
               <div className="sidebar-sticky"></div>
@@ -16,6 +17,28 @@ const Sidebar = props => {
                 <NavItem> 
                     <NavLink href="/sign-in">Login</NavLink>
                 </NavItem>
+=======
+           
+            <Nav vertical color="light" light expand="md" className="sidebar">
+             <p>Menu</p>
+               <div className="sidebar-sticky"></div>
+                <NavItem>
+                    <NavLink href="/dashboard">Dashboard</NavLink> 
+                </NavItem>
+
+                <NavItem> 
+                    <NavLink href="/category">Category</NavLink>
+                </NavItem>
+
+                <NavItem> 
+                    <NavLink href="/department">Department</NavLink>
+                </NavItem>
+     
+                <NavItem> 
+                    <NavLink href="/sign-in">Login</NavLink>
+                </NavItem>
+               
+>>>>>>> origin/honey
             </Nav>
         </>
     )
