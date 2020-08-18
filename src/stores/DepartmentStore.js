@@ -2,9 +2,9 @@ import { decorate, observable, action, computed } from "mobx"
 import { createContext } from "react" ; 
 import { backend } from "../services/APIService";
 // import  Utility from "../shared/Storage";  
-class CategoryStore {
+class DepartmentStore {
   constructor() {
-    this.fetchCategory(); 
+    this.fetchDepartments(); 
     
   }
   
@@ -12,23 +12,27 @@ class CategoryStore {
      message = '';
      loading = false;
      sending = false; 
-     category = [] 
+     departments = [] 
 
-    fetchCategory = () => {
+    fetchDepartments = () => {
       this.loading = true;
-      backend.get('category').then( res => {  
-      this.category = res.data;
-        this.loading = false; 
-      }); 
+     try {
+      backend.get('department').then( res => {  
+        this.departments = res.data;
+          this.loading = false; 
+        }); 
+     } catch (error) {
+       console.log(error);
+     }
   }
   
-  createCat = (data) => {
+  createDept = (data) => {
     try {    
       this.sending = true;
-      backend.post('category', data).then(res => { 
+      backend.post('department', data).then(res => { 
         this.sending = false;
         if(res.data.status === 200) {
-          this.fetchCategory(); 
+          this.fetchDepartments(); 
           this.message = res.data.message; 
           this.response = true;   
         } else {
@@ -45,22 +49,22 @@ class CategoryStore {
     }  
   }
 
-  updateCat = (data) => {
+  updateDept = (data) => {
     this.sending = true;
-    backend.post('category/update', data).then(res => {
+    backend.post('department/update', data).then(res => {
       this.sending = false;
       if (res.data.status === 200) {
-       this.fetchCategory();
+       this.fetchDepartments();
       }
     })
    
  }
-   removeCategory = (id) => {
-    // this.Categorys = this.Categorys.filter(Category => Category.id !== id)
+   removeDepartment = (id) => {
+    // this.Departments = this.Departments.filter(Department => Department.id !== id)
     console.log(id);
-    backend.delete('category/' + id).then( res => {
+    backend.delete('department/' + id).then( res => {
       if(res.status === 200) {
-        this.fetchCategory();
+        this.fetchDepartments();
         this.message = res.message;
         // return <Toast opens={true} type="success" message={res.message} />;
       }
@@ -68,7 +72,7 @@ class CategoryStore {
   }
   get info() {
    var data = []
-    this.category.map(res => {
+    this.departments.map(res => {
       const d = {
         id: res.id,
         name: res.name,
@@ -83,17 +87,17 @@ class CategoryStore {
   }
 
 } 
-decorate(CategoryStore, { 
+decorate(DepartmentStore, { 
   sending: observable,
   message: observable,
   error: observable,
   info: computed, 
   loading: observable,
-  category: observable, 
-  createCat: action,
-  updateCat: action,
-  removeCategory: action
+  departments: observable, 
+  createDept: action,
+  updateDept: action,
+  removeDepartment: action
 })
 
  
-export default createContext(new CategoryStore())
+export default createContext(new DepartmentStore())

@@ -3,7 +3,7 @@ import ServerTable from 'react-strap-table';
 import {Button } from 'reactstrap';
 
 const Details = (props) => {
-const url = 'https://react-strap-table.com/users';
+const url = 'http://localhost:8000/api/department';
 const columns = ['id', 'Name', 'Description', 'created_at', 'action'];
 const options = {  
    headings: {id: '#', created_at: 'Created At'},  

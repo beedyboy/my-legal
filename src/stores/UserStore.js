@@ -5,11 +5,6 @@ import { backend } from "../services/APIService";
 
 
 class UserStore {
-  // constructor() {
-  //   this.fetchUsers();
-  //   this.getProfile()
-  //   reaction(() => this.users, _ => console.log(this.users.length))
-  // }
 
      isAuthenticated = false;
      error = null;
@@ -25,21 +20,73 @@ class UserStore {
   }
   fetchUsers = () => {
     this.loading = true;
-    backend.get('staff').then( res => {  
+    backend.get('user').then( res => {  
           this.users = res.data;
       this.loading = false;
         
     }); 
   }
   confirmEmail = (data) => {
-    backend.get('staff/' + data + '/exist').then( res => { 
+    backend.get('user/' + data + '/exist').then( res => { 
       this.emailExist = res.data.exist;
     })
   }
    
+
+  createStaff = (data) => {
+    try {    
+      this.sending = true;
+      backend.post('user', data).then(res => { 
+        this.sending = false;
+        if(res.data.status === 200) {
+          this.fetchUsers(); 
+          this.message = res.data.message;  
+        } else {
+          this.error = true;
+        }
+        
+      })  
+    } catch(err) {
+      if(err.response.status === 500) {
+        console.log("There was a problem with the server");
+      } else {
+        console.log(err.response.data.msg)
+      }
+    }  
+  }
+  createLogin = (data) => {
+    this.sending = true;
+    backend.post('user/create/login', data).then(res => {
+      this.sending = false;
+      if (res.data.status === 200) {
+       this.fetchUsers();
+      }
+    })
+   
+ }
+  updateStaff = (data) => {
+    this.sending = true;
+    backend.post('user/update', data).then(res => {
+      this.sending = false;
+      if (res.data.status === 200) {
+       this.fetchUsers();
+      }
+    }) 
+ }
+   removeStaff = (id) => {
+    // this.Staffs = this.Staffs.filter(Staff => Staff.id !== id)
+    console.log(id);
+    backend.delete('user/' + id).then( res => {
+      if(res.status === 200) {
+        this.fetchUsers();
+        this.message = res.message;
+        // return <Toast opens={true} type="success" message={res.message} />;
+      }
+    })
+  }
       
   getProfile = () => {
-    backend.get('staff/get/profile/').then( res => {
+    backend.get('user/get/profile/').then( res => {
       // console.log('pay', res.data.data.fullname);
       if(res.data.status === 200) {
         this.profiles = res.data.data;
@@ -47,11 +94,12 @@ class UserStore {
     })
   }
    login = (Admin) => {
-    this.loading = true;
+    this.sending = true;
     this.error = null;
-    backend.post('staff/auth', Admin).then( res => { 
-      if(res.data.status === 200) { 
-        this.loading = false; 
+    backend.post('auth/auth', Admin).then( res => { 
+      if(res.data.status === 200) {  
+        this.sending = false; 
+        Utility.save('name', res.data.staff.lastname); 
         Utility.save('staff_token', res.data.token); 
         this.isAuthenticated = true; 
       }
@@ -63,7 +111,7 @@ class UserStore {
     this.isAuthenticated = false;
   }
    toggleUser = (data) => {
-     backend.post('staff/toggle', data).then(res => {
+     backend.post('user/toggle', data).then(res => {
        if (res.data.status === 200) {
         this.fetchUsers();
        }
@@ -72,7 +120,7 @@ class UserStore {
   }
 
   removeUser = (id) => {
-    backend.delete('staff/' + id).then( res => {
+    backend.delete('user/' + id).then( res => {
       if(res.status === 200) {
         this.fetchUsers();
         this.message = res.message; 
@@ -80,26 +128,7 @@ class UserStore {
     })
   }
   get info() {
-    var data = [];
-     this.users.map((res) => {
-       const status = res.status === "Active" ? true : false;
-       const d = {
-         id: res.id,
-         fullname: res.fullname,
-         username: res.username,
-         email: res.email,
-         phone: res.phone,
-         password: res.password,
-         role: res.role,
-         status: status,
-         roleName: res.roleName,
-         created_at: res.created_at,
-         updated_at: res.updated_at
-       }
-       data.push(d);
-     });
-     return data;
-     
+    return  Object.keys(this.users || {}).map(key => ({...this.users[key], uid: key}));
    }
    get profile() {
     var data = []
@@ -136,6 +165,7 @@ decorate(UserStore, {
   loading: observable,
   users: observable,
   profiles: observable,
+  sending: observable,
   emailExist: observable,
   addUser: action,
   fetchUsers: action,
@@ -145,6 +175,7 @@ decorate(UserStore, {
   login: action,
   logOut: action,
   loginSuccessful: action,
+  createLogin: action,
   info: computed,
   stat: computed, 
   profile: computed, 

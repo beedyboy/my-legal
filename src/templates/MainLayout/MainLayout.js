@@ -3,30 +3,21 @@ import { Container, Row, Col } from 'reactstrap';
 import Sidebar from '../../components/Sidebar/Sidebar';
 import TopBar from '../../components/TopBar/TopBar';
 import './styles.css';
-
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/honey
+ 
 const MainLayout = props => {
     const { children } = props; 
     return (
         <Fragment>
             <Container fluid={true}>
                 <Row>
-                    <Col xs={2} lg="2" id="sidebar-wrapper">
+                    <Col xs={2} lg="2" className="sidebar">
                         <Sidebar />
                     </Col>
                     <Col xs={10} lg="10" id="page-content-wrapper" className="p-0 m-0">
                         <TopBar />
                         <Row>
                         
-<<<<<<< HEAD
-                            <Col md="12">
-                                 
-=======
                             <Col md="12"> 
->>>>>>> origin/honey
                             <main>{children}</main>
                             </Col>
                         </Row>

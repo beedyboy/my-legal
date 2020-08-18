@@ -2,9 +2,9 @@ import { decorate, observable, action, computed } from "mobx"
 import { createContext } from "react" ; 
 import { backend } from "../services/APIService";
 // import  Utility from "../shared/Storage";  
-class CategoryStore {
+class BranchStore {
   constructor() {
-    this.fetchCategory(); 
+    this.fetchBranch(); 
     
   }
   
@@ -12,23 +12,23 @@ class CategoryStore {
      message = '';
      loading = false;
      sending = false; 
-     category = [] 
+     branch = [] 
 
-    fetchCategory = () => {
+    fetchBranch = () => {
       this.loading = true;
-      backend.get('category').then( res => {  
-      this.category = res.data;
+      backend.get('branch').then( res => {  
+      this.branch = res.data;
         this.loading = false; 
       }); 
   }
   
-  createCat = (data) => {
+  createBranch = (data) => {
     try {    
       this.sending = true;
-      backend.post('category', data).then(res => { 
+      backend.post('branch', data).then(res => { 
         this.sending = false;
         if(res.data.status === 200) {
-          this.fetchCategory(); 
+          this.fetchBranch(); 
           this.message = res.data.message; 
           this.response = true;   
         } else {
@@ -45,22 +45,22 @@ class CategoryStore {
     }  
   }
 
-  updateCat = (data) => {
+  updateBranch = (data) => {
     this.sending = true;
-    backend.post('category/update', data).then(res => {
+    backend.post('branch/update', data).then(res => {
       this.sending = false;
       if (res.data.status === 200) {
-       this.fetchCategory();
+       this.fetchBranch();
       }
     })
    
  }
-   removeCategory = (id) => {
-    // this.Categorys = this.Categorys.filter(Category => Category.id !== id)
+   removeBranch = (id) => {
+    // this.Branchs = this.Branchs.filter(Branch => Branch.id !== id)
     console.log(id);
-    backend.delete('category/' + id).then( res => {
+    backend.delete('branch/' + id).then( res => {
       if(res.status === 200) {
-        this.fetchCategory();
+        this.fetchBranch();
         this.message = res.message;
         // return <Toast opens={true} type="success" message={res.message} />;
       }
@@ -68,7 +68,7 @@ class CategoryStore {
   }
   get info() {
    var data = []
-    this.category.map(res => {
+    this.branch.map(res => {
       const d = {
         id: res.id,
         name: res.name,
@@ -83,17 +83,17 @@ class CategoryStore {
   }
 
 } 
-decorate(CategoryStore, { 
+decorate(BranchStore, { 
   sending: observable,
   message: observable,
   error: observable,
   info: computed, 
   loading: observable,
-  category: observable, 
-  createCat: action,
-  updateCat: action,
-  removeCategory: action
+  branch: observable, 
+  createBranch: action,
+  updateBranch: action,
+  removeBranch: action
 })
 
  
-export default createContext(new CategoryStore())
+export default createContext(new BranchStore())

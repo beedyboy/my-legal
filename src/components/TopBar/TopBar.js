@@ -4,16 +4,14 @@ import {
   Navbar,
   NavbarToggler,
   NavbarBrand,
-  Nav,
-  NavItem,
-  NavLink,
+  Nav, 
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
-  DropdownItem,
-  NavbarText,
+  DropdownItem, 
   Container
 } from 'reactstrap';
+import Utility from '../../services/UtilityService';
 
  const TopBar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -22,37 +20,32 @@ import {
     return (
         <Fragment>
             
-          <Navbar color="dark" dark expand="md" fluid>
+          <Navbar className="topbar" expand="md">
           <Container fluid={true}>
         <NavbarBrand href="/">Inventory APP</NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
-          <Nav className="mr-auto" navbar>
-            <NavItem>
+          <Nav className="ml-auto" navbar>
+            {/* <NavItem>
               <NavLink href="/components/">Components</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href="https://github.com/reactstrap/reactstrap">GitHub</NavLink>
-            </NavItem>
+            </NavItem> */}
+             
             <UncontrolledDropdown nav inNavbar>
               <DropdownToggle nav caret>
-                Options
+                {Utility.get('name')}
               </DropdownToggle>
               <DropdownMenu right>
                 <DropdownItem>
-                  Option 1
-                </DropdownItem>
-                <DropdownItem>
-                  Option 2
-                </DropdownItem>
+                  Profile
+                </DropdownItem> 
                 <DropdownItem divider />
-                <DropdownItem>
-                  Reset
+                <DropdownItem onClick={e => Utility.logout()}>
+                  Logout
                 </DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
           </Nav>
-          <NavbarText>Beedy</NavbarText>
+          {/* <NavbarText>Beedy</NavbarText> */}
         </Collapse>
         </Container>
       </Navbar> 
