@@ -11,10 +11,9 @@ export const  backend = axios.create({
   baseURL: serverUrl,
   headers: {
     common: {
-      Authorization: `bearer ${Utility.get('staff_token')}`
+      Authorization: `Bearer ${Utility.get('staff_token')}`
     }
   }
 });
 // export const serverUrl = 'http://192.168.0.5/server/' 
-// export const serverUrl = 'http://localhost/project/php/smart/'
- 
+// export const serverUrl = 'http://localhost/project/php/smart/' 
