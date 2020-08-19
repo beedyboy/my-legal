@@ -20,6 +20,7 @@ import Utility from '../../services/UtilityService';
     return (
         <Fragment>
             <div className="logos">Inventory</div>
+            <div>Welcome  {Utility.get('name')} </div>
                     <ul>
                         <li><i className="fa fa-search"></i></li>
                          <li><i className="fa fa-user"></i></li>
