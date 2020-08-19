@@ -4,7 +4,7 @@ const Category = () => {
     return(
         <div>
 
-        </div>
+         </div>
     )
 }
 
