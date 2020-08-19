@@ -1,30 +1,42 @@
 import React from 'react'
 // import PropTypes from 'prop-types'
-import { Nav, NavItem, NavLink } from "reactstrap";
-
+import { Nav, NavItem } from "reactstrap";
+import { Link } from "react-router-dom"; 
+import brand from '../../assets/img/brand.png';
 const Sidebar = props => {
     return (
         <>
             {/* <Nav className="col-md-12 d-none d-md-block bg-light sidebar"> */}
            
-            <Nav vertical color="light" light expand="md" className="sidebar">
-             <p>Menu</p>
-               <div className="sidebar-sticky"></div>
+            <Nav vertical color="light"  expand="md"  id="sidebar-wrapper">
+              {/* <div className="sidebar-sticky"></div> */}
+              <img src={brand} className="sidelogo" alt="brand" />
                 <NavItem>
-                    <NavLink href="/dashboard">Dashboard</NavLink> 
+                    <Link to="/dashboard" className="nav-link">Dashboard</Link> 
                 </NavItem>
-
+                <span className="hr"></span>
                 <NavItem> 
-                    <NavLink href="/category">Category</NavLink>
+                    <Link to="/branch" className="nav-link">Branch</Link>
                 </NavItem>
-
+                <span className="hr"></span>
                 <NavItem> 
-                    <NavLink href="/department">Department</NavLink>
+                    <Link to="/category" className="nav-link">Category</Link>
                 </NavItem>
-     
+                <span className="hr"></span>
                 <NavItem> 
-                    <NavLink href="/sign-in">Login</NavLink>
+                    <Link to="/department" className="nav-link">Department</Link>
                 </NavItem>
+                <span className="hr"></span>
+                <NavItem> 
+                    <Link to="/staff" className="nav-link">Staff</Link>
+                </NavItem> 
+                <span className="hr"></span>
+                <NavItem> 
+                    <Link to="/product" className="nav-link">Product</Link>
+                </NavItem>
+                {/* <NavItem> 
+                    <Link to="/sign-in" className="nav-link">Login</Link>
+                </NavItem> */}
                
             </Nav>
         </>

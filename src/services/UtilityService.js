@@ -14,7 +14,8 @@ const Utility = {
         localStorage.removeItem(key);
     },
      logout: () => {
-        localStorage.removeItem('staff_token');  
+        localStorage.removeItem('staff_token'); 
+        localStorage.removeItem('name');  
         window.location.href = '/sign-in'; 
     }
 }

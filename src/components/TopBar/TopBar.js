@@ -4,16 +4,14 @@ import {
   Navbar,
   NavbarToggler,
   NavbarBrand,
-  Nav,
-  NavItem,
-  NavLink,
+  Nav, 
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
-  DropdownItem,
-  NavbarText,
+  DropdownItem, 
   Container
 } from 'reactstrap';
+import Utility from '../../services/UtilityService';
 
  const TopBar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -21,41 +19,39 @@ import {
   const toggle = () => setIsOpen(!isOpen);
     return (
         <Fragment>
-            
-          <Navbar color="dark" dark expand="md" fluid>
+            <div className="logo">Inventory</div>
+                    <ul>
+                        <li><i className="fa fa-search"></i></li>
+                        <li><i className="fa fa-bell"></i></li> 
+                         <li><i className="fa fa-user"></i></li>
+                    </ul>
+          {/* <Navbar className="topbar" expand="md">
           <Container fluid={true}>
         <NavbarBrand href="/">Inventory APP</NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
-          <Nav className="mr-auto" navbar>
-            <NavItem>
-              <NavLink href="/components/">Components</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href="https://github.com/reactstrap/reactstrap">GitHub</NavLink>
-            </NavItem>
+          <Nav className="ml-auto" navbar>
+           
+             
             <UncontrolledDropdown nav inNavbar>
               <DropdownToggle nav caret>
-                Options
+                {Utility.get('name')}
               </DropdownToggle>
               <DropdownMenu right>
                 <DropdownItem>
-                  Option 1
-                </DropdownItem>
-                <DropdownItem>
-                  Option 2
-                </DropdownItem>
+                  Profile
+                </DropdownItem> 
                 <DropdownItem divider />
-                <DropdownItem>
-                  Reset
+                <DropdownItem onClick={e => Utility.logout()}>
+                  Logout
                 </DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
           </Nav>
-          <NavbarText>Beedy</NavbarText>
+          
         </Collapse>
         </Container>
-      </Navbar> 
+      </Navbar>  */}
         </Fragment>
     )
 }

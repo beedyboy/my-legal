@@ -25,7 +25,7 @@ const schema = {
 const SignIn = props => { 
 
   const userStore = useContext(UserStore);
-  const { login, isAuthenticated} = userStore; 
+  const { login, isAuthenticated, sending} = userStore; 
 
   const [formState, setFormState] = useState({
     isValid: false,
@@ -164,15 +164,15 @@ const SignIn = props => {
           <Row className="px-3 mb-4">
               <Col lg="12">
                 <Row>
-                  <Col xs="12" lg ="8"> 
+                  {/* <Col xs="12" sm="7" lg ="8"> 
                     <FormGroup check>
-                      <Label className="custom-control-Label text-sm" check>
+                      <Label className="custom-control-Label text-md" check>
                         <Input type="checkbox" />{' '}
                         Remember me
                       </Label>
                     </FormGroup>
-                  </Col>
-                  <Col xs="12" lg ="4">
+                  </Col> */}
+                  <Col xs="12" lg ="12">
                      <a href="/forgot" className="ml-auto mb-0 text-sm">Forgot Password?</a>
                     </Col>
                 </Row>
@@ -183,7 +183,9 @@ const SignIn = props => {
           </Row>
           <Row className="mb-3 px-3">
               <Col lg="12">
-              <Button type="submit"  disabled={!formState.isValid} className="btn btn-blue text-center">Login</Button>
+              <Button type="submit"  disabled={!formState.isValid} className="btn btn-blue text-center"> {sending ? (
+            <span> Connecting to server  <i className="fa fa-spinner"></i></span>
+            ): 'Login'}</Button>
               </Col>
           </Row>
           {/* <Row className="mb-4 px-3">

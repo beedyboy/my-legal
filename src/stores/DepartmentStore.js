@@ -1,46 +1,49 @@
 import { decorate, observable, action, computed } from "mobx"
 import { createContext } from "react" ; 
 import { backend } from "../services/APIService";
-import { Beedy } from "../services/Beedy"; 
-
-class CategoryStore {
+import { Beedy } from "../services/Beedy";
+ 
+class DepartmentStore {
   constructor() {
-    this.fetchCategory();  
+    this.fetchDepartments();  
   }
   
      error = false;
      exist = false;
+     close = false;
      loading = false;
-     close = false; 
      sending = false; 
-     category = [] 
+     departments = [] 
 
-    fetchCategory = () => {
+    fetchDepartments = () => {
       this.loading = true;
-      backend.get('category').then( res => {  
-      this.category = res.data;
-        this.loading = false; 
-      }); 
+     try {
+      backend.get('department').then( res => {  
+        this.departments = res.data;
+          this.loading = false; 
+        }); 
+     } catch (error) {
+       console.log(error);
+     }
   }
   
   confirmName = (data) => {
-    backend.get('category/' + data + '/exist').then( res => { 
+    backend.get('department/' + data + '/exist').then( res => { 
       this.exist = res.data.exist;
     })
   }
-  createCat = (data) => {
+  createDept = (data) => {
     try {    
       this.sending = true;
-      backend.post('category', data).then(res => { 
+      backend.post('department', data).then(res => { 
         this.sending = false;
         if(res.data.status === 200) {
-          this.fetchCategory(); 
+          this.fetchDepartments(); 
           this.close = true;   
           Beedy('success', res.data.message) ;
          } else {
            Beedy('error', res.data.message) 
-         }
-        
+         }        
       })  
     } catch(err) {
       if(err.response.status === 500) {
@@ -51,27 +54,30 @@ class CategoryStore {
     }  
   }
 
-  updateCat = (data) => {
+  updateDept = (data) => {
+   try {
     this.sending = true;
-    backend.post('category/update', data).then(res => {
+    backend.post('department/update', data).then(res => {
       this.sending = false;
       if (res.data.status === 200) {
-       this.fetchCategory();
+       this.fetchDepartments();
        this.close = true;   
        Beedy('success', res.data.message) ;
       } else {
         Beedy('error', res.data.message) 
       }
     })
-   
+   } catch (error) {
+     console.log(error)
+   }   
  }
-   removeCategory = (id) => { 
+   removeDepartment = (id) => { 
    try {
-    backend.delete('category/' + id).then( res => {
+    backend.delete('department/' + id).then( res => {
       if(res.status === 200) {
-        this.fetchCategory(); 
+        this.fetchDepartments();
         Beedy('success', res.data.message)
-      } else { 
+      } else {
         Beedy('error', res.data.message)
       }
     })
@@ -80,23 +86,23 @@ class CategoryStore {
    }
   }
   get info() {
-    return  Object.keys(this.category || {}).map(key => ({...this.category[key], uid: key}));
+    return  Object.keys(this.departments || {}).map(key => ({...this.departments[key], uid: key}));
   }
 
 } 
-decorate(CategoryStore, { 
+decorate(DepartmentStore, { 
   sending: observable,
   close: observable,
   error: observable,
+  exist: observable,
   info: computed, 
   loading: observable,
-  exist: observable,
-  category: observable, 
+  departments: observable, 
   confirmName: action,
-  createCat: action,
-  updateCat: action,
-  removeCategory: action
+  createDept: action,
+  updateDept: action,
+  removeDepartment: action
 })
 
  
-export default createContext(new CategoryStore())
+export default createContext(new DepartmentStore())

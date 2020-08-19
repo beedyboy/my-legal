@@ -6,8 +6,10 @@ import {
     Dashboard as DashboardView,
     SignIn as SignInView,
     NotFound as NotFoundView,
+    Branch as BranchView,
     Department as DepartmentView,
-    Category as CategoryView
+    Category as CategoryView,
+    Staff as StaffView
    
  } from './views';
 import { PrivateRoute, NormalRoute } from './HOC';
@@ -27,17 +29,29 @@ const Routes = () => {
                 layout={MainLayout}
                 path="/dashboard"
           />
+          <PrivateRoute
+                component={BranchView}
+                exact
+                layout={MainLayout}
+                path="/branch"
+          />
            <PrivateRoute
                 component={CategoryView}
                 exact
                 layout={MainLayout}
-                path="/Category"
+                path="/category"
           />
             <PrivateRoute
                 component={DepartmentView}
                 exact
                 layout={MainLayout}
-                path="/Department"
+                path="/department"
+          />
+          <PrivateRoute
+                component={StaffView}
+                exact
+                layout={MainLayout}
+                path="/staff"
           />
            <NormalRoute
                 component={SignInView}
