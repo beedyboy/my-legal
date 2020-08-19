@@ -15,7 +15,7 @@ const MainLayout = props => {
         <Fragment>
              <div className={`wrapper ${collapse}`}>
                 <div className="top_navbar">
-                <div className="hamburger">
+                <div className="hamburger" onClick={handleHamburger}>
                     <div></div>
                     <div></div>
                     <div></div>
