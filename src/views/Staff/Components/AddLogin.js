@@ -16,7 +16,7 @@ const schema = {
 }; 
 const AddLogin = ({ open, handleClose, initial_data}) => {
   const staffStore = useContext(UserStore); 
-  const { createLogin, sending } = staffStore;  
+  const { createLogin, closeLogin, sending } = staffStore;  
     const [formState, setFormState] = useState({ 
      values: {  id: '', email: '', password: ''},
       touched: {},
@@ -44,6 +44,12 @@ const AddLogin = ({ open, handleClose, initial_data}) => {
       }))
     }
   }, [initial_data]);
+  useEffect(() => {
+    if(closeLogin === true) {
+     resetForm();
+     handleClose(); 
+    } 
+  }, [closeLogin]) 
   useEffect(() => {
     const errors = dataHero.validate(schema, formState.values);  
     setFormState(formState => ({
@@ -73,6 +79,18 @@ const hasError = field => formState.touched[field] && formState.errors[field].er
 const handleSubmit = e => {
     e.preventDefault();
     createLogin(formState.values);
+  }
+  const resetForm = () => {
+    setFormState(prev => ({
+      ...prev,
+      values: { ...prev.values,  id: '', email: '', password: ''},
+      touched: {
+        ...formState.touched, 
+        email: false,
+        password: false
+      },
+      errors: {}
+    }))
   }
   const closeBtn = <Button className="close" onClick={handleClose}>&times;</Button>;
     return (

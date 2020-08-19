@@ -1,6 +1,7 @@
 import { decorate, observable, action, computed } from "mobx"
 import { createContext } from "react" ; 
 import { backend } from "../services/APIService";
+import { Beedy } from "../services/Beedy";
 // import  Utility from "../shared/Storage";  
 class BranchStore {
   constructor() {
@@ -8,12 +9,16 @@ class BranchStore {
     
   }
   
-     error = false;
-     message = '';
+    error = false;
+    close = false;
+    exist = false;
      loading = false;
      sending = false; 
      branch = [] 
 
+     toggleClose = () => { 
+       this.close = false;
+     }
     fetchBranch = () => {
       this.loading = true;
       backend.get('branch').then( res => {  
@@ -21,7 +26,11 @@ class BranchStore {
         this.loading = false; 
       }); 
   }
-  
+  confirmName = (data) => {
+    backend.get('branch/' + data + '/exist').then( res => { 
+      this.exist = res.data.exist;
+    })
+  }
   createBranch = (data) => {
     try {    
       this.sending = true;
@@ -29,8 +38,8 @@ class BranchStore {
         this.sending = false;
         if(res.data.status === 200) {
           this.fetchBranch(); 
-          this.message = res.data.message; 
-          this.response = true;   
+          Beedy('success', res.data.message) 
+          this.close = true;   
         } else {
           this.error = true;
         }
@@ -46,53 +55,56 @@ class BranchStore {
   }
 
   updateBranch = (data) => {
+   try {
     this.sending = true;
     backend.post('branch/update', data).then(res => {
       this.sending = false;
       if (res.data.status === 200) {
        this.fetchBranch();
+       Beedy('success', res.data.message) 
+       this.close = true;   
+      } else {
+        Beedy('error', res.data.message) 
       }
     })
+   } catch (error) {
+     console.log(error)
+   }
    
  }
-   removeBranch = (id) => {
-    // this.Branchs = this.Branchs.filter(Branch => Branch.id !== id)
-    console.log(id);
+   removeBranch = (id) => { 
+   try { 
     backend.delete('branch/' + id).then( res => {
       if(res.status === 200) {
         this.fetchBranch();
-        this.message = res.message;
-        // return <Toast opens={true} type="success" message={res.message} />;
+        Beedy('success', res.data.message)
+      } else {
+        Beedy('error', res.data.message) 
       }
     })
+   } catch (error) {
+     console.log(error)
+   }
   }
   get info() {
-   var data = []
-    this.branch.map(res => {
-      const d = {
-        id: res.id,
-        name: res.name,
-        description: res.description,
-        created_at: res.created_at,
-        updated_at: res.updated_at, 
-      }
-      data.push(d);
-    });
-    return data;
+    return  Object.keys(this.branch || {}).map(key => ({...this.branch[key], uid: key}));
     
   }
 
 } 
 decorate(BranchStore, { 
   sending: observable,
-  message: observable,
+  close: observable,
   error: observable,
+  exist: observable,
   info: computed, 
   loading: observable,
   branch: observable, 
+  confirmName: action,
   createBranch: action,
   updateBranch: action,
-  removeBranch: action
+  removeBranch: action,
+  toggleClose: action
 })
 
  

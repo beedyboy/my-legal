@@ -63,7 +63,7 @@ const columns = [
       rowData(row);
       toggle(true);
     };
-    const deleteData = id => {
+    const deleteData = (e, id) => {
       removeData(id);
     }
     return (

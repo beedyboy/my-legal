@@ -1,12 +1,12 @@
 import React, { useEffect, useLayoutEffect, useState, useContext, Fragment } from 'react'
 import dataHero from 'data-hero';
 import DepartmentStore from '../../../stores/DepartmentStore';
-import{ Button, Card, CardBody, FormGroup, Input, Label, Modal, ModalBody, ModalHeader, ModalFooter, Row, Col } from 'reactstrap';  
+import{ Button, Card, CardBody, FormGroup, FormFeedback, Input, Label, Modal, ModalBody, ModalHeader, ModalFooter, Row, Col } from 'reactstrap';  
 import { observer } from 'mobx-react';
 
 const AddDepartment = ({mode, open, handleClose, initial_data}) => {
   const deptStore = useContext(DepartmentStore);
-  const { createDept, updateDept, sending } = deptStore; 
+  const { createDept, updateDept, close, sending, exist, confirmName } = deptStore; 
   const [hasError, setHasError]  = useState(false);
   const [title, setTitle]  = useState('Add Department');
     const [formState, setFormState] = useState({ 
@@ -37,23 +37,36 @@ const AddDepartment = ({mode, open, handleClose, initial_data}) => {
     setHasError(error); 
     setFormState(formState => ({
       ...formState,
-      isValid: !error,
-      errors: error?  'Name field must be a minimum of 2 characters': null
+      isValid: !error 
     })); 
   }, [formState.name]);  
+  useEffect(() => {
+    if(close === true) {
+     resetForm();
+     handleClose(); 
+    } 
+  }, [close]) 
   const handleChange = event => { 
     event.persist(); 
     setFormState(formState => ({
       ...formState,  
-      [event.target.name]:  event.target.value
-       
+      [event.target.name]:  event.target.value 
     })); 
+    if(event.target.name === 'name' && event.target.value.length >= 2) {
+      confirmName(event.target.value);
+    }
   }
   const handleSubmit = e => {
     e.preventDefault();
     mode === 'Add'? createDept(formState) : updateDept(formState);
   }
-  const closeBtn = <Button className="close" onClick={e => handleClose()}>&times;</Button>;
+  const resetForm = () => {
+    setFormState(prev => ({
+      ...prev,
+      id: '', name: '',  description: ''
+    }))
+  }
+  const closeBtn = <Button className="close" onClick={e => handleClose()}>&times;</Button>; 
     return (
         <Fragment>
         <Modal isOpen={open} toggle={e => handleClose()}>
@@ -65,18 +78,23 @@ const AddDepartment = ({mode, open, handleClose, initial_data}) => {
       <CardBody> 
           <Row>
               <Col md="12"> 
-                <FormGroup  className={
-                        hasError ? 'has-danger' : null} >
-                        <Label for="deptName">Department Name</Label>
-                        <Input
-                        type="text" 
-                        value={formState.name || ''}
-                        name="name"
-                        id="deptName"
-                        onChange={handleChange} 
-                        placeholder="Department Name"
-                        />
-                    </FormGroup>  
+                <FormGroup>
+                  <Label for="deptName">Department Name</Label>
+                  <Input
+                  type="text" 
+                  value={formState.name || ''}
+                  name="name"
+                  id="deptName"
+                  onChange={handleChange} 
+                  placeholder="Department Name"
+                  invalid={hasError || exist}
+                  />
+                   <FormFeedback>  
+                        { hasError ? 'Name field must be a minimum of 2 characters' : null } 
+                        <p> { exist ? 'Department name already exist' : null}</p>
+                    </FormFeedback>
+                </FormGroup>  
+                   
               </Col>
 
               <Col md="12"> 
@@ -100,8 +118,10 @@ const AddDepartment = ({mode, open, handleClose, initial_data}) => {
         <Button color="secondary" onClick={e => handleClose()}>
             Close
         </Button> {" "}
-        <Button color="primary" disabled={!formState.isValid || sending}  type="submit">
-            Save changes
+        <Button color="primary" disabled={!formState.isValid || sending || exist}  type="submit">
+        {sending ? (
+            <span> Saving data  <i className="fa fa-spinner"></i></span>
+            ): 'Save changes'}
         </Button>
     </ModalFooter>
       </form>

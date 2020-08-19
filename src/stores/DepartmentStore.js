@@ -1,15 +1,16 @@
 import { decorate, observable, action, computed } from "mobx"
 import { createContext } from "react" ; 
 import { backend } from "../services/APIService";
-// import  Utility from "../shared/Storage";  
+import { Beedy } from "../services/Beedy";
+ 
 class DepartmentStore {
   constructor() {
-    this.fetchDepartments(); 
-    
+    this.fetchDepartments();  
   }
   
      error = false;
-     message = '';
+     exist = false;
+     close = false;
      loading = false;
      sending = false; 
      departments = [] 
@@ -26,6 +27,11 @@ class DepartmentStore {
      }
   }
   
+  confirmName = (data) => {
+    backend.get('department/' + data + '/exist').then( res => { 
+      this.exist = res.data.exist;
+    })
+  }
   createDept = (data) => {
     try {    
       this.sending = true;
@@ -33,12 +39,11 @@ class DepartmentStore {
         this.sending = false;
         if(res.data.status === 200) {
           this.fetchDepartments(); 
-          this.message = res.data.message; 
-          this.response = true;   
-        } else {
-          this.error = true;
-        }
-        
+          this.close = true;   
+          Beedy('success', res.data.message) ;
+         } else {
+           Beedy('error', res.data.message) 
+         }        
       })  
     } catch(err) {
       if(err.response.status === 500) {
@@ -50,50 +55,50 @@ class DepartmentStore {
   }
 
   updateDept = (data) => {
+   try {
     this.sending = true;
     backend.post('department/update', data).then(res => {
       this.sending = false;
       if (res.data.status === 200) {
        this.fetchDepartments();
+       this.close = true;   
+       Beedy('success', res.data.message) ;
+      } else {
+        Beedy('error', res.data.message) 
       }
     })
-   
+   } catch (error) {
+     console.log(error)
+   }   
  }
-   removeDepartment = (id) => {
-    // this.Departments = this.Departments.filter(Department => Department.id !== id)
-    console.log(id);
+   removeDepartment = (id) => { 
+   try {
     backend.delete('department/' + id).then( res => {
       if(res.status === 200) {
         this.fetchDepartments();
-        this.message = res.message;
-        // return <Toast opens={true} type="success" message={res.message} />;
+        Beedy('success', res.data.message)
+      } else {
+        Beedy('error', res.data.message)
       }
     })
+   } catch (error) {
+     console.log(error)
+   }
   }
   get info() {
-   var data = []
-    this.departments.map(res => {
-      const d = {
-        id: res.id,
-        name: res.name,
-        description: res.description,
-        created_at: res.created_at,
-        updated_at: res.updated_at, 
-      }
-      data.push(d);
-    });
-    return data;
-    
+    return  Object.keys(this.departments || {}).map(key => ({...this.departments[key], uid: key}));
   }
 
 } 
 decorate(DepartmentStore, { 
   sending: observable,
-  message: observable,
+  close: observable,
   error: observable,
+  exist: observable,
   info: computed, 
   loading: observable,
   departments: observable, 
+  confirmName: action,
   createDept: action,
   updateDept: action,
   removeDepartment: action

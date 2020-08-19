@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useMemo } from 'react'; 
+import React, { Fragment,  useMemo } from 'react'; 
 import DataTable, { createTheme } from 'react-data-table-component';
 import { Row, Col,  Button } from 'reactstrap';  
  
@@ -77,7 +77,7 @@ const createLogin = (e, row) => {
   rowData(row);
   setLogin();
 };
-const deleteData = id => {
+const deleteData = (e, id) => {
   removeData(id);
 }
     return (

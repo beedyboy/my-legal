@@ -2,22 +2,27 @@ import { decorate, observable, action, computed } from "mobx"
 import { createContext } from "react" ; 
 import Utility from "../services/UtilityService";
 import { backend } from "../services/APIService";
+import { Beedy } from "../services/Beedy";
 
 
 class UserStore {
 
-     isAuthenticated = false;
-     error = null;
-     loading = false;
-     emailExist = false;
+      isAuthenticated = false;
+      error = null;
+      loading = false;
+      emailExist = false;
+      close = false;
+      closeLogin = false;
+      users = [];
+      profiles = [];
 
-    users = [];
-    profiles = [];
-
-   addUser = (User) => {
-    
-    // this.users.push({ ...User, id: uuid() })
-  }
+      toggleClose = () => { 
+        this.close = false;
+      }
+      toggleCloseLogin = () => { 
+        this.closeLogin = false;
+      }
+   
   fetchUsers = () => {
     this.loading = true;
     backend.get('user').then( res => {  
@@ -40,11 +45,11 @@ class UserStore {
         this.sending = false;
         if(res.data.status === 200) {
           this.fetchUsers(); 
-          this.message = res.data.message;  
-        } else {
-          this.error = true;
-        }
-        
+          Beedy('success', res.data.message) 
+       this.close = true;   
+      } else {
+        Beedy('error', res.data.message) 
+      }
       })  
     } catch(err) {
       if(err.response.status === 500) {
@@ -60,7 +65,11 @@ class UserStore {
       this.sending = false;
       if (res.data.status === 200) {
        this.fetchUsers();
-      }
+       Beedy('success', res.data.message) 
+    this.closeLogin = true;   
+   } else {
+     Beedy('error', res.data.message) 
+   } 
     })
    
  }
@@ -70,19 +79,26 @@ class UserStore {
       this.sending = false;
       if (res.data.status === 200) {
        this.fetchUsers();
+       Beedy('success', res.data.message) 
+       this.close = true;   
+      } else {
+        Beedy('error', res.data.message) 
       }
     }) 
  }
-   removeStaff = (id) => {
-    // this.Staffs = this.Staffs.filter(Staff => Staff.id !== id)
-    console.log(id);
+   removeUser = (id) => { 
+   try {
     backend.delete('user/' + id).then( res => {
       if(res.status === 200) {
         this.fetchUsers();
-        this.message = res.message;
-        // return <Toast opens={true} type="success" message={res.message} />;
+        Beedy('success', res.data.message) 
+      } else {
+        Beedy('error', res.data.message) 
       }
     })
+   } catch (error) {
+     console.log(error)
+   }
   }
       
   getProfile = () => {
@@ -96,12 +112,14 @@ class UserStore {
    login = (Admin) => {
     this.sending = true;
     this.error = null;
-    backend.post('auth/auth', Admin).then( res => { 
+    backend.post('auth/auth', Admin).then( res => {
+        this.sending = false;  
       if(res.data.status === 200) {  
-        this.sending = false; 
-        Utility.save('name', res.data.staff.lastname); 
+        Utility.save('name', res.data.staff[0].lastname); 
         Utility.save('staff_token', res.data.token); 
         this.isAuthenticated = true; 
+      } else {
+        Beedy('error', res.data.msg)
       }
     })
   }
@@ -118,15 +136,7 @@ class UserStore {
      })
     
   }
-
-  removeUser = (id) => {
-    backend.delete('user/' + id).then( res => {
-      if(res.status === 200) {
-        this.fetchUsers();
-        this.message = res.message; 
-      }
-    })
-  }
+ 
   get info() {
     return  Object.keys(this.users || {}).map(key => ({...this.users[key], uid: key}));
    }
@@ -167,15 +177,18 @@ decorate(UserStore, {
   profiles: observable,
   sending: observable,
   emailExist: observable,
-  addUser: action,
-  fetchUsers: action,
-  removeUser: action,
+  closeLogin: observable,
+  toggleClose: action,
+  fetchUsers: action, 
   getProfile: action,
+  createStaff: action,
   confirmEmail: action,
+  removeUser: action,
   login: action,
   logOut: action,
   loginSuccessful: action,
   createLogin: action,
+  toggleCloseLogin: action,
   info: computed,
   stat: computed, 
   profile: computed, 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext, Fragment } from 'react'
 import dataHero from 'data-hero';
 import BranchStore from '../../../stores/BranchStore';
-import{ Button, Card, CardBody, FormGroup, Input, Label, Modal, ModalBody, ModalHeader, ModalFooter, Row, Col } from 'reactstrap';  
+import{ Button, Card, CardBody, FormGroup, FormFeedback, Input, Label, Modal, ModalBody, ModalHeader, ModalFooter, Row, Col } from 'reactstrap';  
 import { observer } from 'mobx-react';
 const schema = {
   name:  {
@@ -15,8 +15,8 @@ const schema = {
     } 
 }; 
 const AddBranch = ({mode, open, handleClose, initial_data}) => {
-  const deptStore = useContext(BranchStore);
-  const { createBranch, updateBranch, sending } = deptStore;  
+  const branchStore = useContext(BranchStore);
+  const { createBranch, updateBranch, sending, close, confirmName, exist } = branchStore;  
   const [title, setTitle]  = useState('Add Branch');
     const [formState, setFormState] = useState({ 
      values: {  id: '', name: '',  email: '', phone: '',  address: ''},
@@ -56,7 +56,12 @@ const AddBranch = ({mode, open, handleClose, initial_data}) => {
       errors: errors || {}
     }));
   }, [formState.values]);
-     
+   useEffect(() => {
+     if(close === true) {
+      resetForm();
+      handleClose(); 
+     } 
+   }, [close])  
 const handleChange = event => {
   event.persist();  
   setFormState(formState => ({
@@ -70,7 +75,10 @@ const handleChange = event => {
       [event.target.name]: true
     }
   })); 
-   
+  if(event.target.name === 'name' && event.target.value.length >= 2) {
+    console.log('length', event.target.value.length)
+    confirmName(event.target.value);
+  }   
 }
 const hasError = field =>
       formState.touched[field] && formState.errors[field].error;  
@@ -78,6 +86,14 @@ const hasError = field =>
 const handleSubmit = e => {
     e.preventDefault();
     mode === 'Add'? createBranch(formState.values) : updateBranch(formState.values);
+  }
+  const resetForm = () => {
+    setFormState(prev => ({
+      ...prev,
+      values: { ...prev.values,  id: '', name: '',  email: '', phone: '',  address: ''},
+      touched: {},
+      errors: {}
+    }))
   }
   const closeBtn = <Button className="close" onClick={handleClose}>&times;</Button>;
     return (
@@ -91,17 +107,21 @@ const handleSubmit = e => {
       <CardBody> 
           <Row>
               <Col md="12"> 
-                <FormGroup  className={
-                        hasError('name') ? 'has-danger' : null} >
-                        <Label for="deptName">Branch Name</Label>
-                        <Input
-                        type="text" 
-                        value={formState.values.name || ''}
-                        name="name"
-                        id="deptName"
-                        onChange={handleChange} 
-                        placeholder="Branch Name"
-                        />
+                <FormGroup>
+                  <Label for="deptName">Branch Name</Label>
+                  <Input
+                  type="text" 
+                  value={formState.values.name || ''}
+                  name="name"
+                  id="deptName"
+                  onChange={handleChange} 
+                  placeholder="Branch Name" 
+                  invalid={hasError('name') || exist}
+                  />
+                   <FormFeedback>  
+                        { hasError('name') ? 'Name field must be a minimum of 2 characters' : null } 
+                        <p> { exist ? 'This branch already exist' : null}</p>
+                    </FormFeedback>
                     </FormGroup>  
               </Col>
 
@@ -153,8 +173,10 @@ const handleSubmit = e => {
         <Button color="secondary" onClick={handleClose}>
             Close
         </Button> {" "}
-        <Button color="primary" disabled={!formState.isValid || sending}  type="submit">
-            Save changes
+        <Button color="primary" disabled={!formState.isValid || sending || exist}  type="submit">
+        {sending ? (
+            <span> Saving data  <i className="fa fa-spinner"></i></span>
+            ): 'Save changes'}
         </Button>
     </ModalFooter>
       </form>

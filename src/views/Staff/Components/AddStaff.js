@@ -29,7 +29,7 @@ const AddStaff = ({mode, open, handleClose, initial_data}) => {
   const staffStore = useContext(UserStore);
   const branchStore = useContext(BranchStore);
   const { info: branches } = branchStore;  
-  const { createStaff, updateStaff, sending } = staffStore;  
+  const { createStaff, updateStaff, sending, close, emailExist, confirmEmail } = staffStore;  
   const [title, setTitle]  = useState('Add Staff');
     const [formState, setFormState] = useState({ 
      values: {  id: '', firstname: '', lastname: '',  email: '', branch_id: '', phone: '',  address: ''},
@@ -72,7 +72,14 @@ const AddStaff = ({mode, open, handleClose, initial_data}) => {
       errors: errors || {}
     }));
   }, [formState.values]);
-     
+ 
+  useEffect(() => {
+    if(close === true) {
+     resetForm();
+     handleClose(); 
+    } 
+  }, [close]) 
+
 const handleChange = event => {
   event.persist();  
   setFormState(formState => ({
@@ -86,6 +93,9 @@ const handleChange = event => {
       [event.target.name]: true
     }
   })); 
+  if(event.target.name === "email") {
+    confirmEmail(event.target.value);
+  }
    
 }
 const hasError = field => formState.touched[field] && formState.errors[field].error;  
@@ -93,6 +103,22 @@ const hasError = field => formState.touched[field] && formState.errors[field].er
 const handleSubmit = e => {
     e.preventDefault();
     mode === 'Add'? createStaff(formState.values) : updateStaff(formState.values);
+  }
+  const resetForm = () => {
+    setFormState(prev => ({
+      ...prev,
+      values: { ...prev.values,  id: '', firstname: '', lastname: '', branch_id: '',  email: '', phone: '',  address: ''},
+      touched: {
+        ...formState.touched,
+        firstname: false,
+        lastname: false,
+        branch_id: false,
+        email: false,
+        phone: false,
+        address: false,
+      },
+      errors: {}
+    }))
   }
   const closeBtn = <Button className="close" onClick={handleClose}>&times;</Button>;
     return (
@@ -156,12 +182,13 @@ const handleSubmit = e => {
                     id="email"
                     onChange={handleChange} 
                     placeholder="Email Address"
-                    invalid={ hasError('email')}
+                    invalid={ hasError('email') || emailExist}
                     />
                   <FormFeedback>
-                    {
+                    {  
                     hasError('email') ? formState.errors.email && formState.errors.email.message : null
-                    } 
+                      } 
+                      <p> { emailExist ? 'Email already exist' : null}</p>
                     </FormFeedback>
                </FormGroup>  
               </Col>
@@ -209,7 +236,7 @@ const handleSubmit = e => {
         <Button color="secondary" onClick={handleClose}>
             Close
         </Button> {" "}
-        <Button color="primary" disabled={!formState.isValid}  type="submit">
+        <Button color="primary" disabled={!formState.isValid || emailExist || sending}  type="submit">
             {sending ? (
             <span> Saving data  <i className="fa fa-spinner"></i></span>
             ): 'Save changes'}

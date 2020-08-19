@@ -6,9 +6,11 @@ import 'font-awesome/css/font-awesome.min.css';
 import 'aos/dist/aos.css'; 
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import Responder from './services/Beedy';
 
 ReactDOM.render( 
    <Fragment>
+      <Responder />
       <App />
    </Fragment>,
   document.getElementById('root')

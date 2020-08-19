@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'; 
+import React, { Fragment } from 'react'; 
 import DataTable, { createTheme } from 'react-data-table-component';
 import { Row, Col,  Button } from 'reactstrap';  
  
@@ -73,7 +73,7 @@ const editData = (e, row) => {
   rowData(row);
   toggle(true);
 };
-const deleteData = id => {
+const deleteData = (e, id) => {
   removeData(id);
 }
     return (

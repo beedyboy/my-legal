@@ -1,16 +1,17 @@
 import { decorate, observable, action, computed } from "mobx"
 import { createContext } from "react" ; 
 import { backend } from "../services/APIService";
-// import  Utility from "../shared/Storage";  
+import { Beedy } from "../services/Beedy"; 
+
 class CategoryStore {
   constructor() {
-    this.fetchCategory(); 
-    
+    this.fetchCategory();  
   }
   
      error = false;
-     message = '';
+     exist = false;
      loading = false;
+     close = false; 
      sending = false; 
      category = [] 
 
@@ -22,6 +23,11 @@ class CategoryStore {
       }); 
   }
   
+  confirmName = (data) => {
+    backend.get('category/' + data + '/exist').then( res => { 
+      this.exist = res.data.exist;
+    })
+  }
   createCat = (data) => {
     try {    
       this.sending = true;
@@ -29,11 +35,11 @@ class CategoryStore {
         this.sending = false;
         if(res.data.status === 200) {
           this.fetchCategory(); 
-          this.message = res.data.message; 
-          this.response = true;   
-        } else {
-          this.error = true;
-        }
+          this.close = true;   
+          Beedy('success', res.data.message) ;
+         } else {
+           Beedy('error', res.data.message) 
+         }
         
       })  
     } catch(err) {
@@ -51,45 +57,42 @@ class CategoryStore {
       this.sending = false;
       if (res.data.status === 200) {
        this.fetchCategory();
+       this.close = true;   
+       Beedy('success', res.data.message) ;
+      } else {
+        Beedy('error', res.data.message) 
       }
     })
    
  }
-   removeCategory = (id) => {
-    // this.Categorys = this.Categorys.filter(Category => Category.id !== id)
-    console.log(id);
+   removeCategory = (id) => { 
+   try {
     backend.delete('category/' + id).then( res => {
       if(res.status === 200) {
-        this.fetchCategory();
-        this.message = res.message;
-        // return <Toast opens={true} type="success" message={res.message} />;
+        this.fetchCategory(); 
+        Beedy('success', res.data.message)
+      } else { 
+        Beedy('error', res.data.message)
       }
     })
+   } catch (error) {
+     console.log(error)
+   }
   }
   get info() {
-   var data = []
-    this.category.map(res => {
-      const d = {
-        id: res.id,
-        name: res.name,
-        description: res.description,
-        created_at: res.created_at,
-        updated_at: res.updated_at, 
-      }
-      data.push(d);
-    });
-    return data;
-    
+    return  Object.keys(this.category || {}).map(key => ({...this.category[key], uid: key}));
   }
 
 } 
 decorate(CategoryStore, { 
   sending: observable,
-  message: observable,
+  close: observable,
   error: observable,
   info: computed, 
   loading: observable,
+  exist: observable,
   category: observable, 
+  confirmName: action,
   createCat: action,
   updateCat: action,
   removeCategory: action

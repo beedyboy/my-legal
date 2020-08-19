@@ -7,12 +7,13 @@ import BranchList from './Components/BranchList';
 
 const Branch = () => { 
   const branchStore = useContext(BranchStore);
-  const { info:branches, removeBranch} = branchStore;  
+  const { info:branches, removeBranch, toggleClose} = branchStore;  
   const [mode, setMode] = useState('');
   const [rowData, setRowData] = useState(); 
   const [modal, setModal] = useState(false);   
   const handleClose = () => {
     setModal(!modal);  
+    toggleClose()
   }
   const createBranch = () => {
     setModal(true); 
