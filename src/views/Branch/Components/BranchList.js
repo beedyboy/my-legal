@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'; 
+import React, { Fragment, useState } from 'react'; 
 import DataTable, { createTheme } from 'react-data-table-component';
 import { Row, Col,  Button } from 'reactstrap';  
  
@@ -24,8 +24,7 @@ createTheme('solarized', {
   },
 });
 // const data = [{ id: 1, title: 'Conan the Barbarian', year: '1982' } ];
-const BranchList = ({data, setMode, removeData, rowData, toggle}) => {
-  
+const BranchList = ({data, setMode, removeData, rowData, toggle}) => { 
 const columns = [
   {
     name: 'Name',
@@ -61,7 +60,10 @@ const columns = [
     <Button size="sm" color="warning" onClick={e => editData(e, row)}>
       <i className="fa fa-edit"></i>
       </Button>{' '}
-    <Button size="sm" color="danger" onClick={e => deleteData(e, row.id)}>
+
+    <Button size="sm" color="danger"
+     id={"Popover-" + row.id}
+      onClick={(key) =>{ if(window.confirm('Delete the item?')){deleteData( row.id)};}}>
       <i className="fa fa-trash"></i>
       </Button>  
      </div>
@@ -73,13 +75,15 @@ const editData = (e, row) => {
   rowData(row);
   toggle(true);
 };
-const deleteData = (e, id) => {
-  removeData(id);
+const deleteData = (id) => {
+  removeData(id); 
 }
+ 
     return (
       <Fragment>
         <Row>
           <Col md="12">
+           
              <DataTable
       title="Branch List"
       columns={columns}
@@ -90,6 +94,8 @@ const deleteData = (e, id) => {
     
           </Col>
         </Row>
+       
+
       </Fragment>
     
     )
