@@ -61,7 +61,7 @@ const columns = [
       <i className="fa fa-edit"></i>
       </Button>{' '}
 
-    <Button size="sm" color="danger"
+    <Button size="sm" color="danger" 
      id={"Popover-" + row.id}
       onClick={(key) =>{ if(window.confirm('Delete the item?')){deleteData( row.id)};}}>
       <i className="fa fa-trash"></i>
