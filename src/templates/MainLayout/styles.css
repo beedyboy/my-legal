@@ -1,44 +1,4 @@
-/* .sidebar {
-    position: relative;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    min-height: 100vh !important;
-    z-index: 100;
-    padding: 0 0 40px 0;
-    width: 100%; 
-    color: #FFFFFF;
-    background-color: rgb(48, 54, 65);
-    box-shadow: inset -1px 0 0 rgba(137, 145, 221, 0.1); 
-} */
-/* #sidebar-wrapper {
-    min-height: 100vh !important; 
-    margin-left: -1rem; 
-    -webkit-transform: margin .25s ease-out;
-    -moz-transition: margin .25 ease-out;
-    -o-transition: margin .25s ease-out;
-    transition: margin .25s ease-out;
-} */
-/* #sidebar-wrapper .sidebar-heading {
-    padding: 0.875rem 1.25rem;
-    font-size: 1.2rem;
-} */
-/* #page-content-wrapper { 
-    min-width: 0;
-    width: 100%;
-} */
-/* .topbar {
-    background-color: white;
-    color: black;
-    border-bottom: 1px solid rgb(48, 54, 65);
-    width: 100%; 
-} */
-/* .nav-item { 
-    padding: 0.5rem 2.25rem;
-} */
-.hr {
-    /* margin-top: 1rem;
-    margin-bottom: 1rem; */
+.hr { 
     position: relative;
     border: 1px;
     border-top: 1px solid white;
