@@ -23,24 +23,21 @@ createTheme('solarized', {
     disabled: 'rgba(0,0,0,.12)',
   },
 });
-// const data = [{ id: 1, title: 'Conan the Barbarian', year: '1982' } ];
-const StaffList = ({data, setMode, setLogin, removeData, rowData, toggle}) => {
+const SubCatList = ({data, setMode, removeData, rowData, toggle}) => {
   const columns = useMemo(() => [
     {
+      name: 'Category', 
+      selector: 'cat_Name',
+      sortable: true
+    },
+    {
       name: 'Name', 
-      sortable: true,
-      cell: row => <Fragment>
-        {row.firstname + " " + row.lastname}
-      </Fragment>
+      selector: 'name',
+      sortable: true
     },
     {
-      name: 'Email',
-      selector: 'email',
-      sortable: true,
-    },
-    {
-      name: 'Phone',
-      selector: 'phone_number',
+      name: 'Description',
+      selector: 'description',
       sortable: true,
     }, 
     {
@@ -56,14 +53,9 @@ const StaffList = ({data, setMode, setLogin, removeData, rowData, toggle}) => {
         <i className="fa fa-edit"></i>
         </Button>{' '}
       <Button size="sm" color="danger"
-       onClick={(e) =>{ if(window.confirm('Delete this staff?')){deleteData(e, row.id)};}}>
+       onClick={(e) =>{ if(window.confirm('Delete this sub?')){deleteData(e, row.id)};}}>
         <i className="fa fa-trash"></i>
-        </Button>{' '}
-        {row.can_login === "No" ? (
-          <Button size="sm" color="danger" onClick={e => createLogin(e, row)}>
-          <i className="fa fa-plus"></i>
-          </Button>  
-        ): null}
+        </Button> 
        </div>
     },
   ]); 
@@ -73,11 +65,7 @@ const editData = (e, row) => {
   rowData(row);
   toggle(true);
 };
-const createLogin = (e, row) => {
-  e.persist();  
-  rowData(row);
-  setLogin();
-};
+ 
 const deleteData = (e, id) => {
   removeData(id);
 }
@@ -86,13 +74,12 @@ const deleteData = (e, id) => {
         <Row>
           <Col md="12">
              <DataTable
-      title="Staff List"
-      columns={columns}
-      data={data}
-      pagination={true}
-      theme="solarized"
-    />
-    
+              title="SubCategory List"
+              columns={columns}
+              data={data}
+              pagination={true}
+              theme="solarized"
+           /> 
           </Col>
         </Row>
       </Fragment>
@@ -101,4 +88,4 @@ const deleteData = (e, id) => {
 }
 
 
-export default StaffList;
+export default SubCatList;

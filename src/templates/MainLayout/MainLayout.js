@@ -37,24 +37,7 @@ const MainLayout = props => {
     </Container>
 </div>
             </div>
-            {/* <Container fluid={true}>
-                <Row>
-                    <Col xs={2} lg="2" className="sidebar">
-                        <Sidebar />
-                    </Col>
-                    <Col xs={10} lg="10" id="page-content-wrapper" className="p-0 m-0">
-                       
-                        <Row>
-                        
-                            <Col md="12"> 
-                            <main>{children}</main>
-                            </Col>
-                        </Row>
-                       
-                     
-                    </Col>
-                </Row>
-            </Container> */}
+            
         </Fragment>
     )
 }

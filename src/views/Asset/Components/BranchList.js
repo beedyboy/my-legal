@@ -24,7 +24,8 @@ createTheme('solarized', {
   },
 });
 // const data = [{ id: 1, title: 'Conan the Barbarian', year: '1982' } ];
-const BranchList = ({data, setMode, removeData, rowData, toggle}) => { 
+const BranchList = ({data, setMode, removeData, rowData, toggle}) => {
+  
 const columns = [
   {
     name: 'Name',
@@ -60,9 +61,8 @@ const columns = [
     <Button size="sm" color="warning" onClick={e => editData(e, row)}>
       <i className="fa fa-edit"></i>
       </Button>{' '}
-
     <Button size="sm" color="danger" 
-      onClick={(key) =>{ if(window.confirm('Delete this branch?')){deleteData( row.id)};}}>
+    onClick={(e) =>{ if(window.confirm('Delete the item?')){deleteData( e, row.id)};}}>
       <i className="fa fa-trash"></i>
       </Button>  
      </div>
@@ -74,15 +74,13 @@ const editData = (e, row) => {
   rowData(row);
   toggle(true);
 };
-const deleteData = (id) => {
-  removeData(id); 
+const deleteData = id => {
+  removeData(id);
 }
- 
     return (
       <Fragment>
         <Row>
           <Col md="12">
-           
              <DataTable
       title="Branch List"
       columns={columns}
@@ -93,8 +91,6 @@ const deleteData = (id) => {
     
           </Col>
         </Row>
-       
-
       </Fragment>
     
     )

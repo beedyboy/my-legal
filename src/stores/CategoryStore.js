@@ -23,6 +23,10 @@ class CategoryStore {
       }); 
   }
   
+  toggleClose = () => { 
+    this.close = false;
+  }
+
   confirmName = (data) => {
     backend.get('category/' + data + '/exist').then( res => { 
       this.exist = res.data.exist;
@@ -95,7 +99,8 @@ decorate(CategoryStore, {
   confirmName: action,
   createCat: action,
   updateCat: action,
-  removeCategory: action
+  removeCategory: action,
+  toggleClose: action
 })
 
  

@@ -52,7 +52,7 @@ const columns = [
       <i className="fa fa-edit"></i>
       </Button>{' '}
     <Button size="sm" color="danger" 
-     onClick={(e) =>{ if(window.confirm('Delete the item?')){deleteData(e, row.id)};}}>
+     onClick={(e) =>{ if(window.confirm('Delete this department?')){deleteData(e, row.id)};}}>
       <i className="fa fa-trash"></i>
       </Button> 
      </div>

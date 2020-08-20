@@ -5,8 +5,8 @@ import{ Button, Card, CardBody, FormGroup, FormFeedback, Input, Label, Modal, Mo
 import { observer } from 'mobx-react';
 
 const AddCategory = ({mode, open, handleClose, initial_data}) => {
-  const deptStore = useContext(CategoryStore);
-  const { createCat, updateCat, close, sending, exist, confirmName } = deptStore; 
+  const catStore = useContext(CategoryStore);
+  const { createCat, updateCat, close, sending, exist, confirmName } = catStore; 
   const [hasError, setHasError]  = useState(false);
   const [title, setTitle]  = useState('Add Category');
     const [formState, setFormState] = useState({ 
