@@ -20,7 +20,7 @@ const Branch = () => {
     setMode('Add'); 
   }  
     return( 
-      <Fragment> 
+      <Fragment>
       <Card className='mt-2'>
          <CardHeader>
          </CardHeader>

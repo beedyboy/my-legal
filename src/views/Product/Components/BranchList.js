@@ -61,7 +61,8 @@ const columns = [
     <Button size="sm" color="warning" onClick={e => editData(e, row)}>
       <i className="fa fa-edit"></i>
       </Button>{' '}
-    <Button size="sm" color="danger" onClick={e => deleteData(e, row.id)}>
+    <Button size="sm" color="danger" 
+    onClick={(e) =>{ if(window.confirm('Delete the item?')){deleteData( e, row.id)};}}>
       <i className="fa fa-trash"></i>
       </Button>  
      </div>

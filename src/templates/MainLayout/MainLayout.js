@@ -7,26 +7,26 @@ import RSidebar from '../../components/Sidebar/RSidebar';
  
 const MainLayout = props => {
     const { children } = props; 
-    const [collapse, setCollapse] = useState('')
+    const [collapse, setCollapse] = useState(true)
     const handleHamburger = () => {
-        setCollapse('collapse')
+        setCollapse(!collapse)
     }
     return (
         <Fragment>
-             <div className={`wrapper ${collapse}`}>
+             <div className={`wrapper ${collapse ? 'collapse_sidebar' : ''}`}>
                 <div className="top_navbar">
-                <div className="hamburger">
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                </div>
-                <div className="top_menu">
-                     <TopBar />
-                </div>
+                    <div className="hamburger" onClick={(e) => handleHamburger()}>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                    <div className="top_menu">
+                        <TopBar />
+                    </div>
                 </div>
 
-                {/* side */}
-<RSidebar />
+                <div className="sidebar"> <RSidebar /> </div>
+
 <div className="main_container">
     <Container fluid={true}>
         <Row> 

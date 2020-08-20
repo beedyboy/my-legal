@@ -19,11 +19,12 @@ import Utility from '../../services/UtilityService';
   const toggle = () => setIsOpen(!isOpen);
     return (
         <Fragment>
-            <div className="logo">Inventory</div>
+            <div className="logos">Inventory</div>
+            <div>Welcome  {Utility.get('name')} </div>
                     <ul>
                         <li><i className="fa fa-search"></i></li>
-                        <li><i className="fa fa-bell"></i></li> 
                          <li><i className="fa fa-user"></i></li>
+                        <li onClick={e => Utility.logout()}><i className="fa fa-sign-out"></i></li> 
                     </ul>
           {/* <Navbar className="topbar" expand="md">
           <Container fluid={true}>
@@ -42,7 +43,7 @@ import Utility from '../../services/UtilityService';
                   Profile
                 </DropdownItem> 
                 <DropdownItem divider />
-                <DropdownItem onClick={e => Utility.logout()}>
+                <DropdownItem >
                   Logout
                 </DropdownItem>
               </DropdownMenu>
