@@ -25,7 +25,7 @@ const MainLayout = props => {
                     </div>
                 </div>
 
-                <div className="sidebar"> <RSidebar /> </div>
+                <div className="sidebar"> <Sidebar /> </div>
 
 <div className="main_container">
     <Container fluid={true}>
