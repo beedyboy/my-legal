@@ -89,7 +89,7 @@ class SubCategoryStore {
   }
 
 } 
-decorate(CategoryStore, { 
+decorate( SubCategoryStore, { 
   sending: observable,
   close: observable,
   error: observable,

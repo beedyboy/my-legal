@@ -2,8 +2,9 @@ import React, { useEffect, useState, useContext, Fragment } from 'react'
 import dataHero from 'data-hero'; 
 import{ Button, Card, CardBody, FormGroup, FormFeedback, Input, Label, Modal, ModalBody, ModalHeader, ModalFooter, Row, Col } from 'reactstrap';  
 import { observer } from 'mobx-react'; 
-import CategoryStore from '../../stores/CategoryStore';
+import CategoryStore from '../../../stores/CategoryStore';
 import SubCategoryStore from '../../../stores/SubCategoryStore';
+
 const schema = {
   cat_id:  {
       isEmpty: false,

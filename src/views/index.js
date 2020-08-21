@@ -5,3 +5,5 @@ export { default as Department } from './Department';
 export { default as Branch } from './Branch';
 export { default as Category } from './Category';
 export {default as Staff} from './Staff';
+export { default as SubCategory} from './SubCategory';
+export { default  as Product} from './Product';

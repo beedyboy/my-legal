@@ -1,23 +1,23 @@
 import React, { useEffect, useState, useContext, Fragment } from 'react'
 import dataHero from 'data-hero';
-import BranchStore from '../../../stores/BranchStore';
+import BranchStore from '../../../stores/ProductStore';
 import{ Button, Card, CardBody, FormGroup, Input, Label, Modal, ModalBody, ModalHeader, ModalFooter, Row, Col } from 'reactstrap';  
 import { observer } from 'mobx-react';
 const schema = {
   name:  {
       isEmpty: false,
       min: 1,
-      message: 'A valid branch name is required'
+      message: 'A valid product name is required'
     },
     address:  {
       min: 5,
       message: 'Address is required'
     } 
 }; 
-const AddBranch = ({mode, open, handleClose, initial_data}) => {
+const AddProduct = ({mode, open, handleClose, initial_data}) => {
   const deptStore = useContext(BranchStore);
-  const { createBranch, updateBranch, sending } = deptStore;  
-  const [title, setTitle]  = useState('Add Branch');
+  const { createProduct, updateProduct, sending } = deptStore;  
+  const [title, setTitle]  = useState('Add Product');
     const [formState, setFormState] = useState({ 
      values: {  id: '', name: '',  email: '', phone: '',  address: ''},
       touched: {},
@@ -25,7 +25,7 @@ const AddBranch = ({mode, open, handleClose, initial_data}) => {
       });
   useEffect(() => {
     if(mode === "Edit") {
-        setTitle('Edit Branch');
+        setTitle('Edit Product');
       let shouldSetData =  typeof initial_data !== 'undefined' ? true : false; 
     if (shouldSetData) {  
     const data = initial_data; 
@@ -77,7 +77,7 @@ const hasError = field =>
 
 const handleSubmit = e => {
     e.preventDefault();
-    mode === 'Add'? createBranch(formState.values) : updateBranch(formState.values);
+    mode === 'Add'? createProduct(formState.values) : updateProduct(formState.values);
   }
   const closeBtn = <Button className="close" onClick={handleClose}>&times;</Button>;
     return (
@@ -93,14 +93,14 @@ const handleSubmit = e => {
               <Col md="12"> 
                 <FormGroup  className={
                         hasError('name') ? 'has-danger' : null} >
-                        <Label for="deptName">Branch Name</Label>
+                        <Label for="deptName">Product Name</Label>
                         <Input
                         type="text" 
                         value={formState.values.name || ''}
                         name="name"
                         id="deptName"
                         onChange={handleChange} 
-                        placeholder="Branch Name"
+                        placeholder="Product Name"
                         />
                     </FormGroup>  
               </Col>
@@ -166,4 +166,4 @@ const handleSubmit = e => {
     )
 }
 
-export default observer(AddBranch)
+export default observer(AddProduct)

@@ -9,8 +9,9 @@ import {
     Branch as BranchView,
     Department as DepartmentView,
     Category as CategoryView,
-    Staff as StaffView
-   
+    Staff as StaffView,
+    SubCategory as SubCategoryView,
+    Product as ProductView
  } from './views';
 import { PrivateRoute, NormalRoute } from './HOC';
 
@@ -52,6 +53,18 @@ const Routes = () => {
                 exact
                 layout={MainLayout}
                 path="/staff"
+          />
+           <PrivateRoute
+                component={SubCategoryView}
+                exact
+                layout={MainLayout}
+                path="/subcategory"
+          />
+           <PrivateRoute
+                component={ProductView}
+                exact
+                layout={MainLayout}
+                path="/product"
           />
            <NormalRoute
                 component={SignInView}

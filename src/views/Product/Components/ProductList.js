@@ -24,7 +24,7 @@ createTheme('solarized', {
   },
 });
 // const data = [{ id: 1, title: 'Conan the Barbarian', year: '1982' } ];
-const BranchList = ({data, setMode, removeData, rowData, toggle}) => {
+const ProductList = ({data, setMode, removeData, rowData, toggle}) => {
   
 const columns = [
   {
@@ -82,7 +82,7 @@ const deleteData = id => {
         <Row>
           <Col md="12">
              <DataTable
-      title="Branch List"
+      title="Product List"
       columns={columns}
       data={data}
       pagination={true}
@@ -97,4 +97,4 @@ const deleteData = id => {
 }
 
 
-export default BranchList;
+export default ProductList;

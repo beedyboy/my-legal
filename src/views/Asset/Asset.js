@@ -1,20 +1,20 @@
 import React, { useContext, useState, Fragment } from 'react';
 import { observer } from 'mobx-react';
 import { Card, CardBody, CardHeader, Button, Row, Col } from 'reactstrap'
-import BranchStore from '../../stores/BranchStore';
-import AddBranch from './Components/AddBranch';
-import BranchList from './Components/BranchList';
+// import BranchStore from '../../stores/BranchStore';
+import AddAsset from './Components/AddAsset';
+import AssetList from './Components/AssetList';
 
-const Branch = () => { 
-  const branchStore = useContext(BranchStore);
-  const { info:branches, removeBranch} = branchStore;  
+const Asset = () => { 
+  const assetStore = useContext(AssetStore);
+  const { info:assetes, removeAsset} = AssetStore;  
   const [mode, setMode] = useState('');
   const [rowData, setRowData] = useState(); 
   const [modal, setModal] = useState(false);   
   const handleClose = () => {
     setModal(!modal);  
   }
-  const createBranch = () => {
+  const createAsset = () => {
     setModal(true); 
     setMode('Add'); 
   }  
@@ -26,18 +26,18 @@ const Branch = () => {
          <CardBody>
          <Row>
            <Col md="5" sm="12">
-             <h5>Branch Management</h5>
+             <h5>Asset Management</h5>
           
            </Col>
            <Col md={{ size: 3, offset: 4 }} sm="12"> 
-           <Button color="secondary" className='float-right' onClick={createBranch}
-           >Add Branch</Button>{' '}
+           <Button color="secondary" className='float-right' onClick={createAsset}
+           >Add Asset</Button>{' '}
            </Col>
            <Col md="12" sm="12" className='mt-2'>
-             <BranchList  data={branches} setMode={setMode} toggle={handleClose} removeData={removeBranch} rowData={setRowData} /> 
+             <AssetList  data={assetes} setMode={setMode} toggle={handleClose} removeData={removeAsset} rowData={setRowData} /> 
            </Col>
          </Row>
-         <AddBranch mode={mode} open={modal} handleClose={handleClose} initial_data={rowData} /> 
+         <AddAsset mode={mode} open={modal} handleClose={handleClose} initial_data={rowData} /> 
 
        {/* <Modal isOpen={modal} toggle={toggle}>
            <ModalHeader toggle={toggle} close={closeBtn}>{title}</ModalHeader>
@@ -54,4 +54,4 @@ const Branch = () => {
     )
 }
 
-export default observer(Branch);
+export default observer(Asset);

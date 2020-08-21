@@ -23,7 +23,7 @@ const RSidebar = () => {
                     <span className="icon">
                     <i className="fa fa-tags" aria-hidden="true"></i>
                     </span>
-                    <span className="title">Category</span>
+                    <span className="title">Category</span>      
                     </Link></li>
 
                     <li><Link to="/department">

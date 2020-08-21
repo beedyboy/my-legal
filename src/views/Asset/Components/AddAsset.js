@@ -7,17 +7,17 @@ const schema = {
   name:  {
       isEmpty: false,
       min: 1,
-      message: 'A valid branch name is required'
+      message: 'A valid asset name is required'
     },
     address:  {
       min: 5,
       message: 'Address is required'
     } 
 }; 
-const AddBranch = ({mode, open, handleClose, initial_data}) => {
-  const deptStore = useContext(BranchStore);
-  const { createBranch, updateBranch, sending } = deptStore;  
-  const [title, setTitle]  = useState('Add Branch');
+const AddAsset = ({mode, open, handleClose, initial_data}) => {
+  const deptStore = useContext(AssetStore);
+  const { createAsset, updateAsset, sending } = deptStore;  
+  const [title, setTitle]  = useState('Add Asset');
     const [formState, setFormState] = useState({ 
      values: {  id: '', name: '',  email: '', phone: '',  address: ''},
       touched: {},
@@ -25,7 +25,7 @@ const AddBranch = ({mode, open, handleClose, initial_data}) => {
       });
   useEffect(() => {
     if(mode === "Edit") {
-        setTitle('Edit Branch');
+        setTitle('Edit Asset');
       let shouldSetData =  typeof initial_data !== 'undefined' ? true : false; 
     if (shouldSetData) {  
     const data = initial_data; 
@@ -77,7 +77,7 @@ const hasError = field =>
 
 const handleSubmit = e => {
     e.preventDefault();
-    mode === 'Add'? createBranch(formState.values) : updateBranch(formState.values);
+    mode === 'Add'? createAsset(formState.values) : updateAsset(formState.values);
   }
   const closeBtn = <Button className="close" onClick={handleClose}>&times;</Button>;
     return (
@@ -100,7 +100,7 @@ const handleSubmit = e => {
                         name="name"
                         id="deptName"
                         onChange={handleChange} 
-                        placeholder="Branch Name"
+                        placeholder="Asset Name"
                         />
                     </FormGroup>  
               </Col>
@@ -166,4 +166,4 @@ const handleSubmit = e => {
     )
 }
 
-export default observer(AddBranch)
+export default observer(AddAsset)
