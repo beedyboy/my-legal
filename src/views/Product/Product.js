@@ -39,13 +39,6 @@ const Product = () => {
          </Row>
          <AddProduct mode={mode} open={modal} handleClose={handleClose} initial_data={rowData} /> 
 
-       {/* <Modal isOpen={modal} toggle={toggle}>
-           <ModalHeader toggle={toggle} close={closeBtn}>{title}</ModalHeader>
-           <ModalBody>
-               <AddDepartment mode={mode} open={modal}  initial_data={rowData} />
-           </ModalBody>
-       </Modal>  */}
-
          </CardBody>
        </Card>
    

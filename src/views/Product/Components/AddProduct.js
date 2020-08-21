@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext, Fragment } from 'react'
 import dataHero from 'data-hero';
-import BranchStore from '../../../stores/ProductStore';
+import ProductStore from '../../../stores/ProductStore';
 import{ Button, Card, CardBody, FormGroup, Input, Label, Modal, ModalBody, ModalHeader, ModalFooter, Row, Col } from 'reactstrap';  
 import { observer } from 'mobx-react';
 const schema = {
@@ -15,8 +15,8 @@ const schema = {
     } 
 }; 
 const AddProduct = ({mode, open, handleClose, initial_data}) => {
-  const deptStore = useContext(BranchStore);
-  const { createProduct, updateProduct, sending } = deptStore;  
+  const prodStore = useContext(ProductStore);
+  const { createProduct, updateProduct, sending } = prodStore;  
   const [title, setTitle]  = useState('Add Product');
     const [formState, setFormState] = useState({ 
      values: {  id: '', name: '',  email: '', phone: '',  address: ''},
