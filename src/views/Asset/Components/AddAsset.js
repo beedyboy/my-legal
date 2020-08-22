@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext, Fragment } from 'react'
 import dataHero from 'data-hero';
-import BranchStore from '../../../stores/BranchStore';
+import AssetStore from '../../../stores/AssetStore';
 import{ Button, Card, CardBody, FormGroup, Input, Label, Modal, ModalBody, ModalHeader, ModalFooter, Row, Col } from 'reactstrap';  
 import { observer } from 'mobx-react';
 const schema = {
@@ -93,7 +93,7 @@ const handleSubmit = e => {
               <Col md="12"> 
                 <FormGroup  className={
                         hasError('name') ? 'has-danger' : null} >
-                        <Label for="deptName">Branch Name</Label>
+                        <Label for="deptName">Asset Name</Label>
                         <Input
                         type="text" 
                         value={formState.values.name || ''}
