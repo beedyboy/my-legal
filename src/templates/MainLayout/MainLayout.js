@@ -2,8 +2,7 @@ import React, { Fragment, useState } from 'react';
 import { Container, Row, Col } from 'reactstrap'; 
 import Sidebar from '../../components/Sidebar/Sidebar';
 import TopBar from '../../components/TopBar/TopBar';
-import './styles.css';
-import RSidebar from '../../components/Sidebar/RSidebar';
+import './styles.css'; 
  
 const MainLayout = props => {
     const { children } = props; 

@@ -8,14 +8,17 @@ class ProductStore {
     this.fetchProduct();   
   }
   
-     error = false;
-     filter = 'ALL';
-     close = false;
-     loading = false;
-     sending = false; 
-     sent = false; 
-     products = [] 
-
+      filter = 'ALL';
+      error = false;
+      close = false;
+      loading = false;
+      sending = false; 
+      sent = false; 
+      close = false;
+      exist = false; 
+      products = [];
+ 
+     
      setFilter = (data) => {
      	this.filter = data;
      }
@@ -32,6 +35,16 @@ class ProductStore {
         
     }); 
   }
+  
+  confirmProduct = (cat, branch,name) => {
+   try {
+    backend.get('product/' + cat + '/'+ branch + '/'+ name+ '/exist').then( res => { 
+      this.exist = res.data.exist;
+    })
+   } catch (error) {
+     console.log(error)
+   }
+  }
    toggleProduct = (data) => {
      backend.post('product/toggle', data).then(res => {
        if (res.data.status === 200) {
@@ -44,7 +57,11 @@ class ProductStore {
   createProduct = (data) => {
     try {    
       this.sending = true;
-      backend.post('product', data).then(res => { 
+      backend.post('product', data, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }).then(res => { 
         this.sending = false;
         if(res.data.status === 200) {
           this.fetchProduct(); 
@@ -102,11 +119,7 @@ class ProductStore {
     }
   }
   get info() {
-  	return {
-      total: this.products.length,
-      status: this.products.filter(cat => cat.status).length,
-      // notstatus: this.products.filter(cat => !cat.status).length,
-    }
+  	return Object.keys(this.products || {}).map(key => ({...this.products[key]}));
    
   }
 
@@ -124,6 +137,7 @@ decorate(ProductStore, {
   fetchProduct: action,
   removeProduct: action,
   toggleProduct: action,
+  confirmProduct: action,
   setFilter: action,
   filteredProduct: computed,
   info: computed,

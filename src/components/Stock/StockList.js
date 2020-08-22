@@ -1,38 +1,30 @@
 import React, { Fragment } from 'react'; 
-import DataTable, { createTheme } from 'react-data-table-component';
+import DataTable from 'react-data-table-component';
 import { Row, Col,  Button } from 'reactstrap';  
-import {Link} from 'react-router-dom'; 
+ 
  
 // const data = [{ id: 1, title: 'Conan the Barbarian', year: '1982' } ];
-const ProductList = ({data, setMode, removeData, rowData, toggle}) => {
+const StockList = ({data, setMode, removeData, rowData, toggle}) => {
   
-const columns = [ 
-  {
-    name: 'Image',
-    sortable: true,
-    cell: row => <div>
-     <img src={row.images} alt={row.product_name} style={{width: '100%', height: '30'}} />
-     </div>
-  },
+const columns = [
   {
     name: 'Name',
-    selector: 'product_name',
+    selector: 'stock_name',
     sortable: true,
   },
   {
-    name: 'Category',
-    selector: 'catName',
+    name: 'Quantity',
+    selector: 'quantity',
     sortable: true,
   },
   {
-    name: 'Branch',
-    selector: 'branchName',
+    name: 'Price',
+    selector: 'price',
     sortable: true,
   },
   {
-    name: 'Description',
-    selector: 'description',
-    wrap: true,
+    name: 'Expiry',
+    selector: 'expiry',
     sortable: true,
   },
   {
@@ -48,12 +40,8 @@ const columns = [
     <Button size="sm" color="warning" onClick={e => editData(e, row)}>
       <i className="fa fa-edit"></i>
       </Button>{' '}
-    <Link to={`/product/${row.id}`} className="danger">
-      <Button color="info" size="sm"><i className="fa fa-eye"></i></Button>
-      </Link>  
-      {' '}
     <Button size="sm" color="danger" 
-    onClick={(e) =>{ if(window.confirm('Delete the item?')){deleteData( e, row.id)};}}>
+    onClick={(e) =>{ if(window.confirm('Delete this stock?')){deleteData( e, row.id)};}}>
       <i className="fa fa-trash"></i>
       </Button>  
      </div>
@@ -73,11 +61,11 @@ const deleteData = id => {
         <Row>
           <Col md="12">
              <DataTable
-                title="Product List"
-                columns={columns}
-                data={data}
-                pagination={true}
-                theme="solarized"
+      title="Asset List"
+      columns={columns}
+      data={data}
+      pagination={true}
+      theme="solarized"
     />
     
           </Col>
@@ -88,4 +76,4 @@ const deleteData = id => {
 }
 
 
-export default ProductList;
+export default StockList;

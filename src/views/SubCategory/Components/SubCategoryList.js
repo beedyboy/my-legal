@@ -2,37 +2,16 @@ import React, { Fragment,  useMemo } from 'react';
 import DataTable, { createTheme } from 'react-data-table-component';
 import { Row, Col,  Button } from 'reactstrap';  
  
-createTheme('solarized', {
-  text: {
-    primary: '#268bd2',
-    secondary: '#2aa198',
-  },
-  background: {
-    default: '#002b36',
-  },
-  context: {
-    background: '#cb4b16',
-    text: '#FFFFFF',
-  },
-  divider: {
-    default: '#073642',
-  },
-  action: {
-    button: 'rgba(0,0,0,.54)',
-    hover: 'rgba(0,0,0,.08)',
-    disabled: 'rgba(0,0,0,.12)',
-  },
-});
 const SubCatList = ({data, setMode, removeData, rowData, toggle}) => {
   const columns = useMemo(() => [
     {
       name: 'Category', 
-      selector: 'cat_Name',
+      selector: 'catName',
       sortable: true
     },
     {
       name: 'Name', 
-      selector: 'name',
+      selector: 'sub_name',
       sortable: true
     },
     {
@@ -53,7 +32,7 @@ const SubCatList = ({data, setMode, removeData, rowData, toggle}) => {
         <i className="fa fa-edit"></i>
         </Button>{' '}
       <Button size="sm" color="danger"
-       onClick={(e) =>{ if(window.confirm('Delete this sub?')){deleteData(e, row.id)};}}>
+       onClick={(e) =>{ if(window.confirm('Delete '+ row.sub_name +' ?')){deleteData(e, row.id)};}}>
         <i className="fa fa-trash"></i>
         </Button> 
        </div>

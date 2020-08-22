@@ -26,8 +26,8 @@ class AssetStore {
         this.loading = false; 
       }); 
   }
-  confirmName = (data) => {
-    backend.get('asset/' + data + '/exist').then( res => { 
+  confirmAsset = (sub, title) => {
+    backend.get('asset/' + sub + '/'+ title + '/exist').then( res => { 
       this.exist = res.data.exist;
     })
   }
@@ -100,7 +100,7 @@ decorate(AssetStore, {
   info: computed, 
   loading: observable,
   assets: observable, 
-  confirmName: action,
+  confirmAsset: action,
   createAsset: action,
   updateAsset: action,
   removeAsset: action,

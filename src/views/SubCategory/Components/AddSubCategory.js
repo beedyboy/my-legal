@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext, Fragment } from 'react'
+import React, { useEffect, useState, Fragment, useContext } from 'react'
 import dataHero from 'data-hero'; 
 import{ Button, Card, CardBody, FormGroup, FormFeedback, Input, Label, Modal, ModalBody, ModalHeader, ModalFooter, Row, Col } from 'reactstrap';  
 import { observer } from 'mobx-react'; 
@@ -38,7 +38,7 @@ const AddSubCategory = ({mode, open, handleClose, initial_data}) => {
       ...state, 
     values:  {
       ...state.values, id: data && data.id,
-      name: data && data.name,
+      name: data && data.sub_name,
       cat_id: data && data.cat_id, 
       description: data && data.description
       }

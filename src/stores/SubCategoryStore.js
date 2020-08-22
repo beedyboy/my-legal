@@ -36,10 +36,10 @@ class SubCategoryStore {
   createSubCat = (data) => {
     try {    
       this.sending = true;
-      backend.post('category', data).then(res => { 
+      backend.post('subcategory', data).then(res => { 
         this.sending = false;
         if(res.data.status === 200) {
-          this.fetchCategory(); 
+          this.fetchSubCategory(); 
           this.close = true;   
           Beedy('success', res.data.message) ;
          } else {
@@ -85,7 +85,7 @@ class SubCategoryStore {
    }
   }
   get info() {
-    return  Object.keys(this.category || {}).map(key => ({...this.category[key], uid: key}));
+    return  Object.keys(this.subcategory || {}).map(key => ({...this.subcategory[key], uid: key}));
   }
 
 } 
@@ -97,6 +97,7 @@ decorate( SubCategoryStore, {
   loading: observable,
   exist: observable,
   subcategory: observable, 
+  fetchSubCategory: action,
   confirmName: action,
   createSubCat: action,
   updateSubCat: action,

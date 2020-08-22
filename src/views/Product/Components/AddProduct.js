@@ -1,25 +1,36 @@
 import React, { useEffect, useState, useContext, Fragment } from 'react'
 import dataHero from 'data-hero';
 import ProductStore from '../../../stores/ProductStore';
-import{ Button, Card, CardBody, FormGroup, Input, Label, Modal, ModalBody, ModalHeader, ModalFooter, Row, Col } from 'reactstrap';  
+import{ Button, Card, CardBody, FormGroup, FormFeedback, Input, Label, Modal, ModalBody, ModalHeader, ModalFooter, Row, Col } from 'reactstrap';  
 import { observer } from 'mobx-react';
+import BranchStore from '../../../stores/BranchStore';
+import CategoryStore from '../../../stores/CategoryStore';
 const schema = {
   name:  {
       isEmpty: false,
       min: 1,
       message: 'A valid product name is required'
     },
-    address:  {
-      min: 5,
-      message: 'Address is required'
+    cat_id:  {
+      isEmpty: false,
+      message: 'Category is required'
+    } ,
+    branch_id:  {
+      isEmpty: false,
+      message: 'Branch is required'
     } 
 }; 
 const AddProduct = ({mode, open, handleClose, initial_data}) => {
+  const branchStore = useContext(BranchStore);
+  const catStore = useContext(CategoryStore);
   const prodStore = useContext(ProductStore);
-  const { createProduct, updateProduct, sending } = prodStore;  
+  const { info:branches } = branchStore;
+  const { info:categories } = catStore;    
+  const { createProduct, updateProduct, confirmProduct, sending, exist, close } = prodStore;  
   const [title, setTitle]  = useState('Add Product');
+   const [uploadImage, setUploadImage] = useState({ preview: '', file: 'choose file'} );
     const [formState, setFormState] = useState({ 
-     values: {  id: '', name: '',  email: '', phone: '',  address: ''},
+     values: {  id: '', name: '',  cat_id: '', branch_id: '',  description: ''},
       touched: {},
         errors: {}
       });
@@ -34,9 +45,9 @@ const AddProduct = ({mode, open, handleClose, initial_data}) => {
     values:  {
       ...state.values, id: data && data.id,
       name: data && data.name,
-      email: data && data.email,
-      phone: data && data.phone, 
-      address: data && data.address  }
+      cat_id: data && data.cat_id,
+      branch_id: data && data.branch_id, 
+      description: data && data.description  }
     })); 
     }
     } 
@@ -44,7 +55,7 @@ const AddProduct = ({mode, open, handleClose, initial_data}) => {
       setFormState(prev => ({
         ...prev,
       values: { 
-        ...prev.values, id: '', name: '',  email: '', phone: '',  address: ''}
+        ...prev.values, id: '', name: '',  cat_id: '', branch_id: '',  description: ''}
       }))
     }
   }, [initial_data, mode]);
@@ -54,9 +65,15 @@ const AddProduct = ({mode, open, handleClose, initial_data}) => {
       ...formState,
       isValid: errors.name.error ?  false: true,
       errors: errors || {}
-    }));
+    })); 
+   
   }, [formState.values]);
-     
+  useEffect(() => {
+    if(close === true) {
+     resetForm();
+     handleClose(); 
+    } 
+  }, [close]) 
 const handleChange = event => {
   event.persist();  
   setFormState(formState => ({
@@ -70,14 +87,55 @@ const handleChange = event => {
       [event.target.name]: true
     }
   })); 
-   
+  if((event.target.name === 'name' || event.target.name === 'branch_id' || event.target.name === 'cat_id') && (formState.values.cat_id !== '' && formState.values.branch_id !== '' && formState.values.name.length > 0)) {
+    confirmProduct(formState.values.cat_id, formState.values.branch_id, formState.values.name);
+  }
 }
 const hasError = field =>
       formState.touched[field] && formState.errors[field].error;  
 
+
+const readURI = (e) => {
+  e.persist(); 
+    let reader = new FileReader();
+    let image = e.target.files[0];
+    reader.onloadend = () => { 
+      setUploadImage( state =>  ({
+        ...state, 
+            preview: reader.result,
+            file: image 
+      }) );
+    }
+   reader.readAsDataURL(image);
+}
+// const buildImgTag = () => {
+
+//   return <div className="photo-container" style={{overflowX: 'auto'}}>
+//   { 
+//     imageArray.map(imageURI => 
+//     (
+//       <div className={styles.beedy}>
+//       <div className={styles.imagePreview}>
+//       <img className="photo-uploaded" key={shortId.generate()} src={imageURI} alt="Photo uploaded"/>
+//       </div>
+//       </div> 
+//       )) 
+//   }
+//   </div>
+// } 
+const resetForm = () => {
+  // values: {  id: '', name: '',  cat_id: '', branch_id: '',  description: ''},
+    // 
+}
 const handleSubmit = e => {
     e.preventDefault();
-    mode === 'Add'? createProduct(formState.values) : updateProduct(formState.values);
+     const fd = new FormData();  
+    fd.append('image', uploadImage.file); 
+    fd.append('name', formState.values.name);
+    fd.append('cat_id', formState.values.cat_id);
+    fd.append('branch_id', formState.values.branch_id);
+    fd.append('description', formState.values.description);
+    mode === 'Add'? createProduct(fd) : updateProduct(formState.values);
   }
   const closeBtn = <Button className="close" onClick={handleClose}>&times;</Button>;
     return (
@@ -89,10 +147,72 @@ const handleSubmit = e => {
     <ModalBody>
     <Card>
       <CardBody> 
-          <Row>
+          <Row> 
+              
               <Col md="12"> 
-                <FormGroup  className={
-                        hasError('name') ? 'has-danger' : null} >
+              <FormGroup className={
+            hasError('cat_id') ? 'has-danger' : null} >
+            <Label for="cat_id">Category</Label>
+            <Input
+              type="select" 
+              value={formState.values.cat_id || ''}
+              name="cat_id"
+              id="cat_id"
+              invalid={hasError('cat_id')}
+              onChange={handleChange}>
+                <option value="">select</option>
+                {categories && categories.map(category => (
+                  <option value={category.id} key={category.id}>{category.name}</option>
+                ))}
+              </Input>
+              <FormFeedback>
+                {
+                hasError('cat_id') ? formState.errors.cat_id && formState.errors.cat_id.message : null
+                } 
+                    </FormFeedback>
+          </FormGroup> 
+              </Col>
+               
+              <Col md="12"> 
+              <FormGroup >
+            <Label for="branch_id">Branch</Label>
+            <Input
+              type="select" 
+              value={formState.values.branch_id || ''}
+              name="branch_id"
+              id="branch_id"
+              invalid={hasError('branch_id')}
+              onChange={handleChange}>
+                <option value="">select</option>
+                {branches && branches.map(branch => (
+                  <option value={branch.id} key={branch.id}>{branch.name}</option>
+                ))}
+              </Input>
+              <FormFeedback>
+                {
+                hasError('branch_id') ? formState.errors.branch_id && formState.errors.branch_id.message : null
+                } 
+                    </FormFeedback>
+          </FormGroup> 
+              </Col>
+         
+              <Col md="12"> 
+                <FormGroup>
+                    <Label for="image">Image</Label>
+                    <Input
+                     accept="image/*" 
+                    type="file"  
+                    name="image"
+                    id="image"
+                    onChange={readURI} 
+                    />
+               </FormGroup>  
+              </Col>
+              <Col md="12">
+              <img src={uploadImage.preview} alt="First" style={{width: '100%', height: 90}} />
+              </Col>
+              <Col md="12"> 
+                <FormGroup>
                         <Label for="deptName">Product Name</Label>
                         <Input
                         type="text" 
@@ -101,49 +221,28 @@ const handleSubmit = e => {
                         id="deptName"
                         onChange={handleChange} 
                         placeholder="Product Name"
-                        />
-                    </FormGroup>  
+                       
+                  invalid={ hasError('name') || exist}
+                  />
+                   <FormFeedback>  
+                        {  hasError('name') ? 'Name field must be a minimum of 2 characters' : null } 
+                        <p> { exist ? 'This product already exist' : null}</p>
+                    </FormFeedback>
+                 </FormGroup>  
               </Col>
-
+               
               <Col md="12"> 
                 <FormGroup>
-                    <Label for="email">Email Address</Label>
-                    <Input
-                    type="text" 
-                    value={formState.values.email || ''}
-                    name="email"
-                    id="email"
-                    onChange={handleChange} 
-                    placeholder="Email Address"
-                    />
-               </FormGroup>  
-              </Col>
-              <Col md="12"> 
-                <FormGroup>
-                    <Label for="phone">Phone Number</Label>
-                    <Input
-                    type="text" 
-                    value={formState.values.phone || ''}
-                    name="phone"
-                    id="phone"
-                    onChange={handleChange} 
-                    placeholder="Phone Number"
-                    />
-               </FormGroup>  
-              </Col>
-              <Col md="12"> 
-                <FormGroup className={
-                        hasError('address') ? 'has-danger' : null} >
-                        <Label for="address">Address</Label>
+                        <Label for="description">Description</Label>
                         <Input
                         type="textarea" 
-                        value={formState.values.address || ''}
-                        name="address"
-                        id="address"
+                        value={formState.values.description || ''}
+                        name="description"
+                        id="description"
                         onChange={handleChange} 
-                        placeholder="Enter address"
+                        placeholder="Enter description"
                         />
-                    </FormGroup>  
+                </FormGroup>  
               </Col>
           </Row>
      </CardBody>
@@ -153,8 +252,10 @@ const handleSubmit = e => {
         <Button color="secondary" onClick={handleClose}>
             Close
         </Button> {" "}
-        <Button color="primary" disabled={!formState.isValid || sending}  type="submit">
-            Save changes
+        <Button color="primary" disabled={!formState.isValid || sending || exist}  type="submit">
+        {sending ? (
+            <span> Saving data  <i className="fa fa-spinner"></i></span>
+            ): 'Save changes'}
         </Button>
     </ModalFooter>
       </form>

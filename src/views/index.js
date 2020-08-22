@@ -7,3 +7,4 @@ export { default as Category } from './Category';
 export {default as Staff} from './Staff';
 export { default as SubCategory} from './SubCategory';
 export { default  as Product} from './Product';
+export {default as ProductDetails} from './Product/Components/ProductDetails';
