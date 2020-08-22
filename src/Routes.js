@@ -11,7 +11,8 @@ import {
     Category as CategoryView,
     Staff as StaffView,
     SubCategory as SubCategoryView,
-    Product as ProductView
+    Product as ProductView,
+    Asset as AssetView
  } from './views';
 import { PrivateRoute, NormalRoute } from './HOC';
 
@@ -65,6 +66,12 @@ const Routes = () => {
                 exact
                 layout={MainLayout}
                 path="/product"
+          />
+           <PrivateRoute
+                component={AssetView}
+                exact
+                layout={MainLayout}
+                path="/asset"
           />
            <NormalRoute
                 component={SignInView}

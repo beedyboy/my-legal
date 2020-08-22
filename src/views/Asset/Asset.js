@@ -1,13 +1,13 @@
 import React, { useContext, useState, Fragment } from 'react';
 import { observer } from 'mobx-react';
 import { Card, CardBody, CardHeader, Button, Row, Col } from 'reactstrap'
-// import BranchStore from '../../stores/BranchStore';
+import AssetStore from '../../stores/AssetStore';
 import AddAsset from './Components/AddAsset';
 import AssetList from './Components/AssetList';
 
 const Asset = () => { 
-  const assetStore = useContext(AssetStore);
-  const { info:assetes, removeAsset} = AssetStore;  
+  const assetStore=  useContext(AssetStore);
+  const { info:assetes, removeAsset} = assetStore;  
   const [mode, setMode] = useState('');
   const [rowData, setRowData] = useState(); 
   const [modal, setModal] = useState(false);   
