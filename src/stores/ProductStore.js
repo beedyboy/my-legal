@@ -2,6 +2,7 @@ import { decorate, observable, action, computed } from "mobx"
 import { createContext } from "react" ;   
 import { backend } from "../services/APIService";
 import { Beedy } from "../services/Beedy"; 
+import Utility from "../services/UtilityService";
 
 class ProductStore {
   constructor() {  
@@ -12,10 +13,10 @@ class ProductStore {
       error = false;
       close = false;
       loading = false;
-      sending = false; 
-      sent = false; 
+      sending = false;  
       close = false;
       exist = false; 
+      product = [];
       products = [];
  
      
@@ -80,6 +81,30 @@ class ProductStore {
     }  
   }
 
+
+  getProductById = (id) => {  
+    try {
+   this.loading = true;
+   backend.get('product/' + id).then( res => {   
+      this.loading = false;
+      if(res.data.status === 500) {
+        Utility.logout();
+      }
+     else if(res.data.status === 200) {
+         this.product = res.data.data[0]; 
+      }
+        
+    })
+    .catch(err => {
+     console.log('getProductById', err.code);
+     console.log('getProductById', err.message);
+     console.log('getProductById', err.stack);
+    });
+  
+	} catch(e) {
+		console.error(e);
+	}
+  }
   updateProduct = (data) => {
     this.sending = true;
     backend.post('product/update', data).then(res => {
@@ -119,7 +144,7 @@ class ProductStore {
     }
   }
   get info() {
-  	return Object.keys(this.products || {}).map(key => ({...this.products[key]}));
+  	return Object.keys(this.products || {}).map(key => ({...this.products[key], uid: key}));
    
   }
 
@@ -129,12 +154,13 @@ decorate(ProductStore, {
   error: observable,
   filter: observable,
   sending: observable,
-  sent: observable,
+  product: observable,
   loading: observable,
   products: observable, 
   createProduct: action, 
   updateProduct: action, 
   fetchProduct: action,
+  getProductById: action,
   removeProduct: action,
   toggleProduct: action,
   confirmProduct: action,

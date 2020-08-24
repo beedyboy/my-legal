@@ -108,24 +108,13 @@ const readURI = (e) => {
     }
    reader.readAsDataURL(image);
 }
-// const buildImgTag = () => {
-
-//   return <div className="photo-container" style={{overflowX: 'auto'}}>
-//   { 
-//     imageArray.map(imageURI => 
-//     (
-//       <div className={styles.beedy}>
-//       <div className={styles.imagePreview}>
-//       <img className="photo-uploaded" key={shortId.generate()} src={imageURI} alt="Photo uploaded"/>
-//       </div>
-//       </div> 
-//       )) 
-//   }
-//   </div>
-// } 
+ 
 const resetForm = () => {
-  // values: {  id: '', name: '',  cat_id: '', branch_id: '',  description: ''},
-    // 
+  setFormState(prev => ({
+    ...prev,
+  values: { 
+    ...prev.values, id: '', name: '',  cat_id: '', branch_id: '',  description: ''}
+  })) 
 }
 const handleSubmit = e => {
     e.preventDefault();

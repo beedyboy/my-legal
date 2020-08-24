@@ -2,6 +2,7 @@ import { decorate, observable, action, computed } from "mobx"
 import { createContext } from "react" ;  
 import { backend } from "../services/APIService";
 import { Beedy } from "../services/Beedy"; 
+import Utility from "../services/UtilityService";
 
 class SubCategoryStore { 
   
@@ -15,6 +16,7 @@ class SubCategoryStore {
      close = false; 
      sending = false; 
      subcategory = [];
+     categorysubs = [];
 
      toggleClose = () => { 
       this.close = false;
@@ -84,8 +86,35 @@ class SubCategoryStore {
      console.log(error)
    }
   }
+  
+  getSubByCatId = (id) => {  
+    try {
+   this.loading = true;
+   backend.get('subcategory/category/' + id).then( res => {   
+      this.loading = false;
+      if(res.data.status === 500) {
+        Utility.logout();
+      }
+     else if(res.data.status === 200) {
+         this.categorysubs = res.data.data; 
+      }
+        
+    })
+    .catch(err => {
+     console.log('my_subcategory', err.code);
+     console.log('my_subcategory', err.message);
+     console.log('my_subcategory', err.stack);
+    });
+  
+	} catch(e) {
+		console.error(e);
+	}
+  }
   get info() {
     return  Object.keys(this.subcategory || {}).map(key => ({...this.subcategory[key], uid: key}));
+  }
+  get catsubs() {
+    return Object.keys(this.categorysubs || {}).map(key => ({...this.categorysubs, uid: key}))
   }
 
 } 
@@ -96,8 +125,10 @@ decorate( SubCategoryStore, {
   info: computed, 
   loading: observable,
   exist: observable,
+  categorysubs: observable,
   subcategory: observable, 
   fetchSubCategory: action,
+  getSubByCatId: action,
   confirmName: action,
   createSubCat: action,
   updateSubCat: action,

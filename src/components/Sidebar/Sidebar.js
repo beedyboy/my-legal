@@ -54,12 +54,25 @@ const Sidebar = () => {
                     <span className="title">Product</span>
                     </Link></li>
 
+                    <li><Link to="/pos">
+                    <span className="icon">
+                    <i className="fa fa-shopping-cart" aria-hidden="true"></i>
+                    </span>
+                    <span className="title">POS</span>
+                    </Link></li>
 
                     <li><Link to="/asset">
                     <span className="icon">
                     <i className="fa fa-product-hunt" aria-hidden="true"></i>
                     </span>
                     <span className="title">Asset</span>
+                    </Link></li>
+
+                    <li><Link to="/ticket">
+                    <span className="icon">
+                    <i className="fa fa-ticket" aria-hidden="true"></i>
+                    </span>
+                    <span className="title">Ticket</span>
                     </Link></li>
 
 

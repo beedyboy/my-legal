@@ -1,25 +1,44 @@
 import React, { useEffect, useState, useContext, Fragment } from 'react'
 import dataHero from 'data-hero';
 import AssetStore from '../../../stores/AssetStore';
-import{ Button, Card, CardBody, FormGroup, Input, Label, Modal, ModalBody, ModalHeader, ModalFooter, Row, Col } from 'reactstrap';  
+import{ Button, Card, CardBody, FormGroup, FormFeedback, Input, Label, Modal, ModalBody, ModalHeader, ModalFooter, Row, Col } from 'reactstrap';  
 import { observer } from 'mobx-react';
+import CategoryStore from '../../../stores/CategoryStore';
+import SubCategoryStore from '../../../stores/SubCategoryStore';
 const schema = {
   name:  {
       isEmpty: false,
       min: 1,
-      message: 'A valid asset name is required'
+      message: 'Asset name is required'
     },
-    address:  {
-      min: 5,
-      message: 'Address is required'
+    cat_id:  {
+      isEmpty: false,
+      min: 1,
+      message: 'Category is required'
+    },
+    sub_id:  {
+      isEmpty: false,
+      min: 1,
+      message: 'Sub Category is required'
+    },
+    purchased_price:  {
+      isEmpty: false,
+      message: 'Purchased price is required'
     } 
 }; 
+ 
+
 const AddAsset = ({mode, open, handleClose, initial_data}) => {
   const deptStore = useContext(AssetStore);
+  const catStore = useContext(CategoryStore);
+  const subStore = useContext(SubCategoryStore);
   const { createAsset, updateAsset, sending } = deptStore;  
+  const { info:categories } = catStore; 
+  const { getSubByCatId, catsubs, loading } = subStore;
   const [title, setTitle]  = useState('Add Asset');
+  const [subCategories, setSubCategories]  = useState([]);
     const [formState, setFormState] = useState({ 
-     values: {  id: '', name: '',  email: '', phone: '',  address: ''},
+     values: {  id: '', name: '', cat_id: '', sub_id: '',  purchased_price: '', serial: '', condition: '',  description: '', purchased_date: ''},
       touched: {},
         errors: {}
       });
@@ -33,30 +52,40 @@ const AddAsset = ({mode, open, handleClose, initial_data}) => {
       ...state, 
     values:  {
       ...state.values, id: data && data.id,
-      name: data && data.name,
-      email: data && data.email,
-      phone: data && data.phone, 
-      address: data && data.address  }
+      name: data && data.title,
+      condition: data && data.condition,
+      cat_id: data && data.cat_id,
+      sub_id: data && data.sub_id, 
+      purchased_price: data && data.purchased_price,
+      purchased_date: data && data.purchased_date,
+      serial: data && data.serial, 
+      description: data && data.description  }
     })); 
     }
     } 
-    return () => {
-      setFormState(prev => ({
-        ...prev,
-      values: { 
-        ...prev.values, id: '', name: '',  email: '', phone: '',  address: ''}
-      }))
-    }
+    // return () => {
+    //   setFormState(prev => ({
+    //     ...prev,
+    //   values: { 
+    //     ...prev.values, id: '', name: '', cat_id: '', sub_id: '',  purchased_price: '', purchased_date: '', serial: '', condition: '',  description: ''}
+    //   }))
+    // }
   }, [initial_data, mode]);
   useEffect(() => {
     const errors = dataHero.validate(schema, formState.values);  
     setFormState(formState => ({
       ...formState,
-      isValid: errors.name.error ?  false: true,
+      isValid: errors.name.error || errors.purchased_price.error ?  false: true,
       errors: errors || {}
     }));
   }, [formState.values]);
-     
+  
+  useEffect(() => {
+    setSubCategories(state => ({...state, subCategories: catsubs}))
+    // return () => {
+    //   setSubCategories([])
+    // }
+  }, [catsubs])
 const handleChange = event => {
   event.persist();  
   setFormState(formState => ({
@@ -70,7 +99,20 @@ const handleChange = event => {
       [event.target.name]: true
     }
   })); 
-   
+   if(event.target.name === 'cat_id' && event.target.value.length > 0) {
+    getSubCategory(event.target.value);
+   }
+}
+const getSubCategory = cat_id => {
+  setFormState(prev => ({
+    ...prev,
+    values: {
+      ...prev.values,
+      sub_id: ''
+    }
+  }))
+  setSubCategories([])
+  getSubByCatId(parseInt(cat_id));
 }
 const hasError = field =>
       formState.touched[field] && formState.errors[field].error;  
@@ -79,7 +121,8 @@ const handleSubmit = e => {
     e.preventDefault();
     mode === 'Add'? createAsset(formState.values) : updateAsset(formState.values);
   }
-  const closeBtn = <Button className="close" onClick={handleClose}>&times;</Button>;
+console.log({subCategories})
+const closeBtn = <Button className="close" onClick={handleClose}>&times;</Button>;
     return (
         <Fragment>
         <Modal isOpen={open} toggle={handleClose}>
@@ -93,56 +136,113 @@ const handleSubmit = e => {
               <Col md="12"> 
                 <FormGroup  className={
                         hasError('name') ? 'has-danger' : null} >
-                        <Label for="deptName">Asset Name</Label>
+                        <Label for="name">Asset Name</Label>
                         <Input
                         type="text" 
                         value={formState.values.name || ''}
                         name="name"
-                        id="deptName"
+                        id="name"
                         onChange={handleChange} 
                         placeholder="Asset Name"
                         />
                     </FormGroup>  
+              </Col> 
+              <Col md="12"> 
+              <FormGroup>
+            <Label for="cat_id">Category</Label>
+            <Input
+              type="select" 
+              value={formState.values.cat_id || ''}
+              name="cat_id"
+              id="cat_id"
+              invalid={hasError('cat_id')}
+              onChange={handleChange}>
+                <option value="">select</option>
+                {categories && categories.map(category => (
+                  <option value={category.id} key={category.id}>{category.name}</option>
+                ))}
+              </Input>
+              <FormFeedback>
+                {
+                hasError('cat_id') ? formState.errors.cat_id && formState.errors.cat_id.message : null
+                } 
+                    </FormFeedback>
+          </FormGroup> 
               </Col>
 
               <Col md="12"> 
+              <FormGroup >
+            <Label for="sub_id">Sub</Label>
+            <Input
+              type="select" 
+              value={formState.values.sub_id || ''}
+              name="sub_id"
+              id="sub_id"
+              invalid={hasError('sub_id')}
+              onChange={handleChange}>
+                <option value="">select</option>
+                {/* {subCategories && subCategories.map(sub => (
+                  <option value={sub.id} key={sub.id}>{sub.sub_name}</option>
+                ))} */}
+              </Input>
+              <FormFeedback>
+                {
+                hasError('sub_id') ? formState.errors.sub_id && formState.errors.sub_id.message : null
+                } 
+                    </FormFeedback>
+          </FormGroup> 
+              </Col>
+              <Col md="12"> 
                 <FormGroup>
-                    <Label for="email">Email Address</Label>
+                    <Label for="serial">Serial</Label>
                     <Input
                     type="text" 
-                    value={formState.values.email || ''}
-                    name="email"
-                    id="email"
+                    value={formState.values.serial || ''}
+                    name="serial"
+                    id="serial"
                     onChange={handleChange} 
-                    placeholder="Email Address"
+                    placeholder="Serial"
+                    />
+               </FormGroup>  
+              </Col>
+             
+              <Col md="12"> 
+                <FormGroup>
+                    <Label for="purchased_price">Price</Label>
+                    <Input
+                      type="text" 
+                      value={formState.values.purchased_price || ''}
+                      name="purchased_price"
+                      id="purchased_price"
+                      onChange={handleChange} 
+                      placeholder="Price"
                     />
                </FormGroup>  
               </Col>
               <Col md="12"> 
                 <FormGroup>
-                    <Label for="phone">Phone Number</Label>
+                    <Label for="purchased_date">Date</Label>
                     <Input
-                    type="text" 
-                    value={formState.values.phone || ''}
-                    name="phone"
-                    id="phone"
-                    onChange={handleChange} 
-                    placeholder="Phone Number"
+                      type="date" 
+                      value={formState.values.purchased_date || ''}
+                      name="purchased_date"
+                      id="purchased_date"
+                      onChange={handleChange} 
+                      placeholder="Purchased Date"
                     />
                </FormGroup>  
               </Col>
               <Col md="12"> 
-                <FormGroup className={
-                        hasError('address') ? 'has-danger' : null} >
-                        <Label for="address">Address</Label>
-                        <Input
-                        type="textarea" 
-                        value={formState.values.address || ''}
-                        name="address"
-                        id="address"
-                        onChange={handleChange} 
-                        placeholder="Enter address"
-                        />
+                <FormGroup>
+                    <Label for="description">Description</Label>
+                    <Input
+                      type="textarea" 
+                      value={formState.values.description || ''}
+                      name="description"
+                      id="description"
+                      onChange={handleChange} 
+                      placeholder="Enter description"
+                    />
                     </FormGroup>  
               </Col>
           </Row>

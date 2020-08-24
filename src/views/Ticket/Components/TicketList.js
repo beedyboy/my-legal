@@ -1,14 +1,16 @@
-import React, { Fragment } from 'react'; 
+import React, { Fragment, useContext } from 'react'; 
 import DataTable  from 'react-data-table-component';
 import { Row, Col,  Button } from 'reactstrap';  
+import TicketStore from '../../../stores/TicketStore';
  
- 
-// const data = [{ id: 1, title: 'Conan the Barbarian', year: '1982' } ];
-const BranchList = ({data, setMode, removeData, rowData, toggle}) => { 
+  // staff_id, ticket_date, category, priority, 
+const TicketList = () => { 
+  const tickStore = useContext(TicketStore);
+  const { info:data, removeTicket, toggleClose} = tickStore;
 const columns = [
   {
-    name: 'Name',
-    selector: 'name',
+    name: 'Subject',
+    selector: 'title',
     sortable: true,
   },
   {
@@ -17,22 +19,31 @@ const columns = [
     sortable: true,
   },
   {
-    name: 'Phone',
-    selector: 'phone',
+    name: 'ticket_date',
+    selector: 'ticket_date',
     sortable: true,
   },
   {
-    name: 'Address',
-    selector: 'address',
+    name: 'requester',
+    selector: 'requester',
+    sortable: true
+  }, 
+  {
+    name: 'Description',
+    selector: 'description',
     wrap: true,
     sortable: true,
+    hide: 'md'
   },
   {
-    name: 'Created',
-    selector: 'created_at',
+    name: 'Status',
     sortable: true,
-    right: true,
-  }, 
+    cell: row => <div>
+    <Button size="sm" color="warning" onClick={e => editData(e, row)}>
+      <i className="fa fa-edit"></i>
+      </Button> 
+     </div>
+  },
   {
     name: 'Actions',
     sortable: true,
@@ -42,7 +53,7 @@ const columns = [
       </Button>{' '}
 
     <Button size="sm" color="danger" 
-      onClick={(key) =>{ if(window.confirm('Delete this branch?')){deleteData( row.id)};}}>
+      onClick={(key) =>{ if(window.confirm('Delete this ticket?')){deleteData( row.id)};}}>
       <i className="fa fa-trash"></i>
       </Button>  
      </div>
@@ -50,12 +61,12 @@ const columns = [
 ];
 const editData = (e, row) => {
   e.persist(); 
-  setMode('Edit')
-  rowData(row);
-  toggle(true);
+  // setMode('Edit')
+  // rowData(row);
+  // toggle(true);
 };
 const deleteData = (id) => {
-  removeData(id); 
+  removeTicket(id); 
 }
  
     return (
@@ -63,7 +74,7 @@ const deleteData = (id) => {
         <Row>
           <Col md="12"> 
              <DataTable
-      title="Branch List"
+      title="Ticket List"
       columns={columns}
       data={data}
       pagination={true}
@@ -78,4 +89,4 @@ const deleteData = (id) => {
 }
 
 
-export default BranchList;
+export default TicketList;

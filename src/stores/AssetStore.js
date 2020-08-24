@@ -22,7 +22,7 @@ class AssetStore {
     fetchAsset = () => {
       this.loading = true;
       backend.get('asset').then( res => {  
-      this.assets = res.data;
+      this.assets = res.data.data;
         this.loading = false; 
       }); 
   }
@@ -97,9 +97,9 @@ decorate(AssetStore, {
   close: observable,
   error: observable,
   exist: observable,
-  info: computed, 
   loading: observable,
   assets: observable, 
+  info: computed, 
   confirmAsset: action,
   createAsset: action,
   updateAsset: action,

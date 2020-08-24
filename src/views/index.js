@@ -9,3 +9,5 @@ export { default as SubCategory} from './SubCategory';
 export { default  as Product} from './Product';
 export {default as ProductDetails} from './Product/Components/ProductDetails'; 
 export { default as Asset} from './Asset';
+export { default as POS} from './POS';
+export { default as Ticket} from './Ticket';

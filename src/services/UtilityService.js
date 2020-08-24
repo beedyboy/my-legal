@@ -21,3 +21,4 @@ const Utility = {
 }
 module.exports = Utility;
  
+// export function invoice() { return localStorage.getItem('receiptNumber')}

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-fancybox/lib/fancybox.css'
 import 'font-awesome/css/font-awesome.min.css';
+import 'react-perfect-scrollbar/dist/css/styles.css';
 import 'aos/dist/aos.css'; 
 import App from './App';
 import * as serviceWorker from './serviceWorker';
