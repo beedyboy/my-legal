@@ -1,12 +1,13 @@
 import React, { Fragment, useContext } from 'react'; 
 import DataTable  from 'react-data-table-component';
-import { Row, Col,  Button } from 'reactstrap';  
+import { Row, Col,  Button, Badge } from 'reactstrap';  
 import TicketStore from '../../../stores/TicketStore';
+import { Link } from 'react-router-dom';
  
   // staff_id, ticket_date, category, priority, 
 const TicketList = () => { 
   const tickStore = useContext(TicketStore);
-  const { info:data, removeTicket, toggleClose} = tickStore;
+  const { info:data, removeTicket} = tickStore;
 const columns = [
   {
     name: 'Subject',
@@ -19,39 +20,28 @@ const columns = [
     sortable: true,
   },
   {
-    name: 'ticket_date',
+    name: 'Ticket date',
     selector: 'ticket_date',
     sortable: true,
   },
   {
-    name: 'requester',
+    name: 'Requester',
     selector: 'requester',
     sortable: true
   }, 
   {
-    name: 'Description',
-    selector: 'description',
-    wrap: true,
-    sortable: true,
-    hide: 'md'
-  },
-  {
     name: 'Status',
     sortable: true,
-    cell: row => <div>
-    <Button size="sm" color="warning" onClick={e => editData(e, row)}>
-      <i className="fa fa-edit"></i>
-      </Button> 
-     </div>
+    cell: row => <Badge>{row.status}
+   
+     </Badge>
   },
   {
     name: 'Actions',
     sortable: true,
-    cell: row => <div>
-    <Button size="sm" color="warning" onClick={e => editData(e, row)}>
-      <i className="fa fa-edit"></i>
-      </Button>{' '}
-
+    cell: row => <div> 
+      <Link to={`/ticket/${row.id}/view`} className="btn btn-info btn-sm">View</Link>
+      {' '}
     <Button size="sm" color="danger" 
       onClick={(key) =>{ if(window.confirm('Delete this ticket?')){deleteData( row.id)};}}>
       <i className="fa fa-trash"></i>

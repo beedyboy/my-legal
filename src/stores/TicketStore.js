@@ -2,6 +2,7 @@ import { decorate, observable, action, computed } from "mobx"
 import { createContext } from "react" ; 
 import { backend } from "../services/APIService";
 import { Beedy } from "../services/Beedy"; 
+import Utility from "../services/UtilityService";
 class TicketStore {
   constructor() {
     this.fetchTicket(); 
@@ -13,15 +14,19 @@ class TicketStore {
     exist = false;
     loading = false;
     sending = false; 
+    saved = false;
+    ticket = [] 
     tickets = [] 
 
      toggleClose = () => { 
        this.close = false;
+       this.saved = false;
      }
     fetchTicket = () => {
       this.loading = true;
       backend.get('ticket').then( res => {  
-      this.tickets = res.data;
+        // console.log(res.data)
+      this.tickets = res.data.data;
         this.loading = false; 
       }); 
   }
@@ -34,7 +39,8 @@ class TicketStore {
         if(res.data.status === 200) {
           this.fetchTicket(); 
           Beedy('success', res.data.message) 
-          this.close = true;   
+          this.close = true;  
+          this.saved = true; 
         } else {
           this.error = true;
         }
@@ -68,6 +74,29 @@ class TicketStore {
    
  }
  
+ getTicketById = (id) => {  
+  try {
+ this.loading = true;
+ backend.get('ticket/' + id).then( res => {   
+    this.loading = false;
+    if(res.data.status === 500) {
+      Utility.logout();
+    }
+   else if(res.data.status === 200) {
+       this.ticket = res.data.data[0]; 
+    }
+      
+  })
+  .catch(err => {
+   console.log('getProductById', err.code);
+   console.log('getProductById', err.message);
+   console.log('getProductById', err.stack);
+  });
+
+} catch(e) {
+  console.error(e);
+}
+}
  assignTicket = (data) => {
   try {
    this.sending = true;
@@ -127,15 +156,18 @@ toggleStatus = (data) => {
 } 
 decorate(TicketStore, { 
   sending: observable,
+  saved: observable,
   close: observable,
   error: observable,
   exist: observable,
+  ticket: observable,
   info: computed, 
   loading: observable,
   tickets: observable, 
   assignTicket: action,
   createTicket: action,
   updateTicket: action,
+  getTicketById: action,
   removeTicket: action,
   toggleStatus: action,
   toggleClose: action

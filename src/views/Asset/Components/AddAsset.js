@@ -2,9 +2,10 @@ import React, { useEffect, useState, useContext, Fragment } from 'react'
 import dataHero from 'data-hero';
 import AssetStore from '../../../stores/AssetStore';
 import{ Button, Card, CardBody, FormGroup, FormFeedback, Input, Label, Modal, ModalBody, ModalHeader, ModalFooter, Row, Col } from 'reactstrap';  
+import Select from 'react-select';
 import { observer } from 'mobx-react';
 import CategoryStore from '../../../stores/CategoryStore';
-import SubCategoryStore from '../../../stores/SubCategoryStore';
+import SubCategoryStore from '../../../stores/SubCategoryStore'; 
 const schema = {
   name:  {
       isEmpty: false,
@@ -32,11 +33,13 @@ const AddAsset = ({mode, open, handleClose, initial_data}) => {
   const deptStore = useContext(AssetStore);
   const catStore = useContext(CategoryStore);
   const subStore = useContext(SubCategoryStore);
-  const { createAsset, updateAsset, sending } = deptStore;  
+  const { createAsset, updateAsset, sending, close, toggleClose } = deptStore;  
   const { info:categories } = catStore; 
-  const { getSubByCatId, catsubs, loading } = subStore;
+  const { getSubByCatId, catsubs } = subStore;
   const [title, setTitle]  = useState('Add Asset');
   const [subCategories, setSubCategories]  = useState([]);
+  // const [isClearable, setIsClearable] = useState(true);
+  // const [isLoading, setIsLoading] = useState(false);
     const [formState, setFormState] = useState({ 
      values: {  id: '', name: '', cat_id: '', sub_id: '',  purchased_price: '', serial: '', condition: '',  description: '', purchased_date: ''},
       touched: {},
@@ -48,6 +51,7 @@ const AddAsset = ({mode, open, handleClose, initial_data}) => {
       let shouldSetData =  typeof initial_data !== 'undefined' ? true : false; 
     if (shouldSetData) {  
     const data = initial_data; 
+    getSubCategory(parseInt(data.cat_id));
     setFormState(state => ({
       ...state, 
     values:  {
@@ -61,15 +65,16 @@ const AddAsset = ({mode, open, handleClose, initial_data}) => {
       serial: data && data.serial, 
       description: data && data.description  }
     })); 
+   
     }
     } 
-    // return () => {
-    //   setFormState(prev => ({
-    //     ...prev,
-    //   values: { 
-    //     ...prev.values, id: '', name: '', cat_id: '', sub_id: '',  purchased_price: '', purchased_date: '', serial: '', condition: '',  description: ''}
-    //   }))
-    // }
+    return () => {
+      setFormState(prev => ({
+        ...prev,
+      values: { 
+        ...prev.values, id: '', name: '', cat_id: '', sub_id: '',  purchased_price: '', purchased_date: '', serial: '', condition: '',  description: ''}
+      }))
+    }
   }, [initial_data, mode]);
   useEffect(() => {
     const errors = dataHero.validate(schema, formState.values);  
@@ -81,11 +86,21 @@ const AddAsset = ({mode, open, handleClose, initial_data}) => {
   }, [formState.values]);
   
   useEffect(() => {
-    setSubCategories(state => ({...state, subCategories: catsubs}))
-    // return () => {
-    //   setSubCategories([])
-    // }
+    setSubCategories(catsubs)
+    return () => {
+      setSubCategories([])
+    } 
   }, [catsubs])
+  
+  useEffect(() => {
+    if(close === true) {
+     resetForm();
+     handleClose(); 
+    }
+    return() => {
+      toggleClose()
+    }
+  }, [close])  
 const handleChange = event => {
   event.persist();  
   setFormState(formState => ({
@@ -99,11 +114,24 @@ const handleChange = event => {
       [event.target.name]: true
     }
   })); 
-   if(event.target.name === 'cat_id' && event.target.value.length > 0) {
+   if(event.target.name === 'cat_id') {
     getSubCategory(event.target.value);
    }
 }
-const getSubCategory = cat_id => {
+const handleSubCategory = e => {  
+ if(e !== null) {
+  setFormState(state => ({
+    ...state,
+    values: {
+      ...state.values,
+      sub_id: e.value 
+    },
+    touched: {
+      ...state.touched,
+    sub_id: true
+  }
+  }));
+ } else {
   setFormState(prev => ({
     ...prev,
     values: {
@@ -111,8 +139,22 @@ const getSubCategory = cat_id => {
       sub_id: ''
     }
   }))
+ }
+}
+const getSubCategory = cat_id => {  
+  console.log({cat_id})
   setSubCategories([])
-  getSubByCatId(parseInt(cat_id));
+  setFormState(prev => ({
+    ...prev,
+    values: {
+      ...prev.values,
+      sub_id: ''
+    }
+  }))
+  if( cat_id.length !== '') {
+    getSubByCatId(parseInt(cat_id));
+  }
+  
 }
 const hasError = field =>
       formState.touched[field] && formState.errors[field].error;  
@@ -121,8 +163,21 @@ const handleSubmit = e => {
     e.preventDefault();
     mode === 'Add'? createAsset(formState.values) : updateAsset(formState.values);
   }
-console.log({subCategories})
+const resetForm = () => {
+  setFormState(formState => ({
+    ...formState,
+    values: {
+      ...formState.values,
+      id: '', name: '', cat_id: '', sub_id: '',  purchased_price: '', serial: '', condition: '',  description: '', purchased_date: ''
+    },
+    touched: {
+      ...formState.touched,
+      name: false, cat_id: false, sub_id: false,  purchased_price: false, serial: false, condition: false,  description: false, purchased_date: false
+    }
+  })); 
+}
 const closeBtn = <Button className="close" onClick={handleClose}>&times;</Button>;
+ 
     return (
         <Fragment>
         <Modal isOpen={open} toggle={handleClose}>
@@ -131,7 +186,7 @@ const closeBtn = <Button className="close" onClick={handleClose}>&times;</Button
       
     <ModalBody>
     <Card>
-      <CardBody> 
+      <CardBody>  
           <Row>
               <Col md="12"> 
                 <FormGroup  className={
@@ -170,26 +225,23 @@ const closeBtn = <Button className="close" onClick={handleClose}>&times;</Button
           </FormGroup> 
               </Col>
 
-              <Col md="12"> 
+              <Col md="12">  
               <FormGroup >
-            <Label for="sub_id">Sub</Label>
-            <Input
-              type="select" 
-              value={formState.values.sub_id || ''}
-              name="sub_id"
-              id="sub_id"
-              invalid={hasError('sub_id')}
-              onChange={handleChange}>
-                <option value="">select</option>
-                {/* {subCategories && subCategories.map(sub => (
-                  <option value={sub.id} key={sub.id}>{sub.sub_name}</option>
-                ))} */}
-              </Input>
-              <FormFeedback>
+            <Label for="sub_id">Sub</Label> 
+               <Select
+                 placeholder="Select Option"
+                 name="sub_id"
+                 value={subCategories.filter(obj => obj.value === formState.values.sub_id) || ''} 
+                 onChange={handleSubCategory}  
+                 isLoading={subCategories && subCategories.length > 0 ? false: true}
+                 isClearable={true}
+                 options={subCategories} 
+             />
+              <span className={ hasError('sub_id') ? 'text-danger' : null}>
                 {
                 hasError('sub_id') ? formState.errors.sub_id && formState.errors.sub_id.message : null
-                } 
-                    </FormFeedback>
+                }  
+            </span>
           </FormGroup> 
               </Col>
               <Col md="12"> 
@@ -254,7 +306,9 @@ const closeBtn = <Button className="close" onClick={handleClose}>&times;</Button
             Close
         </Button> {" "}
         <Button color="primary" disabled={!formState.isValid || sending}  type="submit">
-            Save changes
+        {sending ? (
+            <span> Saving data  <i className="fa fa-spinner"></i></span>
+            ): 'Save changes'}
         </Button>
     </ModalFooter>
       </form>

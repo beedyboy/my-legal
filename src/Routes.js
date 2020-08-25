@@ -89,8 +89,7 @@ const Routes = () => {
                 path="/pos"
           />
            <PrivateRoute
-                component={TicketView}
-                exact
+                component={TicketView} 
                 layout={MainLayout}
                 path="/ticket"
           />

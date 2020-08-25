@@ -1,10 +1,13 @@
 import React, { useContext, useState, Fragment } from 'react';
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, Link } from 'react-router-dom'
 import { observer } from 'mobx-react';
 import { Card, CardBody, CardHeader, Button, Row, Col, Collapse } from 'reactstrap' 
 import TicketStore from '../../stores/TicketStore';
 import TicketHome from './Components/TicketHome';
 import TicketList from './Components/TicketList';
+import CreateTicket from './Components/CreateTicket';
+import TicketSummary from './Components/TicketSummary';
+import TicketDetails from './Components/TicketDetails';
 
 const Ticket = () => { 
   const tickStore = useContext(TicketStore);
@@ -12,17 +15,6 @@ const Ticket = () => {
   const [collapse, setCollapse] = useState(false);
   const [status, setStatus] = useState('Closed');
   const toggle = () => setCollapse(!collapse);
-  // const [mode, setMode] = useState('');
-  // const [rowData, setRowData] = useState(); 
-  // const [modal, setModal] = useState(false);   
-  // const handleClose = () => {
-  //   setModal(!modal);  
-  //   toggleClose()
-  // }
-  // const createTicket = () => {
-  //   setModal(true); 
-  //   setMode('Add'); 
-  // }  
     return( 
       <Fragment>
         <Row>
@@ -30,14 +22,17 @@ const Ticket = () => {
             <Card>
               <CardBody>
               <div>
-                <Button color="primary" onClick={toggle} style={{ marginBottom: '1rem' }}>Your Recent Tickets</Button>
-                <h5>Current state: {status}</h5>
+                <Button color="warning" onClick={toggle} style={{ marginBottom: '1rem' }}>
+                  Your Recent Tickets 
+                  </Button> 
                 <Collapse
                   isOpen={collapse} 
                 >
                   <Card>
                     <CardBody>
-                     #id title 
+                    {tickets && tickets.slice(0,5).map((ticket) => (
+                       <TicketSummary key={ticket.id} row={ticket} />
+                    ))}
                     </CardBody>
                   </Card>
                 </Collapse>
@@ -46,9 +41,15 @@ const Ticket = () => {
             </Card>
           </Col>
           <Col md="9">
+            <div className="my-3">
+            <Link to="/ticket/create" className="btn btn-primary">Create Ticket</Link>{" "}
+            <Link to="/ticket/list" className="btn btn-info">View Ticket</Link>
+            </div>
             <Switch>
-              <Route exact path="/" component={TicketHome} />
-              <Route exact path="/list" component={TicketList} />
+              <Route exact path="/ticket/" component={TicketHome} />
+              <Route exact path="/ticket/list" component={TicketList} />
+              <Route exact path="/ticket/create" component={CreateTicket} />
+              <Route exact path="/ticket/:id/view" component={TicketDetails} />
             </Switch>
           </Col>
         </Row>

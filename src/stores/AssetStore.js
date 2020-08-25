@@ -41,11 +41,12 @@ class AssetStore {
           Beedy('success', res.data.message) 
           this.close = true;   
         } else {
-          this.error = true;
+          Beedy('error', res.data.message) 
         }
         
       })  
     } catch(err) {
+      this.sending = false;
       if(err.response.status === 500) {
         console.log("There was a problem with the server");
       } else {

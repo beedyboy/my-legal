@@ -17,12 +17,12 @@ const columns = [
   {
     name: 'Name',
     selector: 'product_name',
-    sortable: true,
+    sortable: true 
   },
   {
     name: 'Category',
     selector: 'catName',
-    sortable: true,
+    sortable: true
   },
   {
     name: 'Branch',
@@ -34,6 +34,7 @@ const columns = [
     selector: 'description',
     wrap: true,
     sortable: true,
+    hide: 'sm'
   },
   {
     name: 'Created',

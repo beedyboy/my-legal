@@ -92,13 +92,7 @@ class SubCategoryStore {
    this.loading = true;
    backend.get('subcategory/category/' + id).then( res => {   
       this.loading = false;
-      if(res.data.status === 500) {
-        Utility.logout();
-      }
-     else if(res.data.status === 200) {
-         this.categorysubs = res.data.data; 
-      }
-        
+      this.categorysubs = res.data 
     })
     .catch(err => {
      console.log('my_subcategory', err.code);
@@ -114,7 +108,12 @@ class SubCategoryStore {
     return  Object.keys(this.subcategory || {}).map(key => ({...this.subcategory[key], uid: key}));
   }
   get catsubs() {
-    return Object.keys(this.categorysubs || {}).map(key => ({...this.categorysubs, uid: key}))
+    
+    return Object.keys(this.categorysubs || {}).map(key => (
+      {
+        value: this.categorysubs[key].id,
+        label: this.categorysubs[key].sub_name}
+      )); 
   }
 
 } 
@@ -123,6 +122,7 @@ decorate( SubCategoryStore, {
   close: observable,
   error: observable,
   info: computed, 
+  catsubs: computed,
   loading: observable,
   exist: observable,
   categorysubs: observable,

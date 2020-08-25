@@ -1,7 +1,19 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
 import { Link } from "react-router-dom"; 
 
 const Sidebar = () => {
+    const [superMenu, setSuperMenu] = useState({
+        inventory: false,
+        laptop: false,
+        settings: false
+    });
+const getSuper = (item, value) => {
+
+    setSuperMenu(state => ({
+        ...state,
+        [item]: !value
+    }));
+}
     return (
         <Fragment> 
                 <ul className="sidebar_menu">
@@ -12,13 +24,56 @@ const Sidebar = () => {
                         <span className="title">Dashboard</span>
                         </Link></li>
 
-                    <li><Link to="/branch">
+                      
+                  <li><Link to="/asset">
                     <span className="icon">
-                        <i className="fa fa-industry" aria-hidden="true"></i>
-                        </span>
-                    <span className="title">Branch</span>
-                    </Link></li>
+                    <i className="fa fa-product-hunt" aria-hidden="true"></i>
+                    </span>
+                    <span className="title">Asset</span>
+                    </Link></li> 
+                    
 
+                    <li><Link to="/staff">
+                    <span className="icon">
+                    <i className="fa fa-group" aria-hidden="true"></i>
+                    </span>
+                    <span className="title">Staff</span>
+                    </Link></li> 
+
+                    <li className="super"> 
+                        <span className="icon">
+                    <i className="fa fa-shopping-cart" aria-hidden="true"></i>
+                    </span>
+                    <span className="title" onClick={e => getSuper('inventory', superMenu.inventory)} >Inventory<i className="fa fa-chevron-down caret"></i></span>
+                        <ul className={`submenu ${superMenu.inventory ? ' show': ''}`}>
+                            <li><Link to="/product">Product</Link></li>
+                            <li><Link to="/pos">pos</Link></li> 
+                        </ul> 
+                  </li> 
+
+                    <li><Link to="/ticket">
+                    <span className="icon">
+                    <i className="fa fa-ticket" aria-hidden="true"></i>
+                    </span>
+                    <span className="title">Ticket</span>
+                    </Link></li>
+                    
+                    <li className="super"> 
+                        <span className="icon">
+                    <i className="fa fa-cog" aria-hidden="true"></i>
+                    </span>
+                    <span className="title" onClick={e => getSuper('settings', superMenu.settings)} >Settings<i className="fa fa-chevron-down caret"></i></span>
+                        <ul className={`submenu ${superMenu.settings ? ' show': ''}`}>
+                        <li><Link to="/branch">Branch </Link></li>
+                        <li><Link to="/department">Department </Link></li>
+                         <li><Link to="/category">Category </Link></li>
+                            <li><Link to="/subcategory">Sub Category</Link></li> 
+                        </ul> 
+                  </li>
+ 
+                  
+
+                  {/* 
                     <li><Link to="/category">
                     <span className="icon">
                     <i className="fa fa-tags" aria-hidden="true"></i>
@@ -39,42 +94,7 @@ const Sidebar = () => {
                     </span>
                     <span className="title">Department</span>
                     </Link></li>
-
-                    <li><Link to="/staff">
-                    <span className="icon">
-                    <i className="fa fa-group" aria-hidden="true"></i>
-                    </span>
-                    <span className="title">Staff</span>
-                    </Link></li> 
-
-                    <li><Link to="/product">
-                    <span className="icon">
-                    <i className="fa fa-product-hunt" aria-hidden="true"></i>
-                    </span>
-                    <span className="title">Product</span>
-                    </Link></li>
-
-                    <li><Link to="/pos">
-                    <span className="icon">
-                    <i className="fa fa-shopping-cart" aria-hidden="true"></i>
-                    </span>
-                    <span className="title">POS</span>
-                    </Link></li>
-
-                    <li><Link to="/asset">
-                    <span className="icon">
-                    <i className="fa fa-product-hunt" aria-hidden="true"></i>
-                    </span>
-                    <span className="title">Asset</span>
-                    </Link></li>
-
-                    <li><Link to="/ticket">
-                    <span className="icon">
-                    <i className="fa fa-ticket" aria-hidden="true"></i>
-                    </span>
-                    <span className="title">Ticket</span>
-                    </Link></li>
-
+ */}
 
                 </ul>
             

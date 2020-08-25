@@ -41,12 +41,13 @@ const columns = [
     selector: 'description',
     wrap: true,
     sortable: true,
+    hide: 'md'
   },
   {
     name: 'Created',
     selector: 'created_at',
     sortable: true,
-    right: true,
+    hide: 'md',
   }, 
   {
     name: 'Actions',
