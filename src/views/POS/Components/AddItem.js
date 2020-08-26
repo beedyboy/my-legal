@@ -54,7 +54,7 @@ const AddItem = ({data, open, mode, toggle, initial_data}) => {
       ...state, 
     values:  {
       ...state.values,
-       stock_id: data && data.stock_id,
+       stock_id: data && data.id,
       available: data && data.quantity, 
       item_price: data && data.price,
       order_no: Utility.get('receiptNumber')

@@ -7,7 +7,7 @@ import Utility from "../services/UtilityService";
 
 class OrderStore { 
   constructor() {
-    this.cartOrder();
+    this.cartOrder(); 
   }
      error = false;
      deleting = false;
@@ -24,11 +24,29 @@ class OrderStore {
       this.close = false;
     }
   
-    generateOrderNo = () => {
-     const receiptNumber =  Math.ceil(Math.random() * 10)
-    Utility.save('receiptNumber', receiptNumber);
-
+    generateOrderNo = () => { 
+     const active = Utility.get('receiptNumber'); 
+     if (active === undefined || active === null) {
+      var array = new Uint32Array(8);
+      window.crypto.getRandomValues(array); 
+      var number =''
+      for (var i = 0; i < array.length; i++) {
+          number = array[i]
+      } 
+      Utility.save('receiptNumber', number);
+     } 
     }
+
+    startNewOrder = () => {
+      var array = new Uint32Array(8);
+        window.crypto.getRandomValues(array); 
+        var number =''
+        for (var i = 0; i < array.length; i++) {
+            number = array[i]
+        } 
+      Utility.save('receiptNumber', number);
+     }
+
 
   productStockByName = (name) => {  
     try {
@@ -84,23 +102,29 @@ class OrderStore {
     
   cartOrder = () => {  
     try {
-    const order = Utility.get('receiptNumber');
-   backend.get('order/cart/' + order).then( res => {   
-      this.loading = false;
-      if(res.data.status === 500) {
-        Utility.logout();
-      }
-     else if(res.data.status === 200) {
-      this.close = true;
-         this.cart = res.data.data; 
-      }
-        
-    })
-    .catch(err => {
-     console.log('my_stock', err.code);
-     console.log('my_stock', err.message);
-     console.log('my_stock', err.stack);
-    });
+      const receiptNumber =  Math.ceil(Math.random() * 10)
+     const active = Utility.get('receiptNumber'); 
+     if (active === undefined || active === null) {
+      this.startNewOrder()
+     } else {
+      const order = Utility.get('receiptNumber');
+      backend.get('order/cart/' + order).then( res => {   
+         this.loading = false;
+         if(res.data.status === 500) {
+           Utility.logout();
+         }
+        else if(res.data.status === 200) {
+         this.close = true;
+            this.cart = res.data.data; 
+         }
+           
+       })
+       .catch(err => {
+        console.log('my_stock', err.code);
+        console.log('my_stock', err.message);
+        console.log('my_stock', err.stack);
+       });
+     } 
   
 	} catch(e) {
 		console.error(e);
@@ -213,6 +237,7 @@ decorate(OrderStore, {
   pos: observable,
   productStockByName: action,
   generateOrderNo: action,
+  startNewOrder: action,
   createOrder: action,
   updateOrder: action,
   cartOrder: action,

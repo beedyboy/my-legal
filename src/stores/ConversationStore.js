@@ -11,12 +11,16 @@ class ConversationStore {
      deleting = false;
      sending = false;  
      loading = false; 
-     sending = false; 
+     close = true; 
      conversations = [];  
      
+     toggleClose = () => {
+       this.close = !this.close;
+     }
     
     createConversation = (data) => {  
       try {
+        this.close = false;
         this.sending = true;
         backend.post('conversation', data).then(res => {
           this.sending = false;
@@ -24,6 +28,7 @@ class ConversationStore {
             Utility.logout();
           }
          else  if(res.data.status === 200) { 
+           this.close = true
           this.fetchConversation(data.ticket_id);
           Beedy('success', res.data.message);
          }
@@ -118,6 +123,7 @@ class ConversationStore {
 }  
   
 decorate(ConversationStore, { 
+  close: observable,
   sending: observable,
   deleting: observable,
   sending: observable,
