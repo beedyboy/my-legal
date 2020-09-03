@@ -7,7 +7,7 @@ import AssetList from './Components/AssetList';
 
 const Asset = () => { 
   const assetStore=  useContext(AssetStore);
-  const { info:assets, removeAsset} = assetStore;  
+  const { info:assets, removeAsset, deleting} = assetStore;  
   const [mode, setMode] = useState('');
   const [rowData, setRowData] = useState(); 
   const [modal, setModal] = useState(false);   
@@ -30,11 +30,11 @@ const Asset = () => {
           
            </Col>
            <Col md={{ size: 3, offset: 4 }} sm="12"> 
-           <Button color="secondary" className='float-right' onClick={createAsset}
-           >Add Asset</Button>{' '}
+           {/* <Button color="secondary" className='float-right' onClick={createAsset}
+           >Add Asset</Button>{' '} */}
            </Col>
            <Col md="12" sm="12" className='mt-2'>
-             <AssetList  data={assets} setMode={setMode} toggle={handleClose} removeData={removeAsset} rowData={setRowData} /> 
+             <AssetList deleting={deleting} createAsset={createAsset} data={assets} setMode={setMode} toggle={handleClose} removeData={removeAsset} rowData={setRowData} /> 
            </Col>
          </Row>
          <AddAsset mode={mode} open={modal} handleClose={handleClose} initial_data={rowData} /> 

@@ -69,9 +69,9 @@ class OrderStore {
         
     })
     .catch(err => {
-     console.log('my_stock', err.code);
-     console.log('my_stock', err.message);
-     console.log('my_stock', err.stack);
+     console.log('productStockByName', err.code);
+     console.log('productStockByName', err.message);
+     console.log('productStockByName', err.stack);
     });
   
 	} catch(e) {
@@ -130,9 +130,9 @@ class OrderStore {
            
        })
        .catch(err => {
-        console.log('my_stock', err.code);
-        console.log('my_stock', err.message);
-        console.log('my_stock', err.stack);
+        console.log('cartOrder', err.code);
+        console.log('cartOrder', err.message);
+        console.log('cartOrder', err.stack);
        });
      } 
   
@@ -206,8 +206,31 @@ class OrderStore {
      console.log('removeOrder', err.stack);
     });
   }
-
+      
+  emptyCart = () => {  
+    try {
+       const order = Utility.get('receiptNumber');
+      backend.get('order/cart/' + order + '/empty').then( res => {   
+         this.loading = false;
+         if(res.data.status === 500) {
+           Utility.logout();
+         }
+        else if(res.data.status === 200) {
+          this.cartOrder();
+          Beedy('success', res.data.message)
+         }
+           
+       })
+       .catch(err => {
+        console.log('emptyCart', err.code);
+        console.log('emptyCart', err.message);
+        console.log('emptyCart', err.stack);
+       }); 
   
+	} catch(e) {
+		console.error(e);
+	}
+  }
   checkout = (data) => {  
     try {  
       this.sending = true;
@@ -251,7 +274,7 @@ class OrderStore {
      console.log('remove_stock', err.stack);
     });
   }
-  getOrderById = (id) => {
+  getCartItemById = (id) => {
   try { 
     backend.get('stock/' + id).then( res => {
       if(res.data.status === 200) { 
@@ -267,7 +290,7 @@ class OrderStore {
 	console.error(e);
   }
   }
-  
+   
  
    get allProductOrders() {
     return   Object.keys(this.cart || {}).map(key => ({...this.cart[key], uid: key}));

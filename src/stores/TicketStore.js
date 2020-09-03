@@ -13,6 +13,7 @@ class TicketStore {
     close = false;
     exist = false;
     loading = false;
+    deleting = false;
     sending = false; 
     saved = false;
     ticket = [] 
@@ -136,7 +137,9 @@ toggleStatus = (data) => {
 }
    removeTicket = (id) => { 
    try { 
+     this.deleting = true;
     backend.delete('ticket/' + id).then( res => {
+      this.deleting = false;
       if(res.status === 200) {
         this.fetchTicket();
         Beedy('success', res.data.message)

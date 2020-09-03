@@ -15,7 +15,8 @@ import {
     ProductDetails as ProductDetailsView,
     Asset as AssetView,
     POS as POSView,
-    Ticket as TicketView
+    Ticket as TicketView,
+    Report as ReportView
  } from './views';
 import { PrivateRoute, NormalRoute } from './HOC';
 
@@ -92,6 +93,11 @@ const Routes = () => {
                 component={TicketView} 
                 layout={MainLayout}
                 path="/ticket"
+          />
+        <PrivateRoute
+                component={ReportView} 
+                layout={MainLayout}
+                path="/report"
           />
            <NormalRoute
                 component={SignInView}

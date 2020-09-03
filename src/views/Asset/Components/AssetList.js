@@ -3,8 +3,17 @@ import DataTable from 'react-data-table-component';
 import { Row, Col,  Button } from 'reactstrap';  
  
 // const data = [{ id: 1, title: 'Conan the Barbarian', year: '1982' } ];
-const AssetList = ({data, setMode, removeData, rowData, toggle}) => { 
-  console.log({data})
+const AssetList = ({data, setMode, removeData, rowData, createAsset, toggle, deleting}) => { 
+  
+  const [selectedRows, setSelectedRows] = useState([]);
+  const handleChange = React.useCallback(state => {
+    let id = state.selectedRows.map(r => r.id);
+    setSelectedRows(id); 
+  }, []);
+   
+  const transfer = () => {
+    // deleteInBulk(id, selectedRows);
+  }
 const columns = [
   {
     name: 'Name',
@@ -75,6 +84,17 @@ const deleteData = id => {
     return (
       <Fragment>
         <Row>
+        <Col md="12" sm="12"> 
+       <div className="m-b-2 "> 
+           {selectedRows.length > 0 ? (
+              <Button color="danger" className='float-right my-1' disabled={deleting} onClick={transfer}> {deleting ? (
+                <span> Transfering  <i className="fa fa-spinner"></i></span>
+                ): 'Transfer'}</Button>
+           ) : ''} {" "} 
+       <Button color="secondary" className='float-right my-1' onClick={createAsset}
+           >Add Asset</Button>{' '}
+       </div>
+        </Col>
           <Col md="12">
              <DataTable
       title="Asset List"
@@ -82,6 +102,10 @@ const deleteData = id => {
       data={data}
       pagination={true}
       theme="solarized"
+      highlightOnHover={true}
+      selectableRows={true}
+      selectableRowsHighlight={true}
+      onSelectedRowsChange={handleChange}
     />
     
           </Col>

@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
   // staff_id, ticket_date, category, priority, 
 const TicketList = () => { 
   const tickStore = useContext(TicketStore);
-  const { info:data, removeTicket} = tickStore;
+  const { info:data, removeTicket} = tickStore;  
 const columns = [
   {
     name: 'Subject',
@@ -61,19 +61,20 @@ const deleteData = (id) => {
  
     return (
       <Fragment>
-        <Row>
-          <Col md="12"> 
-             <DataTable
-      title="Ticket List"
-      columns={columns}
-      data={data}
-      pagination={true}
-      theme="solarized"
-    />
-    
-          </Col>
-        </Row> 
-      </Fragment>
+      <Row>
+      
+        <Col md="12" className="m-t-2">
+           <DataTable
+            title="Ticket List"
+            columns={columns}
+            data={data}
+            pagination={true} 
+            theme="solarized"
+           />
+  
+        </Col>
+      </Row> 
+    </Fragment>
     
     )
 }

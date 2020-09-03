@@ -13,6 +13,7 @@ class AssetStore {
     close = false;
     exist = false;
      loading = false;
+     deleting = false;
      sending = false; 
      assets = [] 
 
@@ -75,7 +76,9 @@ class AssetStore {
  }
    removeAsset = (id) => { 
    try { 
+     this.deleting = true;
     backend.delete('asset/' + id).then( res => {
+      this.deleting = false;
       if(res.status === 200) {
         this.fetchAsset();
         Beedy('success', res.data.message)
@@ -88,19 +91,22 @@ class AssetStore {
    }
   }
   get info() {
-    return  Object.keys(this.assets || {}).map(key => ({...this.assets[key], uid: key}));
-    
+    return  Object.keys(this.assets || {}).map(key => ({...this.assets[key], uid: key})); 
   }
-
+  get totalAsset() {
+  	return   this.assets.length 
+  }
 } 
 decorate(AssetStore, { 
   sending: observable,
+  deleting: observable,
   close: observable,
   error: observable,
   exist: observable,
   loading: observable,
   assets: observable, 
   info: computed, 
+  totalAsset: computed, 
   confirmAsset: action,
   createAsset: action,
   updateAsset: action,

@@ -70,16 +70,16 @@ const getSuper = (item, value) => {
                             <li><Link to="/subcategory">Sub Category</Link></li> 
                         </ul> 
                   </li>
- 
+                  <li><Link to="/report">
+                    <span className="icon">
+                    <i className="fa fa-bar-chart" aria-hidden="true"></i>
+                    </span>
+                    <span className="title">Report</span>
+                    </Link></li>
                   
 
                   {/* 
-                    <li><Link to="/category">
-                    <span className="icon">
-                    <i className="fa fa-tags" aria-hidden="true"></i>
-                    </span>
-                    <span className="title">Category</span>
-                    </Link></li>
+                    
 
                     <li><Link to="/subcategory">
                     <span className="icon">

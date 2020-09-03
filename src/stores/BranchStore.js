@@ -87,8 +87,10 @@ class BranchStore {
    }
   }
   get info() {
-    return  Object.keys(this.branch || {}).map(key => ({...this.branch[key], uid: key}));
-    
+    return  Object.keys(this.branch || {}).map(key => ({...this.branch[key], uid: key})); 
+  }
+  get stats() {
+  	return this.branch.length 
   }
 
 } 
@@ -98,6 +100,7 @@ decorate(BranchStore, {
   error: observable,
   exist: observable,
   info: computed, 
+  stats: computed, 
   loading: observable,
   branch: observable, 
   confirmName: action,

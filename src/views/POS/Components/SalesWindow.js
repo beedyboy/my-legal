@@ -10,7 +10,25 @@ import CartTotal from './CartTotal';
 
 const SalesWindow = () => {
     const ordStore = useContext(OrderStore); 
-    const { stocks: pos, cart, total, cartTotal, removeOrder, productStockByName, generateOrderNo, startNewOrder, createOrder, updateOrder, sending, close, toggleClose,  checkout, ckclose, toggleCKClose } = ordStore;   
+    const {
+      stocks: pos,
+      cart,
+      total,
+      cartTotal,
+      removeOrder,
+      productStockByName,
+      generateOrderNo,
+      startNewOrder,
+      createOrder,
+      updateOrder,
+      emptyCart,
+      sending,
+      close,
+      toggleClose,
+      checkout,
+      ckclose,
+      toggleCKClose,
+    } = ordStore;   
     const [modal, setModal] = useState(false);
     const [cmodal, setCModal] = useState(false);
     const [search, setSearch] = useState('');
@@ -45,7 +63,7 @@ const SalesWindow = () => {
         <Fragment>
             <Row className="m-b-5">
                 <Col md="12">
-                    <Button color="primary" type="button" onClick={handleNewOrder}>New Order</Button>
+                    <Button color="secondary" type="button" className="pull-right" onClick={handleNewOrder}>New Order</Button>
                 </Col>
                 <Col md="12">
                     
@@ -104,7 +122,8 @@ const SalesWindow = () => {
                             <Col md="12">
                                 {/* order item */}
                                 <CartList data={cart} open={modal} toggle={setModal} setMode={setMode} mode={mode} removeData={removeOrder} setRowData={setRowData}/>
-                                <CartTotal count={cart.length} checkout={checkout} sending={sending} ckclose={ckclose} toggleCKClose={toggleCKClose} total={total} open={cmodal} toggle={setCModal} />
+                                <CartTotal count={cart.length} checkout={checkout} sending={sending} ckclose={ckclose} toggleCKClose={toggleCKClose} total={total} open={cmodal}
+                                emptyCart={emptyCart} toggle={setCModal} />
                             </Col>
                         </Row>
                     </PerfectScrollBar>

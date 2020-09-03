@@ -10,7 +10,7 @@ const StockList = ({id, data, removeData, deleting, deleteInBulk}) => {
   const [rowData, setRowData] = useState(); 
   const [isOpen, setIsOpen] = useState(false);   
   const [selectedRows, setSelectedRows] = useState([]);
-   const [toggleCleared, setToggleCleared] = useState(false);
+  //  const [toggleCleared, setToggleCleared] = useState(false);
   const toggle = () => {
     setIsOpen(!isOpen);  
     // toggleClose()
@@ -45,8 +45,7 @@ const columns = [
   {
     name: 'Created',
     selector: 'created_at',
-    sortable: true,
-    right: true,
+    sortable: true
   }, 
   {
     name: 'Actions',
@@ -94,7 +93,7 @@ const bulkDelete = e => {
                   <span> Deleting data  <i className="fa fa-spinner"></i></span>
                   ): 'Delete'}</Button>
              ) : ''} {" "}
-         <Button color="secondary" className='float-right' onClick={createStock}>Add Stock</Button> {" "}
+         <Button color="secondary" className='float-left' onClick={createStock}>Add Stock</Button> {" "}
          </div>
           </Col>
           <Col md="12" className="m-t-2">

@@ -6,7 +6,9 @@ import { Beedy } from "../services/Beedy";
 
 
 class UserStore {
-
+constructor() {
+  this.fetchUsers();
+}
       isAuthenticated = false;
       error = null;
       loading = false;
@@ -161,7 +163,10 @@ class UserStore {
      return data; 
     }
     
-   get stat() {
+    get totalUser() {
+      return this.users.length
+    }
+   get userStat() {
     return {
       total: this.users.length,
       completed: this.users.filter(User => User.completed).length,
@@ -190,7 +195,7 @@ decorate(UserStore, {
   createLogin: action,
   toggleCloseLogin: action,
   info: computed,
-  stat: computed, 
+  totalUser: computed, 
   profile: computed, 
   toggleUser: action
 })

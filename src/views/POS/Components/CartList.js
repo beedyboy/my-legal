@@ -25,9 +25,9 @@ const CartList = ({data, setMode, removeData, setRowData, toggle}) => {
         name: 'Actions',
         sortable: true,
         cell: row => <div>
-        <Button size="sm" color="warning" onClick={e => editData(e, row)}>
+        {/* <Button size="sm" color="warning" onClick={e => editData(e, row)}>
           <i className="fa fa-edit"></i>
-          </Button>{' '}
+          </Button>{' '} */}
     
         <Button size="sm" color="danger" 
           onClick={(key) =>{ if(window.confirm('Delete this item?')){deleteData( row.id)};}}>

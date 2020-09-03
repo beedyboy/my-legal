@@ -144,10 +144,11 @@ class ProductStore {
     }
   }
   get info() {
-  	return Object.keys(this.products || {}).map(key => ({...this.products[key], uid: key}));
-   
+  	return Object.keys(this.products || {}).map(key => ({...this.products[key], uid: key})); 
   }
-
+  get totalProduct() {
+  	return  this.products.length
+  }
 } 
 decorate(ProductStore, { 
   close: observable,
@@ -166,6 +167,7 @@ decorate(ProductStore, {
   confirmProduct: action,
   setFilter: action,
   filteredProduct: computed,
+  totalProduct: computed,
   info: computed,
 })
 
