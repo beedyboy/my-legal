@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'; 
 import DataTable  from 'react-data-table-component';
 import { Row, Col,  Button } from 'reactstrap';  
+import PerfectScrollBar from 'react-perfect-scrollbar';
  
  
 // const data = [{ id: 1, title: 'Conan the Barbarian', year: '1982' } ];
@@ -26,6 +27,7 @@ const columns = [
     selector: 'address',
     wrap: true,
     sortable: true,
+    hidden: 'sm'
   },
   {
     name: 'Created',
@@ -60,18 +62,21 @@ const deleteData = (id) => {
  
     return (
       <Fragment>
-        <Row>
+       <PerfectScrollBar>
+       <Row>
           <Col md="12"> 
              <DataTable
-      title="Branch List"
-      columns={columns}
-      data={data}
-      pagination={true}
-      theme="solarized"
-    />
+            title="Branch List"
+            columns={columns}
+            data={data}
+            pagination={true}
+            theme="solarized"
+          />
     
           </Col>
         </Row> 
+       </PerfectScrollBar>
+       
       </Fragment>
     
     )

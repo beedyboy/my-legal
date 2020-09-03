@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import { Card, CardBody, CardHeader, Button, Row, Col } from 'reactstrap'
 import BranchStore from '../../stores/BranchStore';
 import AddBranch from './Components/AddBranch';
-import BranchList from './Components/BranchList';
+import BranchList from './Components/BranchList'; 
 
 const Branch = () => { 
   const branchStore = useContext(BranchStore);
@@ -35,17 +35,11 @@ const Branch = () => {
            >Add Branch</Button>{' '}
            </Col>
            <Col md="12" sm="12" className='mt-2'>
-             <BranchList  data={branches} setMode={setMode} toggle={handleClose} removeData={removeBranch} rowData={setRowData} /> 
+           <BranchList  data={branches} setMode={setMode} toggle={handleClose} removeData={removeBranch} rowData={setRowData} /> 
+            
            </Col>
          </Row>
-         <AddBranch mode={mode} open={modal} handleClose={handleClose} initial_data={rowData} /> 
-
-       {/* <Modal isOpen={modal} toggle={toggle}>
-           <ModalHeader toggle={toggle} close={closeBtn}>{title}</ModalHeader>
-           <ModalBody>
-               <AddDepartment mode={mode} open={modal}  initial_data={rowData} />
-           </ModalBody>
-       </Modal>  */}
+         <AddBranch mode={mode} open={modal} handleClose={handleClose} initial_data={rowData} />  
 
          </CardBody>
        </Card>

@@ -1,8 +1,6 @@
-import React, { useEffect, useState, useContext, Fragment } from 'react'
-import OrderStore from '../../../stores/OrderStore';
+import React, { useEffect, useState, useContext, Fragment } from 'react' 
 import dataHero from 'data-hero'; 
-import{ Button, Card, CardBody, FormGroup, FormFeedback, Input, Label, Modal, ModalBody, ModalHeader, ModalFooter, Row, Col } from 'reactstrap';  
-import { observer } from 'mobx-react';
+import{ Button, Card, CardBody, FormGroup, FormFeedback, Input, Label, Modal, ModalBody, ModalHeader, ModalFooter, Row, Col } from 'reactstrap';   
 import Utility from '../../../services/UtilityService';
 const schema = {
     quantity:  {
@@ -12,12 +10,11 @@ const schema = {
     } 
 }; 
 
-const AddItem = ({data, open, mode, toggle, initial_data}) => {
-    const ordStore = useContext(OrderStore);
-  const { createOrder, updateOrder, sending, close } = ordStore;  
+const AddItem = ({data, open, mode, toggle, createOrder, updateOrder, sending, close, toggleClose, initial_data}) => {
+  
   const [title, setTitle]  = useState('Add Item');
     const [formState, setFormState] = useState({ 
-     values: {  id: '', stock_id: '', order_no: '', available: '',  quantity: '', item_price: '',  sold_price: '', discount: ''},
+     values: {  id: '', stock_id: '', order_no: '', available: '',  quantity: '', item_price: '',  discount: 0},
       touched: {},
         errors: {}
       });
@@ -35,8 +32,8 @@ const AddItem = ({data, open, mode, toggle, initial_data}) => {
       stock_id: iniData && iniData.stock_id,
       order_no: iniData && iniData.order_no,
       quantity: iniData && iniData.quantity,
-      item_price: iniData && iniData.item_price, 
-      sold_price: iniData && iniData.sold_price  }
+      item_price: iniData && iniData.item_price
+     }
     })); 
     }
     } 
@@ -70,14 +67,15 @@ const AddItem = ({data, open, mode, toggle, initial_data}) => {
       errors: errors || {}
     }));
   }, [formState.values]);
-   useEffect(() => {
-     if(close === true) {
-      resetForm();
-      handleClose(); 
-     } 
-   }, [close])  
-const handleClose = () => {
-    toggle(false);
+  useEffect(() => { 
+    if(close === true) {
+    resetForm();
+    handleClose(); 
+    } 
+  }, [close])  
+const handleClose = () => { 
+  toggleClose();
+  toggle(false);
 }
 const handleChange = event => {
   event.persist();  
@@ -107,7 +105,7 @@ const handleSubmit = e => {
   const resetForm = () => {
     setFormState(prev => ({
       ...prev,
-      values: { ...prev.values,  id: '', stock_id: '', available: '',  quantity: '', item_price: '',  sold_price: '', discount: ''},
+      values: { ...prev.values,  id: '', stock_id: '', available: '',  quantity: '', item_price: '',  sold_price: '', discount: 0},
       touched: {},
       errors: {}
     }))
@@ -171,7 +169,7 @@ const handleSubmit = e => {
     </ModalBody>
     <ModalFooter>
         <Button color="secondary" onClick={handleClose}>
-            Close
+            Close  
         </Button> {" "}
         <Button color="primary" disabled={!formState.isValid || sending }  type="submit">
         {sending ? (
@@ -188,4 +186,4 @@ const handleSubmit = e => {
     )
 }
 
-export default observer(AddItem);
+export default AddItem;

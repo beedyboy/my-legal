@@ -12,16 +12,21 @@ class OrderStore {
      error = false;
      deleting = false;
      close = false;  
+     ckclose = false;  
      loading = false; 
      sending = false; 
      searching = false; 
      cart = [];
+     total = 0;
      stock = []; 
      pos = []; 
 
    
-    toggleClose = () => {
+    toggleClose = () => { 
       this.close = false;
+    }
+    toggleCKClose = () => { 
+      this.ckclose = false;
     }
   
     generateOrderNo = () => { 
@@ -44,7 +49,9 @@ class OrderStore {
         for (var i = 0; i < array.length; i++) {
             number = array[i]
         } 
+      Utility.remove('receiptNumber');
       Utility.save('receiptNumber', number);
+      this.cartOrder();
      }
 
 
@@ -81,7 +88,9 @@ class OrderStore {
             Utility.logout();
           }
          else  if(res.data.status === 200) {
+           this.close = true;
            this.cartOrder();
+           this.cartTotal();
           Beedy('success', res.data.message);
          }
          
@@ -114,8 +123,9 @@ class OrderStore {
            Utility.logout();
          }
         else if(res.data.status === 200) {
+          this.cartTotal();
          this.close = true;
-            this.cart = res.data.data; 
+          this.cart = res.data.data; 
          }
            
        })
@@ -158,20 +168,72 @@ class OrderStore {
        }
      }
    }
- 
-
-   removeOrder = (product_id, id) => { 
-    backend.delete('stock/' + id).then( res => {
+     
+  cartTotal = () => {  
+    try {
+       const order = Utility.get('receiptNumber');
+      backend.get('order/cart/' + order + '/total').then( res => {    
+         if(res.data.status === 500) {
+           Utility.logout();
+         }
+        else if(res.data.status === 200) { 
+            this.total = res.data.data;  
+         }
+           
+       })
+       .catch(err => {
+        console.log('cartTotal', err.code);
+        console.log('cartTotal', err.message);
+        console.log('cartTotal', err.stack);
+       });
+    
+  
+	} catch(e) {
+		console.error(e);
+	}
+  }
+  
+   removeOrder = (id) => { 
+    backend.delete('order/' + id).then( res => {
       if(res.status === 200) {
-        this.productOrder(product_id);
+        this.cartOrder();
         Beedy('success', res.data.message);
       }
     })
     .catch(err => {
-     console.log('remove_stock', err.code);
-     console.log('remove_stock', err.message);
-     console.log('remove_stock', err.stack);
+     console.log('removeOrder', err.code);
+     console.log('removeOrder', err.message);
+     console.log('removeOrder', err.stack);
     });
+  }
+
+  
+  checkout = (data) => {  
+    try {  
+      this.sending = true;
+      backend.post('sale', data).then( res => {   
+         this.sending = false;
+         if(res.data.status === 500) {
+           Utility.logout();
+         }
+        else if(res.data.status === 200) {
+            Beedy('success', res.data.message)
+            this.startNewOrder();
+            this.ckclose = true;
+         } else {
+           Beedy('error', res.data.message)
+         }
+           
+       })
+       .catch(err => {
+        console.log('checkout', err.code);
+        console.log('checkout', err.message);
+        console.log('checkout', err.stack);
+       });
+     
+	} catch(e) {
+		console.error(e);
+	}
   }
   
    deleteInBulk = (product_id, arr) => { 
@@ -227,7 +289,9 @@ decorate(OrderStore, {
   sending: observable,
   deleting: observable,
   searching: observable,
+  total: observable,
   close: observable,
+  ckclose: observable,
   error: observable, 
   stocks: computed,
   info: computed, 
@@ -241,9 +305,12 @@ decorate(OrderStore, {
   createOrder: action,
   updateOrder: action,
   cartOrder: action,
+  cartTotal: action,
+  checkout: action,
   removeOrder: action,
   deleteInBulk: action,
-  toggleClose: action 
+  toggleClose: action,
+  toggleCKClose: action
 })
 
  

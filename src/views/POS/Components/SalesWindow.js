@@ -6,11 +6,13 @@ import AddItem from './AddItem';
 import CartList from './CartList';
 import { observer } from 'mobx-react';
 import Utility from '../../../services/UtilityService';
+import CartTotal from './CartTotal'; 
 
 const SalesWindow = () => {
-    const ordStore = useContext(OrderStore);
-    const { stocks: pos, cart, cartOrder, removeOrder, productStockByName, generateOrderNo, startNewOrder } = ordStore;
+    const ordStore = useContext(OrderStore); 
+    const { stocks: pos, cart, total, cartTotal, removeOrder, productStockByName, generateOrderNo, startNewOrder, createOrder, updateOrder, sending, close, toggleClose,  checkout, ckclose, toggleCKClose } = ordStore;   
     const [modal, setModal] = useState(false);
+    const [cmodal, setCModal] = useState(false);
     const [search, setSearch] = useState('');
     const [mode, setMode] = useState('');
     const [rowData, setRowData] = useState([]);
@@ -21,6 +23,7 @@ const SalesWindow = () => {
         if (active === undefined || active === null) {
             generateOrderNo();
         }
+            cartTotal();
     }, [])
     const AddNewStock = (e, row) => {
         setMode('Add');
@@ -36,9 +39,8 @@ const SalesWindow = () => {
         }
     }
     const handleNewOrder = () => {
-        startNewOrder()
-       
-    }
+        startNewOrder() 
+    } 
     return (
         <Fragment>
             <Row className="m-b-5">
@@ -69,7 +71,7 @@ const SalesWindow = () => {
                     <Row>
                         {pos && pos.map((stock) => (
 
-                            <Col md="3" className="mt-2" key={stock.uid}>
+                            <Col md="4" className="mt-2" key={stock.uid}>
                                 <Card>
                                     <CardBody>
                                     <div className="card-img-actions">
@@ -101,13 +103,14 @@ const SalesWindow = () => {
                         <Row>
                             <Col md="12">
                                 {/* order item */}
-                                <CartList data={cart} open={modal} toggle={setModal} setMode={setMode} mode={mode} removeData={removeOrder} setRowData={setRowData} />
+                                <CartList data={cart} open={modal} toggle={setModal} setMode={setMode} mode={mode} removeData={removeOrder} setRowData={setRowData}/>
+                                <CartTotal count={cart.length} checkout={checkout} sending={sending} ckclose={ckclose} toggleCKClose={toggleCKClose} total={total} open={cmodal} toggle={setCModal} />
                             </Col>
                         </Row>
                     </PerfectScrollBar>
                 </Col>
             </Row>
-            <AddItem open={modal} toggle={setModal} mode={mode} data={rowData} />
+            <AddItem open={modal} toggle={setModal} createOrder={createOrder} updateOrder={updateOrder} sending={sending} close={close} toggleClose={toggleClose} mode={mode} data={rowData}/>
         </Fragment>
     )
 }
