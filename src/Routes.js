@@ -16,9 +16,11 @@ import {
     Asset as AssetView,
     POS as POSView,
     Ticket as TicketView,
-    Report as ReportView
+    Report as ReportView,
+    Profile as ProfileView
  } from './views';
 import { PrivateRoute, NormalRoute } from './HOC';
+import AssetDetails from './views/Asset/Components/AssetDetails';
 
 
 const Routes = () => {
@@ -54,6 +56,12 @@ const Routes = () => {
                 path="/department"
           />
           <PrivateRoute
+                component={ProfileView}
+                exact
+                layout={MainLayout}
+                path="/profile"
+          />
+          <PrivateRoute
                 component={StaffView}
                 exact
                 layout={MainLayout}
@@ -82,6 +90,12 @@ const Routes = () => {
                 exact
                 layout={MainLayout}
                 path="/asset"
+          />
+           <PrivateRoute
+                component={AssetDetails}
+                exact
+                layout={MainLayout}
+                path="/asset/:id/view"
           />
            <PrivateRoute
                 component={POSView}

@@ -37,8 +37,7 @@ constructor() {
     backend.get('user/' + data + '/exist').then( res => { 
       this.emailExist = res.data.exist;
     })
-  }
-   
+  }   
 
   createStaff = (data) => {
     try {    
@@ -104,13 +103,25 @@ constructor() {
   }
       
   getProfile = () => {
-    backend.get('user/get/profile/').then( res => {
-      // console.log('pay', res.data.data.fullname);
+    backend.get('user/get/profile/').then( res => { 
       if(res.data.status === 200) {
-        this.profiles = res.data.data;
+        this.profiles = res.data.data; 
       }
     })
   }
+  
+  updateProfile = (data) => {
+    this.sending = true;
+    backend.post('user/update/profile', data).then(res => {
+      this.sending = false;
+      if (res.data.status === 200) {
+       this.getProfile();
+       Beedy('success', res.data.message)  
+      } else {
+        Beedy('error', res.data.message) 
+      }
+    }) 
+ }
    login = (Admin) => {
     this.sending = true;
     this.error = null;
@@ -141,27 +152,7 @@ constructor() {
  
   get info() {
     return  Object.keys(this.users || {}).map(key => ({...this.users[key], uid: key}));
-   }
-   get profile() {
-    var data = []
-    const d = {
-      id: this.profiles.id,
-      fullname: this.profiles.fullname,
-      username: this.profiles.username,
-      email: this.profiles.email,
-      phone: this.profiles.phone,
-      password: this.profiles.password,
-      status: this.profiles.status,
-      image: this.profiles.image,
-      role: this.profiles.role,
-      roleName: this.profiles.roleName,
-      created_at: this.profiles.created_at,
-      updated_at: this.profiles.updated_at
-    }
-     
-       data.push(d);  
-     return data; 
-    }
+   } 
     
     get totalUser() {
       return this.users.length
@@ -186,6 +177,7 @@ decorate(UserStore, {
   toggleClose: action,
   fetchUsers: action, 
   getProfile: action,
+  updateProfile: action,
   createStaff: action,
   confirmEmail: action,
   removeUser: action,
@@ -195,8 +187,7 @@ decorate(UserStore, {
   createLogin: action,
   toggleCloseLogin: action,
   info: computed,
-  totalUser: computed, 
-  profile: computed, 
+  totalUser: computed,  
   toggleUser: action
 })
 

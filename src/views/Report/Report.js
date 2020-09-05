@@ -1,6 +1,6 @@
 import React, { useContext, useState, Fragment, useEffect } from 'react';
 import { observer } from 'mobx-react';
-import { Card, CardBody, CardHeader, Button, Row, Col, FormGroup, FormFeedback, Label, Input } from 'reactstrap' 
+import { Card, CardBody, CardHeader, ButtonGroup, Button, Row, Col, FormGroup, FormFeedback, Label, Input } from 'reactstrap' 
 import ReportStore from '../../stores/ReportStore';
 import dataHero from 'data-hero';
 import moment from 'moment'
@@ -27,6 +27,7 @@ const Report = () => {
      touched: {},
        errors: {}
      });
+  const [ activeReport, setActiveReport ] = useState('sales');
      useEffect(() => {
       const errors = dataHero.validate(schema, formState.values);  
       setFormState(formState => ({
@@ -35,7 +36,10 @@ const Report = () => {
         errors: errors || {}
       }));
     }, [formState.values]);
-    
+  
+    const handleReportTab = data => {
+      if(activeReport != data) setActiveReport(data);
+    }
 const dateFormat = 'YYYY/MM/DD';
 const handleChange = event => {
   event.persist();  
@@ -134,9 +138,20 @@ const resetForm = () => {
          </form>
         <Row>
         <Col md="12" sm="12" className='mt-2'>
-           <SalesReport data={sales} /> 
-            
-           </Col>
+        <ButtonGroup>
+          <Button color={activeReport === "sales" ? 'primary' : 'info'} onClick={handleReportTab('sales')}>
+            Sales Report
+          </Button>
+          <Button color={activeReport === "asset" ? 'primary' : 'info'} onClick={handleReportTab('asset')}>
+            Asset Report
+          </Button>
+        </ButtonGroup>
+        <div className="card-block mt-2  border-right"> 
+          <div className={activeReport === "sales" ? 'active' : 'd-none'}> 
+            <SalesReport data={sales} /> 
+          </div>
+        </div>  
+        </Col>
         </Row>
          </CardBody>
        </Card>

@@ -1,16 +1,5 @@
-import React, { Fragment, useState } from 'react';
-import {
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
-  Nav, 
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem, 
-  Container
-} from 'reactstrap';
+import React, { Fragment, useState } from 'react'; 
+import { Link } from "react-router-dom"; 
 import Utility from '../../services/UtilityService';
 
  const TopBar = () => {
@@ -22,37 +11,11 @@ import Utility from '../../services/UtilityService';
             <div className="logos">Inventory</div>
             <div>Welcome  {Utility.get('name')} </div>
                     <ul>
-                        <li><i className="fa fa-search"></i></li>
-                         <li><i className="fa fa-user"></i></li>
-                        <li onClick={e => Utility.logout()}><i className="fa fa-sign-out"></i></li> 
+                        <li className="right-icon-btn"><i className="fa fa-search"></i></li>
+                         <li className="right-icon-link"><Link to="/profile"><i className="fa fa-user"></i></Link></li>
+                        <li className="right-icon-btn" onClick={e => Utility.logout()}><i className="fa fa-sign-out"></i></li> 
                     </ul>
-          {/* <Navbar className="topbar" expand="md">
-          <Container fluid={true}>
-        <NavbarBrand href="/">Inventory APP</NavbarBrand>
-        <NavbarToggler onClick={toggle} />
-        <Collapse isOpen={isOpen} navbar>
-          <Nav className="ml-auto" navbar>
-           
-             
-            <UncontrolledDropdown nav inNavbar>
-              <DropdownToggle nav caret>
-                {Utility.get('name')}
-              </DropdownToggle>
-              <DropdownMenu right>
-                <DropdownItem>
-                  Profile
-                </DropdownItem> 
-                <DropdownItem divider />
-                <DropdownItem >
-                  Logout
-                </DropdownItem>
-              </DropdownMenu>
-            </UncontrolledDropdown>
-          </Nav>
-          
-        </Collapse>
-        </Container>
-      </Navbar>  */}
+         
         </Fragment>
     )
 }

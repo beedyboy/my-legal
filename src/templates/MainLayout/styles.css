@@ -190,8 +190,9 @@ body {
     display: flex;
 }
 
-.wrapper .top_navbar .top_menu ul li,
-.wrapper .top_navbar .top_menu ul li a {
+/* .wrapper .top_navbar .top_menu ul li,  */
+.wrapper .top_navbar .top_menu ul li.right-icon-btn, 
+.wrapper .top_navbar .top_menu ul li.right-icon-link a {
     display: block;
     margin: 0 10px;
     width: 35px;
@@ -200,7 +201,7 @@ body {
     border: 1px solid #2e4ead;
     text-align: center;
     border-radius: 50%;
-    color: #2e4ead;
+    color: #2e4ead; 
 }
 .wrapper .top_navbar .top_menu ul li:hover,
  .wrapper .top_navbar .top_menu ul li a:hover {
@@ -338,4 +339,73 @@ width: 70px;
 
 .ck-content {
   min-height: 20em;
+}
+ 
+  
+.card-block {
+    padding: 1.25rem
+}
+ 
+
+h6 {
+    font-size: 14px
+}
+ 
+
+@media only screen and (min-width: 1400px) {
+    p {
+        font-size: 14px
+    }
+}
+
+.card-block {
+    padding: 1.25rem
+}
+
+.b-b-default {
+    border-bottom: 1px solid #e0e0e0
+}
+ 
+
+.text-muted {
+    color: #919aa3 !important
+}
+
+.b-b-default {
+    border-bottom: 1px solid #e0e0e0
+}
+
+.f-w-600 {
+    font-weight: 600
+}
+
+.m-b-20 {
+    margin-bottom: 20px
+}
+
+.m-t-40 {
+    margin-top: 20px
+}
+
+.p-b-5 {
+    padding-bottom: 5px !important
+}
+
+.m-b-10 {
+    margin-bottom: 10px
+}
+
+.m-t-40 {
+    margin-top: 20px
+}
+
+ .social-link li {
+    display: inline-block
+}
+
+ .social-link li a {
+    font-size: 20px;
+    margin: 0 10px 0 0;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out
 }
