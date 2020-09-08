@@ -131,7 +131,7 @@ const resetForm = () => {
            </Col>
                
         <Col md="3" sm="12">
-        <Button color="secondary" className='float-right' disabled={!formState.isValid || searching} onClick={handleSubmit}>Search Report</Button> 
+        <Button color="secondary" size="sm" className='float-right' disabled={!formState.isValid || searching} onClick={handleSubmit}>Search Report</Button> 
         </Col>
          </Row>
         
