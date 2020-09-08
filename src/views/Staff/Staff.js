@@ -5,6 +5,7 @@ import UserStore from '../../stores/UserStore';
 import StaffList from './Components/StaffList';
 import AddStaff from './Components/AddStaff';
 import AddLogin from './Components/AddLogin';
+import RoleForm from './Components/RoleForm';
 
 const Staff = () => { 
   const userStore = useContext(UserStore);
@@ -13,15 +14,24 @@ const Staff = () => {
   const [rowData, setRowData] = useState(); 
   const [modal, setModal] = useState(false);   
   const [lmodal, setLModal] = useState(false);   
+  const [acl, setACL] = useState(false);   
+  const [id, setId] = useState(0);   
   useEffect(() => {
-    fetchUsers();
-     
+    fetchUsers(); 
   }, [])
   const handleClose = () => {
     setModal(!modal);  
   }
   const toggleLogin = () => {
     setLModal(!lmodal);  
+  }
+  const assignACL = () => {
+    if(acl === false) { 
+    setACL(true);  
+    } else {
+      setACL(false);
+      setId(0);  
+    }
   }
   const createStaff = () => {
     setModal(true); 
@@ -35,19 +45,19 @@ const Staff = () => {
          <CardBody>
          <Row>
            <Col md="5" sm="12">
-             <h5>Staff Management</h5>
-          
+             <h5>Staff Management</h5> 
            </Col>
            <Col md={{ size: 3, offset: 4 }} sm="12"> 
            <Button color="secondary" className='float-right' onClick={createStaff}
            >Add Staff</Button>{' '}
            </Col>
            <Col md="12" sm="12" className='mt-2'>
-             <StaffList  data={users} setMode={setMode} setLogin={toggleLogin} toggle={handleClose} removeData={removeUser} rowData={setRowData} /> 
+             <StaffList  data={users} setMode={setMode} setACL={assignACL} setId={setId} setLogin={toggleLogin} toggle={handleClose} removeData={removeUser} rowData={setRowData} /> 
            </Col>
          </Row>
          <AddStaff mode={mode} open={modal} handleClose={handleClose} initial_data={rowData} />  
          <AddLogin open={lmodal}  handleClose={toggleLogin} initial_data={rowData} />
+         <RoleForm open={acl} handleClose={assignACL} id={id} initial_data={rowData}  />
          </CardBody>
        </Card>
    

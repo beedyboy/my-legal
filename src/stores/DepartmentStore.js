@@ -92,6 +92,13 @@ class DepartmentStore {
   get info() {
     return  Object.keys(this.departments || {}).map(key => ({...this.departments[key], uid: key}));
   }
+  
+  get deptSelect() {
+    return Object.keys(this.departments || {}).map((key) => ({
+      value: this.departments[key].id,
+      label: this.departments[key].name,
+    }));
+  } 
 
 } 
 decorate(DepartmentStore, { 
@@ -100,6 +107,7 @@ decorate(DepartmentStore, {
   error: observable,
   exist: observable,
   info: computed, 
+  deptSelect: computed, 
   loading: observable,
   departments: observable, 
   confirmName: action,

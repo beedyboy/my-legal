@@ -1,12 +1,24 @@
-import React, { useEffect, useContext, Fragment, useState } from "react"; 
+import React, { useEffect, useContext, Fragment, useState } from "react";
 import ReactHtmlParser from "react-html-parser";
-import { Badge, Card, CardBody, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, Button, Row, Col } from "reactstrap";
+import {
+  Badge,
+  Card,
+  CardBody,
+  ButtonDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+  Button,
+  Row,
+  Col,
+} from "reactstrap";
 import PerfectScrollBar from "react-perfect-scrollbar";
-import { observer } from "mobx-react"; 
-import Status from "./Status"; 
-import AssetStore from "../../../stores/AssetStore";
+import { observer } from "mobx-react";
+import Status from "./Status";
+import AssetStore from "../../../stores/AssetStore"; 
+import TransferDept from "../../../components/Asset/TransferDept";
+import TransferIndividual from "../../../components/Asset/TransferIndividual";
 import MyAllocations from "../../../components/Asset/MyAllocations";
-
 
 const AssetDetails = (props) => {
   const assetStore = useContext(AssetStore);
@@ -18,17 +30,21 @@ const AssetDetails = (props) => {
     getAssetAllocations,
     myAllocation,
     toggleClose,
-    toggleStatus
-  } = assetStore;
+    toggleStatus,
+  } = assetStore; 
   const [modal, setModal] = useState(false);
-  const [dropdownOpen, setOpen] = useState(false);
-  const [assign, setAssign] = useState(false);
+  const [deptModal, setDeptModal] = useState(false);
+  const [indModal, setIndModal] = useState(false);
+  const [dropdownOpen, setOpen] = useState(false); 
   const handleClose = () => {
     setModal(!modal);
   };
+  const toggleDepartmental = () => {
+    setDeptModal(!deptModal);
+  };
   const toggle = () => setOpen(!dropdownOpen);
-  const toggleAssign = () => {
-    setAssign(!assign);
+  const toggleIndividual = () => {
+    setIndModal(!indModal);
   };
   useEffect(() => {
     let id = parseInt(props.match.params.id);
@@ -41,7 +57,8 @@ const AssetDetails = (props) => {
         <Col md="8" className="border-right">
           <Card className="mt-2">
             <CardBody>
-              <h6 className="m-b-20 p-b-5 b-b-default f-w-600">Asset Activities
+              <h6 className="m-b-20 p-b-5 b-b-default f-w-600">
+                Asset Activities
               </h6>
               <Row>
                 <Col md="12">
@@ -57,20 +74,21 @@ const AssetDetails = (props) => {
               <Card className="mt-2">
                 <CardBody>
                   <h6 className="m-b-20 p-b-5 b-b-default f-w-600">
-                    Asset Information 
-             
-<ButtonDropdown isOpen={dropdownOpen} toggle={toggle}>
-  <DropdownToggle caret color="primary">
-    Transfer
-  </DropdownToggle>
-  <DropdownMenu>
-    <DropdownItem>Individual</DropdownItem>
-    <DropdownItem>Department</DropdownItem>
-  </DropdownMenu>
-</ButtonDropdown>{" "}
-              <Button color="danger">Maintenance</Button>{" "}
-              {/* <Button color="secondary">Transfer</Button>{" "} */}
+                    Asset Information
+                    <ButtonDropdown isOpen={dropdownOpen} toggle={toggle}>
+                      <DropdownToggle caret color="primary">
+                        Transfer
+                      </DropdownToggle>
+                      <DropdownMenu>
+                        <DropdownItem onClick={toggleIndividual}>Individual</DropdownItem>
+                        <DropdownItem onClick={toggleDepartmental}>Department</DropdownItem>
+                      </DropdownMenu>
+                    </ButtonDropdown>{" "}
+                    <Button color="danger">Maintenance</Button>{" "}
+                    {/* <Button color="secondary">Transfer</Button>{" "} */}
                   </h6>
+                  <TransferDept id={parseInt(props.match.params.id)} mode="Add" handleClose={toggleDepartmental} open={deptModal} />
+                  <TransferIndividual id={parseInt(props.match.params.id)} mode="Add" handleClose={toggleIndividual} open={indModal} />
                   <Row>
                     <Col md="12">
                       <p className="m-b-10 f-w-600">Name</p>
@@ -136,9 +154,7 @@ const AssetDetails = (props) => {
                   </Row>
                   <Row>
                     <Col md="12">
-                      <h6 className="m-b-20 p-b-5 b-b-default f-w-600">
-                     Note
-                  </h6>
+                      <h6 className="m-b-20 p-b-5 b-b-default f-w-600">Note</h6>
                       <PerfectScrollBar>
                         {ReactHtmlParser(asset.description)}
                       </PerfectScrollBar>

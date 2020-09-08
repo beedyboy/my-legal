@@ -91,4 +91,4 @@ const closeBtn = <Button className="close" onClick={handleClose}>&times;</Button
     )
 }
 
-export default AssignTicket
+export default observer(AssignTicket)

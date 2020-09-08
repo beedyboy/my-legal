@@ -84,7 +84,7 @@ const SalesWindow = () => {
                 </Col>
             </Row>
             <Row className="m-t-2 m-b-5">
-                <Col md="6">
+                <Col md="6" className="border-right">
                     <PerfectScrollBar>
                     <Row>
                         {pos && pos.map((stock) => (

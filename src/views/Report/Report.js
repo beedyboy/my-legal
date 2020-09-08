@@ -139,10 +139,10 @@ const resetForm = () => {
         <Row>
         <Col md="12" sm="12" className='mt-2'>
         <ButtonGroup>
-          <Button color={activeReport === "sales" ? 'primary' : 'info'} onClick={handleReportTab('sales')}>
+          <Button color={activeReport === "sales" ? 'primary' : 'info'} onClick={e => handleReportTab('sales')}>
             Sales Report
           </Button>
-          <Button color={activeReport === "asset" ? 'primary' : 'info'} onClick={handleReportTab('asset')}>
+          <Button color={activeReport === "asset" ? 'primary' : 'info'} onClick={e => handleReportTab('asset')}>
             Asset Report
           </Button>
         </ButtonGroup>

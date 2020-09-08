@@ -92,6 +92,12 @@ class BranchStore {
   get stats() {
   	return this.branch.length 
   }
+  get branchSelect() {
+    return Object.keys(this.branch || {}).map((key) => ({
+      value: this.branch[key].id,
+      label: this.branch[key].name,
+    }));
+  } 
 
 } 
 decorate(BranchStore, { 
@@ -101,6 +107,7 @@ decorate(BranchStore, {
   exist: observable,
   info: computed, 
   stats: computed, 
+  branchSelect: computed, 
   loading: observable,
   branch: observable, 
   confirmName: action,
