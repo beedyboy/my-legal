@@ -21,6 +21,9 @@ const EditProfile = ({ initial_data, edit, submit, sending, toggle }) => {
       lastname: "",
       email: "",
       phone_number: "",
+      emergency_phone: "",
+      emergency_contact: "",
+      address: "",
       branchName: "",
     },
     touched: {},
@@ -88,28 +91,7 @@ const EditProfile = ({ initial_data, edit, submit, sending, toggle }) => {
     e.preventDefault();
     submit(formState.values);
   };
-  const resetForm = () => {
-    setFormState((prev) => ({
-      ...prev,
-      values: {
-        ...prev.values,
-        id: "",
-        firstname: "",
-        lastname: "",
-        email: "",
-        phone_number: "",
-        branchName: "",
-      },
-      touched: {
-        ...formState.touched,
-        firstname: false,
-        lastname: false,
-        email: false,
-        phone_number: false,
-      },
-      errors: {},
-    }));
-  };
+  
 
   return (
     <Fragment>
@@ -138,8 +120,7 @@ const EditProfile = ({ initial_data, edit, submit, sending, toggle }) => {
                 <Col md="6">
                   <Input
                     type="text"
-                    className="form-control"
-                    value="Doe"
+                    className="form-control" 
                     placeholder="last name"
                     name="lastname"
                     value={formState.values.lastname}
@@ -160,11 +141,46 @@ const EditProfile = ({ initial_data, edit, submit, sending, toggle }) => {
                 <Col md="6">
                   <Input
                     type="text"
-                    className="form-control"
-                    value="+19685969668"
+                    className="form-control" 
                     placeholder="Phone number"
                     name="phone_number"
                     value={formState.values.phone_number}
+                    onChange={handleChange}
+                  />
+                </Col>
+              </Row>
+             
+              <Row className="mt-3">
+              <Col md="12">
+                  <Input
+                    type="textarea"
+                    className="form-control" 
+                    placeholder="Address"
+                    name="address"
+                    value={formState.values.address}
+                    onChange={handleChange}
+                  />
+                </Col>
+              </Row>
+
+              <Row className="mt-3">
+                <Col md="6">
+                  <Input
+                    type="text"
+                    className="form-control"
+                    placeholder="Emergency contact"
+                    name="emergency_contact"
+                    value={formState.values.emergency_contact} 
+                    onChange={handleChange}
+                  />
+                </Col>
+                <Col md="6">
+                  <Input
+                    type="text"
+                    className="form-control" 
+                    placeholder="Emergency Phone number"
+                    name="emergency_phone"
+                    value={formState.values.emergency_phone}
                     onChange={handleChange}
                   />
                 </Col>

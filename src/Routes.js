@@ -16,11 +16,13 @@ import {
     Asset as AssetView,
     POS as POSView,
     Ticket as TicketView,
+    TicketAdmin as TicketAdminView,
     Report as ReportView,
     Profile as ProfileView
  } from './views';
 import { PrivateRoute, NormalRoute } from './HOC';
 import AssetDetails from './views/Asset/Components/AssetDetails';
+import AdminTicketDetails from './views/TicketAdmin/Components/AdminTicketDetails';
 
 
 const Routes = () => {
@@ -107,6 +109,17 @@ const Routes = () => {
                 component={TicketView} 
                 layout={MainLayout}
                 path="/ticket"
+          />
+           <PrivateRoute
+                component={TicketAdminView} 
+                layout={MainLayout}
+                path="/admin/ticket"
+          />
+           <PrivateRoute
+                component={AdminTicketDetails}
+                exact
+                layout={MainLayout}
+                path="/admin/ticket/:id/view"
           />
         <PrivateRoute
                 component={ReportView} 

@@ -18,6 +18,7 @@ class TicketStore {
     saved = false;
     ticket = [] 
     tickets = [] 
+    staffTickets = [] 
 
      toggleClose = () => { 
        this.close = false;
@@ -31,7 +32,13 @@ class TicketStore {
         this.loading = false; 
       }); 
   }
- 
+  fetchMyTicket = () => {
+    this.loading = true;
+    backend.get('ticket/myticket').then( res => {  
+    this.staffTickets = res.data.data;
+      this.loading = false; 
+    }); 
+}
   createTicket = (data) => {
     try {    
       this.sending = true;
@@ -39,6 +46,7 @@ class TicketStore {
         this.sending = false;
         if(res.data.status === 200) {
           this.fetchTicket(); 
+          this.fetchMyTicket(); 
           Beedy('success', res.data.message) 
           this.close = true;  
           this.saved = true; 
@@ -152,8 +160,10 @@ toggleStatus = (data) => {
    }
   }
   get info() {
-    return  Object.keys(this.tickets || {}).map(key => ({...this.tickets[key], uid: key}));
-    
+    return  Object.keys(this.tickets || {}).map(key => ({...this.tickets[key], uid: key})); 
+  }
+  get myTickets() {
+    return  Object.keys(this.staffTickets || {}).map(key => ({...this.staffTickets[key], uid: key})); 
   }
 
 } 
@@ -164,9 +174,13 @@ decorate(TicketStore, {
   error: observable,
   exist: observable,
   ticket: observable,
+  staffTickets: observable,
   info: computed, 
+  myTickets: computed, 
   loading: observable,
   tickets: observable, 
+  fetchTicket: action,
+  fetchMyTicket: action,
   assignTicket: action,
   createTicket: action,
   updateTicket: action,

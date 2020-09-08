@@ -1,7 +1,7 @@
-import React, { useContext, useState, Fragment } from 'react';
+import React, { useContext, useState, Fragment, useEffect } from 'react';
 import { Switch, Route, Link } from 'react-router-dom'
 import { observer } from 'mobx-react';
-import { Card, CardBody, CardHeader, Button, Row, Col, Collapse } from 'reactstrap' 
+import { Card, CardBody, Button, Row, Col, Collapse } from 'reactstrap' 
 import TicketStore from '../../stores/TicketStore';
 import TicketHome from './Components/TicketHome';
 import TicketList from './Components/TicketList';
@@ -11,9 +11,12 @@ import TicketDetails from './Components/TicketDetails';
 
 const Ticket = () => { 
   const tickStore = useContext(TicketStore);
-  const { info:tickets} = tickStore;
+  const { fetchMyTicket, myTickets:tickets} = tickStore;
   const [collapse, setCollapse] = useState(true); 
   const toggle = () => setCollapse(!collapse);
+  useEffect(() => {
+    fetchMyTicket();
+  }, [])
     return( 
       <Fragment>
         <Row>

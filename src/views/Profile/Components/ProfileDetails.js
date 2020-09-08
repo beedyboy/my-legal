@@ -26,6 +26,21 @@ const ProfileDetails = ({data, toggle}) => {
                         <p className="m-b-10 f-w-600">Phone</p>
                          <h6 className="text-muted f-w-400">{data.phone_number || '-'}</h6>
                         </Col>
+                        <Col sm="12">
+                        <p className="m-b-10 f-w-600">Address</p>
+                         <h6 className="text-muted f-w-400">{data.address || '-'}</h6>
+                        </Col>
+                    </Row>
+                    <h6 className="m-b-20 p-b-5 b-b-default f-w-600">Emergency Contact</h6>
+                     <Row>
+                        <Col sm="6">
+                        <p className="m-b-10 f-w-600">Contact</p>
+                         <h6 className="text-muted f-w-400">{data.emergency_contact}</h6>
+                        </Col>
+                        <Col sm="6">
+                        <p className="m-b-10 f-w-600">Phone Number</p>
+                         <h6 className="text-muted f-w-400">{data.emergency_phone || '-'}</h6>
+                        </Col> 
                     </Row>
                     <Button color="info" size="sm" onClick={toggle}>
                         <i className="fa fa-edit"></i>

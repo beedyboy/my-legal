@@ -4,10 +4,11 @@ import ReactHtmlParser from "react-html-parser";
 import { Badge, Card, CardBody, Button, Row, Col } from "reactstrap";
 import PerfectScrollBar from "react-perfect-scrollbar";
 import { observer } from "mobx-react";
-import Conversation from "../../../components/Conversation/Conversation";
+import Conversation from "../../../components/Conversation/Conversation"; 
 import Status from "./Status";
+import AssignTicket from "./AssignTicket";
 
-const TicketDetails = (props) => {
+const AdminTicketDetails = (props) => {
   const tickStore = useContext(TicketStore);
   const {
     getTicketById,
@@ -18,10 +19,13 @@ const TicketDetails = (props) => {
     toggleClose,
   } = tickStore;
   const [modal, setModal] = useState(false);
+  const [assign, setAssign] = useState(false);
   const handleClose = () => {
     setModal(!modal);
   };
-
+  const toggleAssign = () => {
+    setAssign(!assign);
+  };
   useEffect(() => {
     let id = parseInt(props.match.params.id);
     getTicketById(id);
@@ -65,14 +69,19 @@ const TicketDetails = (props) => {
                       </h6>
                     </Col>
                     <Col md="12">
-                      {/* <p className="m-b-10 f-w-600">Ticket Manager
+                      <p className="m-b-10 f-w-600">Ticket Manager
                         <Button size="sm" color="warning" onClick={toggleAssign}>
                           <i className="fa fa-edit"></i>
-                        </Button></p> */}
+                        </Button></p>
                       <h6 className="text-muted f-w-400">
                         {" "}
                         {ticket && ticket.assigned_to}
                       </h6>
+                      <AssignTicket
+                         open={assign}
+                         handleClose={toggleAssign} 
+                         ticket={ticket.id}
+                      />
                     </Col>
                     <Col md="12">
                       <p className="m-b-10 f-w-600">Status</p>
@@ -110,4 +119,4 @@ const TicketDetails = (props) => {
   );
 };
 
-export default observer(TicketDetails);
+export default observer(AdminTicketDetails);

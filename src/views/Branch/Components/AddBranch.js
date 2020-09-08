@@ -75,8 +75,7 @@ const handleChange = event => {
       [event.target.name]: true
     }
   })); 
-  if(event.target.name === 'name' && event.target.value.length >= 2) {
-    console.log('length', event.target.value.length)
+  if(event.target.name === 'name' && event.target.value.length >= 2) { 
     confirmName(event.target.value);
   }   
 }

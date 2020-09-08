@@ -11,5 +11,6 @@ export { default as ProductDetails } from "./Product/Components/ProductDetails";
 export { default as Asset } from "./Asset";
 export { default as POS } from "./POS";
 export { default as Ticket } from "./Ticket";
+export { default as TicketAdmin } from "./TicketAdmin";
 export { default as Report } from "./Report";
 export { default as Profile } from "./Profile";
