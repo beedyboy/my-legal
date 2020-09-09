@@ -2,9 +2,10 @@ import React, { useEffect, useContext, Fragment, useState } from "react";
 import TicketStore from "../../../stores/TicketStore";
 import ReactHtmlParser from "react-html-parser";
 import { Badge, Card, CardBody, Button, Row, Col } from "reactstrap";
+import { Link } from "react-router-dom";
 import PerfectScrollBar from "react-perfect-scrollbar";
 import { observer } from "mobx-react";
-import Conversation from "../../../components/Conversation/Conversation"; 
+import Conversation from "../../../components/Conversation/Conversation";
 import Status from "./Status";
 import AssignTicket from "./AssignTicket";
 
@@ -33,13 +34,29 @@ const AdminTicketDetails = (props) => {
   return (
     <Fragment>
       <Row>
+        <Col md="12">
+          <div className="d-flex justify-content-between align-items-center mb-1">
+            <div className="d-flex flex-row align-items-center back">
+              <i className="fa fa-long-arrow-left mr-1 mb-1"></i>
+              <h6>
+                <Link to={`/admin/ticket`} className="btn btn-info btn-sm">
+                  Back to Tickets
+                </Link>
+              </h6>
+            </div>
+            {/* <h6 className="text-right">Edit Profile</h6> */}
+          </div>
+        </Col>
         <Col md="8">
           <Card className="mt-2">
             <CardBody>
               <h6 className="m-b-20 p-b-5 b-b-default f-w-600">Conversation</h6>
               <Row>
                 <Col md="12">
-                  <Conversation id={parseInt(props.match.params.id)} />
+                  <Conversation
+                    id={parseInt(props.match.params.id)}
+                    respondent="TaskPerson"
+                  />
                 </Col>
               </Row>
             </CardBody>
@@ -69,24 +86,30 @@ const AdminTicketDetails = (props) => {
                       </h6>
                     </Col>
                     <Col md="12">
-                      <p className="m-b-10 f-w-600">Ticket Manager
-                        <Button size="sm" color="warning" onClick={toggleAssign}>
+                      <p className="m-b-10 f-w-600">
+                        Ticket Manager {" "}
+                        <Button
+                          size="sm"
+                          color="warning"
+                          onClick={toggleAssign}
+                        >
                           <i className="fa fa-edit"></i>
-                        </Button></p>
+                        </Button>
+                      </p>
                       <h6 className="text-muted f-w-400">
                         {" "}
-                        {ticket && ticket.assigned_to}
+                      {` ${ticket && ticket.firstname}  ${ticket && ticket.lastname}`}
                       </h6>
                       <AssignTicket
-                         open={assign}
-                         handleClose={toggleAssign} 
-                         ticket={ticket.id}
+                        open={assign}
+                        handleClose={toggleAssign}
+                        ticket={ticket.id}
                       />
                     </Col>
                     <Col md="12">
                       <p className="m-b-10 f-w-600">Status</p>
                       <h6 className="text-muted f-w-400">
-                        <Badge>{ticket && ticket.status}</Badge>
+                        <Badge>{ticket && ticket.status}</Badge> {" "}
                         <Button size="sm" color="warning" onClick={handleClose}>
                           <i className="fa fa-edit"></i>
                         </Button>

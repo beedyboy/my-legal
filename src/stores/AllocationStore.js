@@ -5,7 +5,7 @@ import { Beedy } from "../services/Beedy";
 import Utility from "../services/UtilityService";
 class AllocationStore {
   constructor() {
-    this.fetchAllocation();
+    // this.fetchAllocation();
   }
 
   error = false;

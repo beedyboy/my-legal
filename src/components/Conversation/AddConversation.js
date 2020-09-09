@@ -13,11 +13,11 @@ const schema = {
     }  
 }; 
 
-const AddConversation = ({id}) => {
+const AddConversation = ({id, respondent}) => {
     const convoStore = useContext(ConversationStore);
   const { createConversation, sending, close } = convoStore;   
     const [formState, setFormState] = useState({ 
-     values: {  id: '', respondent: '', description: '', ticket_id: id},
+     values: {  id: '', respondent: respondent, description: '', ticket_id: id},
       touched: {},
         errors: {}
       }); 
@@ -62,7 +62,7 @@ const handleSubmit = e => {
   const resetForm = () => {
     setFormState(prev => ({
       ...prev,
-      values: { ...prev.values,  respondent: '', description: '', ticket_id: id},
+      values: { ...prev.values,  respondent: respondent, description: '', ticket_id: id},
       touched: {},
       errors: {}
     }))
@@ -71,7 +71,7 @@ const handleSubmit = e => {
         <Fragment>
                <form noValidate autoComplete="off"  onSubmit={handleSubmit}> 
           <Row>
-              <Col md="12"> 
+              <Col md="12"> {respondent}
               <FormGroup className={
                   hasError('description') ? 'has-danger' : null} >
                   <Label for="description">Description</Label>

@@ -17,6 +17,7 @@ import ReportStore from "../../stores/ReportStore";
 import dataHero from "data-hero";
 import moment from "moment";
 import SalesReport from "./Components/SalesReport";
+import AssetReport from "./Components/AssetReport";
 const schema = {
   start_date: {
     isEmpty: false,
@@ -32,7 +33,7 @@ const schema = {
 
 const Report = () => {
   const repStore = useContext(ReportStore);
-  const { getSalesReport, sales, searching } = repStore;
+  const { getSalesReport, sales, searching, getAssetReport, assets } = repStore;
   const [formState, setFormState] = useState({
     values: { start_date: "", end_date: "" },
     touched: {},
@@ -73,31 +74,17 @@ const Report = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     getSalesReport(formState.values);
-  };
-  const resetForm = () => {
-    setFormState((formState) => ({
-      ...formState,
-      values: {
-        ...formState.values,
-        start_date: "",
-        end_date: "",
-      },
-      touched: {
-        ...formState.touched,
-        start_date: false,
-        end_date: false,
-      },
-    }));
+    getAssetReport(formState.values);
   };
   return (
     <Fragment>
       <Card className="mt-2">
-        <CardHeader></CardHeader>
+        <CardHeader>
+          <h5>Report Management</h5>
+        </CardHeader>
         <CardBody>
           <Row>
-            <Col md="12" sm="12">
-              <h5>Report Management</h5>
-            </Col>
+            <Col md="12" sm="12"></Col>
           </Row>
           <form onSubmit={handleSubmit}>
             <Row>
@@ -126,7 +113,7 @@ const Report = () => {
                   </FormFeedback>
                 </FormGroup>
               </Col>
-              <Col md={{ size: 3, offset: 4 }} sm="12">
+              <Col md={{ size: 3, offset: 1 }} sm="12">
                 <FormGroup>
                   <Label for="end_date">End Date</Label>
                   <Input
@@ -151,11 +138,11 @@ const Report = () => {
                 </FormGroup>
               </Col>
 
-              <Col md="3" sm="12">
+              <Col md="2" sm="12" className="mt-3">
                 <Button
                   color="secondary"
                   size="sm"
-                  className="float-right"
+                  className="float-right mt-3"
                   disabled={!formState.isValid || searching}
                   onClick={handleSubmit}
                 >
@@ -164,17 +151,22 @@ const Report = () => {
               </Col>
             </Row>
           </form>
+        </CardBody>
+      </Card>
+
+      <Card className="mt-2">
+        <CardBody>
           <Row>
             <Col md="12" sm="12" className="mt-2">
-              <ButtonGroup>
+              <ButtonGroup className="border border-secondary rounded">
                 <Button
-                  color={activeReport === "sales" ? "primary" : "info"}
+                  color={activeReport === "sales" ? "primary" : "dark"}
                   onClick={(e) => handleReportTab("sales")}
                 >
                   Sales Report
                 </Button>
                 <Button
-                  color={activeReport === "asset" ? "primary" : "info"}
+                  color={activeReport === "asset" ? "primary" : "dark"}
                   onClick={(e) => handleReportTab("asset")}
                 >
                   Asset Report
@@ -182,7 +174,10 @@ const Report = () => {
               </ButtonGroup>
               <div className="card-block mt-2  border-right">
                 <div className={activeReport === "sales" ? "active" : "d-none"}>
-                  <SalesReport data={sales} />
+                  <SalesReport data={sales}  period={formState.values.start_date + " to " + formState.values.end_date}  />
+                </div>
+                <div className={activeReport === "asset" ? "active" : "d-none"}>
+                  <AssetReport data={assets}  period={formState.values.start_date + " to " + formState.values.end_date} />
                 </div>
               </div>
             </Col>

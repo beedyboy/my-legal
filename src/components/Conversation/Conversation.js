@@ -5,7 +5,7 @@ import ReactHtmlParser from 'react-html-parser';
 import { observer } from 'mobx-react';
 import AddConversation from './AddConversation';
 
-const Conversation = ({id}) => {
+const Conversation = ({id, respondent}) => {
     const convoStore = useContext(ConversationStore);
     const { allConversations: conversations, fetchConversation } = convoStore;
     const [reply, setReply] = useState(false)
@@ -21,16 +21,21 @@ const Conversation = ({id}) => {
                            <Button color="primary" onClick={() => setReply(!reply)}>Reply</Button>
                        </CardHeader>
                        <CardBody>
-                     {reply ?   <AddConversation id={id} /> : ''}
+                     {reply ?   <AddConversation id={id} respondent={respondent} /> : ''}
                        </CardBody>
                    </Card>
                 </Col>
             
                 <Col md="12">
                     {conversations && conversations.map((convo) => (
-                        <Fragment>
-                            {ReactHtmlParser(convo.description)}
-                        </Fragment>
+                        <Card className="p-2" key={convo.id}>
+                            <CardHeader>
+                            {convo.created_at}
+                            </CardHeader>
+                           <CardBody>
+                           {ReactHtmlParser(convo.description)}
+                           </CardBody>
+                        </Card>
                     ))}
                 </Col>
             </Row>

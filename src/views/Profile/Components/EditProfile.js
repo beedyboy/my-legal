@@ -43,6 +43,9 @@ const EditProfile = ({ initial_data, edit, submit, sending, toggle }) => {
           email: data && data.email,
           phone_number: data && data.phone_number,
           branchName: data && data.branchName,
+          address: data && data.address,
+          emergency_contact: data && data.emergency_contact,
+          emergency_phone: data && data.emergency_phone,
         },
       }));
     }
@@ -91,7 +94,6 @@ const EditProfile = ({ initial_data, edit, submit, sending, toggle }) => {
     e.preventDefault();
     submit(formState.values);
   };
-  
 
   return (
     <Fragment>
@@ -102,7 +104,9 @@ const EditProfile = ({ initial_data, edit, submit, sending, toggle }) => {
               <div className="d-flex justify-content-between align-items-center mb-3">
                 <div className="d-flex flex-row align-items-center back">
                   <i className="fa fa-long-arrow-left mr-1 mb-1"></i>
-                  <h6><span onClick={toggle}>Back to profile</span></h6>
+                  <h6>
+                    <span onClick={toggle}>Back to profile</span>
+                  </h6>
                 </div>
                 <h6 className="text-right">Edit Profile</h6>
               </div>
@@ -120,7 +124,7 @@ const EditProfile = ({ initial_data, edit, submit, sending, toggle }) => {
                 <Col md="6">
                   <Input
                     type="text"
-                    className="form-control" 
+                    className="form-control"
                     placeholder="last name"
                     name="lastname"
                     value={formState.values.lastname}
@@ -141,7 +145,7 @@ const EditProfile = ({ initial_data, edit, submit, sending, toggle }) => {
                 <Col md="6">
                   <Input
                     type="text"
-                    className="form-control" 
+                    className="form-control"
                     placeholder="Phone number"
                     name="phone_number"
                     value={formState.values.phone_number}
@@ -149,12 +153,12 @@ const EditProfile = ({ initial_data, edit, submit, sending, toggle }) => {
                   />
                 </Col>
               </Row>
-             
+
               <Row className="mt-3">
-              <Col md="12">
+                <Col md="12">
                   <Input
                     type="textarea"
-                    className="form-control" 
+                    className="form-control"
                     placeholder="Address"
                     name="address"
                     value={formState.values.address}
@@ -170,14 +174,14 @@ const EditProfile = ({ initial_data, edit, submit, sending, toggle }) => {
                     className="form-control"
                     placeholder="Emergency contact"
                     name="emergency_contact"
-                    value={formState.values.emergency_contact} 
+                    value={formState.values.emergency_contact}
                     onChange={handleChange}
                   />
                 </Col>
                 <Col md="6">
                   <Input
                     type="text"
-                    className="form-control" 
+                    className="form-control"
                     placeholder="Emergency Phone number"
                     name="emergency_phone"
                     value={formState.values.emergency_phone}
@@ -188,13 +192,19 @@ const EditProfile = ({ initial_data, edit, submit, sending, toggle }) => {
 
               <div className="mt-5 text-right">
                 <Button
-                color="primary"
+                  color="primary"
                   className="profile-button"
                   type="button"
                   onClick={handleSubmit}
-                >{sending ? (
-                    <span> Saving Profile  <i className="fa fa-spinner"></i></span>
-                    ): 'Save Profile'} 
+                >
+                  {sending ? (
+                    <span>
+                      {" "}
+                      Saving Profile <i className="fa fa-spinner"></i>
+                    </span>
+                  ) : (
+                    "Save Profile"
+                  )}
                 </Button>
               </div>
             </div>

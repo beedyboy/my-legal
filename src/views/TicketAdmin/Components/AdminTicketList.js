@@ -37,7 +37,7 @@ const columns = [
     name: 'Actions',
     sortable: true,
     cell: row => <div> 
-      <Link to={`/admin/ticket/${row.id}/view`} className="btn btn-info btn-sm">View</Link>
+      <Link to={`/adminticket/view/${row.id}`} className="btn btn-info btn-sm">View</Link>
       {' '}
       <Button size="sm" color="warning" onClick={e => editData(e, row)}>
       <i className="fa fa-edit"></i>

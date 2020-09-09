@@ -65,7 +65,7 @@ const closeBtn = <Button className="close" onClick={handleClose}>&times;</Button
              >
                  <option value="">Select One</option>
                  {users && users.map((user) =>(
-                      <option key={user.id} value={user.id}>{`${user.firstname} ' ' ${user.lastname} `}</option>
+                      <option key={user.id} value={user.id}>{`${user.firstname} ${user.lastname} `}</option>
                  ))}
              </Input>
           </FormGroup> 

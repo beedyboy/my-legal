@@ -52,7 +52,7 @@ const AddAsset = ({ mode, open, handleClose, initial_data }) => {
   const { getSubByCatId, catsubs } = subStore;
   const [title, setTitle] = useState("Add Asset");
   const [subCategories, setSubCategories] = useState([]);
-  const [activeButton, setActiveButton] = useState("bought");
+  const [activeButton, setActiveButton] = useState("New");
   const [formState, setFormState] = useState({
     values: {
       id: "",
@@ -61,7 +61,7 @@ const AddAsset = ({ mode, open, handleClose, initial_data }) => {
       sub_id: "",
       purchased_price: "",
       serial: "",
-      condition: "",
+      condition: "New",
       description: "",
       purchased_date: "",
       start_date: "",
@@ -89,10 +89,14 @@ const AddAsset = ({ mode, open, handleClose, initial_data }) => {
             sub_id: data && data.sub_id,
             purchased_price: data && data.purchased_price,
             purchased_date: data && data.purchased_date,
+            start_date: data && data.start_date,
+            end_date: data && data.end_date,
+            company_name: data && data.company_name,
             serial: data && data.serial,
             description: data && data.description,
           },
         }));
+        handleButtonTab(data.condition);
       }
     }
     return () => {
@@ -121,9 +125,7 @@ const AddAsset = ({ mode, open, handleClose, initial_data }) => {
       errors: errors || {},
     }));
   }, [formState.values]);
-  const handleButtonTab = (data) => {
-    if (activeButton != data) setActiveButton(data);
-  };
+
   useEffect(() => {
     setSubCategories(catsubs);
     return () => {
@@ -157,6 +159,36 @@ const AddAsset = ({ mode, open, handleClose, initial_data }) => {
       getSubCategory(event.target.value);
     }
   };
+  const handleButtonTab = (data) => {
+    if (activeButton != data) {
+      setActiveButton(data);
+      handleCondition(data);
+    }
+  };
+  const handleCondition = (data) => {
+    if (data === 'Leased') {
+      setFormState((prev) => ({
+        ...prev,
+        values: {
+          ...prev.values,
+          condition: data,
+          purchased_date: ''
+        },
+      }));
+    } else {
+      setFormState((prev) => ({
+        ...prev,
+        values: {
+          ...prev.values,
+          condition: data,
+          company_name: '',
+          start_date: '',
+          end_date: ''
+        },
+      }));
+    }
+  };
+
   const handleSubCategory = (e) => {
     if (e !== null) {
       setFormState((state) => ({
@@ -181,7 +213,7 @@ const AddAsset = ({ mode, open, handleClose, initial_data }) => {
     }
   };
   const getSubCategory = (cat_id) => {
-    console.log({ cat_id });
+    // console.log({ cat_id });
     setSubCategories([]);
     setFormState((prev) => ({
       ...prev,
@@ -214,7 +246,7 @@ const AddAsset = ({ mode, open, handleClose, initial_data }) => {
         sub_id: "",
         purchased_price: "",
         serial: "",
-        condition: "",
+        condition: "New",
         description: "",
         purchased_date: "",
         start_date: "",
@@ -355,14 +387,14 @@ const AddAsset = ({ mode, open, handleClose, initial_data }) => {
                   <Col md="12" sm="12" className="mt-2">
                     <ButtonGroup>
                       <Button
-                        color={activeButton === "bought" ? "primary" : "info"}
-                        onClick={(e) => handleButtonTab("bought")}
+                        color={activeButton === "New" ? "primary" : "info"}
+                        onClick={(e) => handleButtonTab("New")}
                       >
                         New
                       </Button>
                       <Button
-                        color={activeButton === "leased" ? "primary" : "info"}
-                        onClick={(e) => handleButtonTab("leased")}
+                        color={activeButton === "Leased" ? "primary" : "info"}
+                        onClick={(e) => handleButtonTab("Leased")}
                       >
                         Leased
                       </Button>
@@ -371,7 +403,7 @@ const AddAsset = ({ mode, open, handleClose, initial_data }) => {
 
                   <Col
                     md="12"
-                    className={activeButton === "leased" ? "active" : "d-none"}
+                    className={activeButton === "Leased" ? "active" : "d-none"}
                   >
                     <FormGroup>
                       <Label for="start_date">Start Date</Label>
@@ -387,7 +419,7 @@ const AddAsset = ({ mode, open, handleClose, initial_data }) => {
                   </Col>
                   <Col
                     md="12"
-                    className={activeButton === "leased" ? "active" : "d-none"}
+                    className={activeButton === "Leased" ? "active" : "d-none"}
                   >
                     <FormGroup>
                       <Label for="end_date">End Date</Label>
@@ -403,7 +435,7 @@ const AddAsset = ({ mode, open, handleClose, initial_data }) => {
                   </Col>
                   <Col
                     md="12"
-                    className={activeButton === "leased" ? "active" : "d-none"}
+                    className={activeButton === "Leased" ? "active" : "d-none"}
                   >
                     <FormGroup>
                       <Label for="company_name">Company Name</Label>
@@ -420,7 +452,7 @@ const AddAsset = ({ mode, open, handleClose, initial_data }) => {
 
                   <Col
                     md="12"
-                    className={activeButton === "bought" ? "active" : "d-none"}
+                    className={activeButton === "New" ? "active" : "d-none"}
                   >
                     <FormGroup>
                       <Label for="purchased_date">Date</Label>

@@ -119,7 +119,7 @@ const Routes = () => {
                 component={AdminTicketDetails}
                 exact
                 layout={MainLayout}
-                path="/admin/ticket/:id/view"
+                path="/adminticket/view/:id"
           />
         <PrivateRoute
                 component={ReportView} 

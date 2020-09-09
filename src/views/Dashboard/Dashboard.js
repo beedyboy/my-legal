@@ -3,6 +3,7 @@ import { Row, Col, Card, CardHeader, CardBody } from 'reactstrap';
 import BranchStore from '../../stores/BranchStore';
 import AssetStore from '../../stores/AssetStore';
 import ProductStore from '../../stores/ProductStore';
+import {Doughnut} from 'react-chartjs-2';
 import UserStore from '../../stores/UserStore';
 import { observer } from 'mobx-react';
  
@@ -16,6 +17,30 @@ const { stats } = branchStore;
 const { totalAsset } = assetStore;
 const { totalProduct } = prodStore;
 const { totalUser } = userStore;
+const data = {
+	labels: [
+		'Asset',
+		'Branch',
+		'Product',
+		'User'
+	],
+	datasets: [{
+		data: [totalAsset, stats, totalProduct, totalUser],
+		backgroundColor: [
+		'#007BFF',
+		'#6C757D',
+		'#FFCE56',
+    '#17A2B8',
+    '#28A745'
+		],
+		hoverBackgroundColor: [
+		'#55A7FF',
+		'#484E53',
+		'#64C1CF',
+    '#6FC483'
+		]
+	}]
+};
   return (
     <Fragment>
       {/* <Container> */}
@@ -84,7 +109,11 @@ const { totalUser } = userStore;
           </Col>
         </Row>
      
-
+<Row>
+  <Col md="12" className="m-t-3">
+  <Doughnut data={data} />
+  </Col>
+</Row>
             </CardBody>
           </Card>
        {/* </Container> */}

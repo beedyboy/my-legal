@@ -28,14 +28,14 @@ const TicketDetails = (props) => {
   }, [props]);
   return (
     <Fragment>
-      <Row>
+      <Row> 
         <Col md="8">
           <Card className="mt-2">
             <CardBody>
               <h6 className="m-b-20 p-b-5 b-b-default f-w-600">Conversation</h6>
               <Row>
                 <Col md="12">
-                  <Conversation id={parseInt(props.match.params.id)} />
+                  <Conversation id={parseInt(props.match.params.id)} respondent="Requester" />
                 </Col>
               </Row>
             </CardBody>
@@ -86,7 +86,7 @@ const TicketDetails = (props) => {
                         open={modal}
                         handleClose={handleClose}
                         sending={sending}
-                        data={ticket.status}
+                        data={ticket && ticket.status}
                         close={close}
                         toggleStatus={toggleStatus}
                         toggleClose={toggleClose}
@@ -96,7 +96,7 @@ const TicketDetails = (props) => {
                   <Row>
                     <Col md="12">
                       <PerfectScrollBar>
-                        {ReactHtmlParser(ticket.description)}
+                        {ReactHtmlParser(ticket && ticket.description)}
                       </PerfectScrollBar>
                     </Col>
                   </Row>
