@@ -73,6 +73,23 @@ class AssetStore {
       console.log(error);
     }
   };
+  transferBulkAsset = (data) => {
+    try {
+      this.sending = true;
+      backend.post("asset/bulk/transfer", data).then((res) => {
+        this.sending = false;
+        if (res.data.status === 200) {
+          this.fetchAsset();
+          Beedy("success", res.data.message);
+          this.close = true;
+        } else {
+          Beedy("error", res.data.message);
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
   removeAsset = (id) => {
     try {
       this.deleting = true;
@@ -88,7 +105,7 @@ class AssetStore {
     } catch (error) {
       console.log(error);
     }
-  }; 
+  };
   getAssetById = (id) => {
     try {
       this.loading = true;
@@ -181,6 +198,7 @@ decorate(AssetStore, {
   totalAsset: computed,
   confirmAsset: action,
   createAsset: action,
+  transferBulkAsset: action,
   updateAsset: action,
   removeAsset: action,
   getAssetById: action,

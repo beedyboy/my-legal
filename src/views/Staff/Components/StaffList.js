@@ -1,5 +1,6 @@
 import React, { Fragment, useMemo, useState } from "react";
 import DataTable from "react-data-table-component";
+import { Link } from "react-router-dom";
 import {
   Row,
   Col,
@@ -16,7 +17,7 @@ const StaffList = ({
   setMode,
   setLogin,
   setId,
-  setACL, 
+  setACL,
   removeData,
   rowData,
   toggle,
@@ -27,7 +28,13 @@ const StaffList = ({
     {
       name: "Name",
       sortable: true,
-      cell: (row) => <Fragment>{row.firstname + " " + row.lastname}</Fragment>,
+      cell: (row) => (
+        <Fragment>
+          <Link to={`/staff/${row.id}/view`} className="text-info">
+            {row.firstname + " " + row.lastname}
+          </Link>
+        </Fragment>
+      ),
     },
     {
       name: "Email",
@@ -62,24 +69,24 @@ const StaffList = ({
             }}
           >
             <i className="fa fa-trash"></i>
-          </Button>{" "} 
-           <Fragment>
-           <UncontrolledButtonDropdown size="sm">
+          </Button>{" "}
+          <Fragment>
+            <UncontrolledButtonDropdown size="sm">
               <DropdownToggle caret color="warning">
                 Set
               </DropdownToggle>
               <DropdownMenu>
                 <DropdownItem size="sm" onClick={(e) => assignACL(e, row)}>
-                  <i className="fa fa-key"></i>   Roles
+                  <i className="fa fa-key"></i> Roles
                 </DropdownItem>
-              {row.can_login === "No" ? ( 
-                  <DropdownItem size="sm" onClick={(e) => createLogin(e, row)}> 
-                  <i className="fa fa-plus"></i>  Login
-                </DropdownItem>
-          ) : null}
+                {row.can_login === "No" ? (
+                  <DropdownItem size="sm" onClick={(e) => createLogin(e, row)}>
+                    <i className="fa fa-plus"></i> Login
+                  </DropdownItem>
+                ) : null}
               </DropdownMenu>
             </UncontrolledButtonDropdown>
-           </Fragment>
+          </Fragment>
         </div>
       ),
     },

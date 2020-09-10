@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 const Sidebar = () => {
   const [superMenu, setSuperMenu] = useState({
+    asset: false,
     inventory: false,
     ticketing: false,
     settings: false,
@@ -25,15 +26,25 @@ const Sidebar = () => {
           </Link>
         </li>
 
-        <li>
-          <Link to="/asset">
-            <span className="icon">
-              <i className="fa fa-product-hunt" aria-hidden="true"></i>
-            </span>
-            <span className="title">Asset</span>
-          </Link>
+        <li className="super">
+          <span className="icon">
+            <i className="fa fa-product-hunt" aria-hidden="true"></i>
+          </span>
+          <span
+            className="title"
+            onClick={(e) => getSuper("asset", superMenu.asset)}
+          >
+            Asset<i className="fa fa-chevron-down caret"></i>
+          </span>
+          <ul className={`submenu ${superMenu.asset ? " show" : ""}`}>
+            <li>
+              <Link to="/asset">Manage Asset </Link>
+            </li>
+            <li>
+              <Link to="/maintenance">Maintenance </Link>
+            </li>
+          </ul>
         </li>
-
         <li>
           <Link to="/staff">
             <span className="icon">

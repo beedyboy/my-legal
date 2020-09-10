@@ -65,19 +65,17 @@ const TicketDetails = (props) => {
                       </h6>
                     </Col>
                     <Col md="12">
-                      {/* <p className="m-b-10 f-w-600">Ticket Manager
-                        <Button size="sm" color="warning" onClick={toggleAssign}>
-                          <i className="fa fa-edit"></i>
-                        </Button></p> */}
+                      <p className="m-b-10 f-w-600">Ticket Manager
+                         </p>
                       <h6 className="text-muted f-w-400">
                         {" "}
-                        {ticket && ticket.assigned_to}
+                        {` ${ticket && ticket.firstname}  ${ticket && ticket.lastname}`}
                       </h6>
                     </Col>
                     <Col md="12">
                       <p className="m-b-10 f-w-600">Status</p>
                       <h6 className="text-muted f-w-400">
-                        <Badge>{ticket && ticket.status}</Badge>
+                        <Badge>{ticket && ticket.status}</Badge> {" "}
                         <Button size="sm" color="warning" onClick={handleClose}>
                           <i className="fa fa-edit"></i>
                         </Button>

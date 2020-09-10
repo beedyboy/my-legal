@@ -20,13 +20,10 @@ const Profile = () => {
       <Fragment>
       <Card className='mt-2'>
          <CardHeader>
+           <h5>Profile Management</h5>
          </CardHeader>
          <CardBody>
-         <Row>
-           <Col md="5" sm="12">
-             <h5>Profile Management</h5>
-          
-           </Col>
+         <Row> 
             
            <Col md="12" sm="12" className='mt-2'>
              {edit ? 

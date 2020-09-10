@@ -14,3 +14,4 @@ export { default as Ticket } from "./Ticket";
 export { default as TicketAdmin } from "./TicketAdmin";
 export { default as Report } from "./Report";
 export { default as Profile } from "./Profile";
+export { default as Maintenance } from "./Maintenance";

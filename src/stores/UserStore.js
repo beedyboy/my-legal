@@ -16,6 +16,7 @@ class UserStore {
   closeACL = false;
   closeLogin = false;
   users = [];
+  profile = [];
   profiles = [];
 
   toggleClose = () => {
@@ -111,6 +112,14 @@ class UserStore {
     });
   };
 
+  getProfileById = (id) => {
+    backend.get("user/profile/" + id).then((res) => {
+      if (res.data.status === 200) {
+        this.profile = res.data.data; 
+      }
+    });
+  };
+
   updateProfile = (data) => {
     this.sending = true;
     backend.post("user/update/profile", data).then((res) => {
@@ -191,6 +200,7 @@ decorate(UserStore, {
   error: observable,
   loading: observable,
   users: observable,
+  profile: observable,
   profiles: observable,
   sending: observable,
   emailExist: observable,
@@ -199,6 +209,7 @@ decorate(UserStore, {
   toggleClose: action,
   fetchUsers: action,
   getProfile: action,
+  getProfileById: action,
   updateProfile: action,
   createStaff: action,
   confirmEmail: action,

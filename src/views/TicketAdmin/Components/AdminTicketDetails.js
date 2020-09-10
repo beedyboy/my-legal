@@ -43,8 +43,7 @@ const AdminTicketDetails = (props) => {
                   Back to Tickets
                 </Link>
               </h6>
-            </div>
-            {/* <h6 className="text-right">Edit Profile</h6> */}
+            </div> 
           </div>
         </Col>
         <Col md="8">
