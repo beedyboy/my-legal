@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
+import Utility from "../../services/UtilityService";
 
 const Sidebar = () => {
   const [superMenu, setSuperMenu] = useState({
@@ -14,6 +15,19 @@ const Sidebar = () => {
       [item]: !value,
     }));
   };
+
+  let access = Utility.get("acl");
+  let acl;
+
+  function canAccess(key, priviledge) {
+    if (access && access.length > 0) {
+      acl = JSON.parse(access);
+      return acl[key][priviledge];
+    }
+    return false;
+  }
+  // console.log(canAccess('asset', 'add'));
+
   return (
     <Fragment>
       <ul className="sidebar_menu">
@@ -109,6 +123,9 @@ const Sidebar = () => {
               <Link to="/branch">Branch </Link>
             </li>
             <li>
+              <Link to="/company">Company </Link>
+            </li>
+            <li>
               <Link to="/department">Department </Link>
             </li>
             <li>
@@ -127,24 +144,6 @@ const Sidebar = () => {
             <span className="title">Report</span>
           </Link>
         </li>
-
-        {/* 
-                    
-
-                    <li><Link to="/subcategory">
-                    <span className="icon">
-                    <i className="fa fa-tags" aria-hidden="true"></i>
-                    </span>
-                    <span className="title">Sub Category</span>
-                    </Link></li>
-
-                    <li><Link to="/department">
-                    <span className="icon">
-                    <i className="fa fa-sitemap" aria-hidden="true"></i>
-                    </span>
-                    <span className="title">Department</span>
-                    </Link></li>
- */}
       </ul>
     </Fragment>
   );

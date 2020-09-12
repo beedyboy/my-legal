@@ -3,23 +3,24 @@ import { Switch, Redirect } from "react-router-dom";
 import MainLayout from "./templates/MainLayout/MainLayout";
 import NormalLayout from "./templates/NormalLayout/NormalLayout";
 import {
-  Dashboard as DashboardView,
-  SignIn as SignInView,
-  NotFound as NotFoundView,
-  Branch as BranchView,
-  Department as DepartmentView,
-  Category as CategoryView,
-  Staff as StaffView,
-  SubCategory as SubCategoryView,
-  Product as ProductView,
-  ProductDetails as ProductDetailsView,
   Asset as AssetView,
+  Branch as BranchView,
+  Category as CategoryView,
+  Company as CompanyView,
+  Dashboard as DashboardView,
+  Department as DepartmentView,
+  NotFound as NotFoundView,
   Maintenance as MaintenanceView,
   POS as POSView,
+  Product as ProductView,
+  ProductDetails as ProductDetailsView,
+  Profile as ProfileView,
+  Report as ReportView,
+  SignIn as SignInView,
+  Staff as StaffView,
+  SubCategory as SubCategoryView,
   Ticket as TicketView,
   TicketAdmin as TicketAdminView,
-  Report as ReportView,
-  Profile as ProfileView,
 } from "./views";
 import { PrivateRoute, NormalRoute } from "./HOC";
 import AssetDetails from "./views/Asset/Components/AssetDetails";
@@ -41,6 +42,12 @@ const Routes = () => {
         exact
         layout={MainLayout}
         path="/branch"
+      />
+      <PrivateRoute
+        component={CompanyView}
+        exact
+        layout={MainLayout}
+        path="/company"
       />
       <PrivateRoute
         component={CategoryView}

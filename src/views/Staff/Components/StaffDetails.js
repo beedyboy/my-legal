@@ -2,7 +2,7 @@ import React, { Fragment, useContext, useEffect } from "react";
 import { Row, Col } from "reactstrap";
 import UserStore from "../../../stores/UserStore";
 import { Link } from "react-router-dom";
-import ReactHtmlParser from 'react-html-parser'; 
+import ReactHtmlParser from "react-html-parser";
 import { observer } from "mobx-react";
 
 const StaffDetails = (props) => {
@@ -10,39 +10,41 @@ const StaffDetails = (props) => {
   const { profile: data, getProfileById } = userStore;
   useEffect(() => {
     let id = parseInt(props.match.params.id);
-    getProfileById(id); 
-  }, [props]); 
+    getProfileById(id);
+  }, [props]);
   let access = data && data.acl;
   let acl;
-//   if( access && access.length > 0) {
-//     acl = JSON.parse(access);
-//     console.log(acl.asset, {acl})
-//   }
-let payload = '';
-  function showAccess () {
+
+  let payload = "";
+  function showAccess() {
     if (access && access.length > 0) {
-        acl = JSON.parse(access);
-        Object.keys(acl).map(key => { 
-          stressAccess(key, acl[key])
-        })
-      
-      }
+      acl = JSON.parse(access);
+      Object.keys(acl).map((key) => {
+        stressAccess(key, acl[key]);
+      });
+    }
   }
-  const stressAccess =  (key, item) => { 
-      let add = '';
+  const stressAccess = (key, item) => {
+    let add = "";
     for (let property in item) {
-        if(item[property] === true) { 
-            add  += "<span class='border-right  badge bg-success p-1'> Can " + property + "</span>";
-        } else {
-            add  += "<span class='border-right badge bg-warning p-1'> Cannot " + property + "</span>";
-        }
+      if (item[property] === true) {
+        add +=
+          "<span class='border-right  badge bg-success p-1'> Can " +
+          property +
+          "</span>";
+      } else {
+        add +=
+          "<span class='border-right badge bg-warning p-1'> Cannot " +
+          property +
+          "</span>";
+      }
     }
     payload += "<div class='row mb-1 border-bottom'>";
     payload += "<h6 class='border-bottom'>" + key.toUpperCase() + "</h6>";
     payload += "<div class='col-12 p-1'>" + add + "</div>";
     payload += "</div>";
-    return add 
-  } 
+    return add;
+  };
   return (
     <Fragment>
       <Row>
@@ -110,10 +112,9 @@ let payload = '';
             </Row>
 
             <h6 className="m-b-20 p-b-5 b-b-default f-w-600">Permissions</h6>
-           
+
             {showAccess()}
             {ReactHtmlParser(payload)}
-           
           </div>
         </Col>
       </Row>

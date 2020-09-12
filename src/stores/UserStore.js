@@ -140,6 +140,7 @@ class UserStore {
       if (res.data.status === 200) {
         Utility.save("name", res.data.staff[0].lastname);
         Utility.save("staff_token", res.data.token);
+        Utility.save("acl", res.data.staff[0].acl);
         this.isAuthenticated = true;
       } else {
         Beedy("error", res.data.msg);

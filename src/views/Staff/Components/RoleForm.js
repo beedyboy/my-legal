@@ -10,6 +10,7 @@ import {
   Button,
   Card,
   CardBody,
+  Form,
   FormGroup,
   Input,
   Label,
@@ -27,62 +28,79 @@ const RoleForm = ({ handleClose, open, id, initial_data }) => {
   const { assignRole, closeACL, toggleACLClose, sending } = userStore;
 
   const [priviledges, setPriviledges] = useState({
-    asset: { add: false, view: false, del: false },
+    asset: { add: false, view: false, del: false, modify: false },
     branch: { add: false, view: false, del: false },
+    category: { add: false, view: false, del: false },
+    company: { manage: false },
     department: { add: false, view: false, del: false },
     pos: { sell: false, view: false, modify: false },
     product: { add: false, view: false, del: false },
-    staff: { add: false, view: false, del: false },
+    staff: { add: false, view: false, del: false, modify: false },
     stock: { add: false, view: false, del: false },
-    ticket: { create: false, assign: false },
+    ticket: { create: false, manage: false },
+    report: { manage: false },
   });
 
   useLayoutEffect(() => {
     let shouldSetPriviledges =
       typeof initial_data !== "undefined" ? true : false;
     if (shouldSetPriviledges) {
-      const d = initial_data && initial_data.name;
-      const data = initial_data && initial_data.priviledges;
+      const acl = initial_data && initial_data.acl;
+      let data;
+      data = JSON.parse(acl);
       setPriviledges((state) => ({
         ...state,
         asset: {
-          add: data && data.asset.add,
-          view: data && data.asset.view,
-          del: data && data.asset.del,
+          add: (data && data.asset.add) || false,
+          view: (data && data.asset.view) || false,
+          del: (data && data.asset.del) || false,
+          modify: (data && data.asset.modify) || false,
         },
         branch: {
-          add: data && data.branch.add,
-          view: data && data.branch.view,
-          del: data && data.branch.del,
+          add: (data && data.branch.add) || false,
+          view: (data && data.branch.view) || false,
+          del: (data && data.branch.del) || false,
+        },
+        category: {
+          add: (data && data.category.add) || false,
+          view: (data && data.category.view) || false,
+          del: (data && data.category.del) || false,
+        },
+        company: {
+          manage: (data && data.company.manage) || false,
         },
         department: {
-          add: data && data.department.add,
-          view: data && data.department.view,
-          del: data && data.department.del,
+          add: (data && data.department.add) || false,
+          view: (data && data.department.view) || false,
+          del: (data && data.department.del) || false,
         },
         pos: {
-          sell: data && data.pos.sell,
-          view: data && data.pos.view,
-          modify: data && data.pos.modify,
+          sell: (data && data.pos.sell) || false,
+          view: (data && data.pos.view) || false,
+          modify: (data && data.pos.modify) || false,
         },
         product: {
-          add: data && data.product.add,
-          view: data && data.product.view,
-          del: data && data.product.del,
+          add: (data && data.product.add) || false,
+          view: (data && data.product.view) || false,
+          del: (data && data.product.del) || false,
         },
         staff: {
-          add: data && data.staffs.add,
-          view: data && data.staffs.view,
-          del: data && data.staffs.del,
+          add: (data && data.staff.add) || false,
+          view: (data && data.staff.view) || false,
+          del: (data && data.staff.del) || false,
+          modify: (data && data.staff.modify) || false,
         },
         stock: {
-          add: data && data.stock.add,
-          view: data && data.stock.view,
-          del: data && data.stock.del,
+          add: (data && data.stock.add) || false,
+          view: (data && data.stock.view) || false,
+          del: (data && data.stock.del) || false,
         },
         ticket: {
-          create: data && data.ticket.create,
-          assign: data && data.ticket.assign,
+          create: (data && data.ticket.create) || false,
+          manage: (data && data.ticket.manage) || false,
+        },
+        report: {
+          manage: (data && data.report.manage) || false,
         },
       }));
     }
@@ -118,14 +136,17 @@ const RoleForm = ({ handleClose, open, id, initial_data }) => {
       ...prev,
       values: {
         ...prev.values,
-        asset: { add: false, view: false, del: false },
+        asset: { add: false, view: false, del: false, modify: false },
         branch: { add: false, view: false, del: false },
+        category: { add: false, view: false, del: false },
+        company: { manage: false },
         department: { add: false, view: false, del: false },
         pos: { sell: false, view: false, modify: false },
         product: { add: false, view: false, del: false },
-        staff: { add: false, view: false, del: false },
+        staff: { add: false, view: false, del: false, modify: false },
         stock: { add: false, view: false, del: false },
-        ticket: { create: false, assign: false },
+        ticket: { create: false, manage: false },
+        report: { manage: false },
       },
     }));
   };
@@ -141,68 +162,67 @@ const RoleForm = ({ handleClose, open, id, initial_data }) => {
           {" "}
           Access Level
         </ModalHeader>
-        <form noValidate autoComplete="off" onSubmit={handleSubmit}>
+        <Form noValidate autoComplete="off" onSubmit={handleSubmit}>
           <ModalBody>
             <Card>
               <CardBody>
                 <h4 className="title"> Assign responsibility </h4>
                 <Row>
-                  <Col md="12">
-                    <Label>Asset:</Label>
+                  <Col md="12" className="border mb-1">
+                    <Label className="border-bottom bg-info">Asset:</Label>
                     <br />
                     <FormGroup check inline>
-                      <Label className="form-check-label">
+                      <Label>
                         <Input
-                          className="form-check-input"
                           type="checkbox"
                           checked={priviledges.asset.add || false}
                           name="add"
                           onChange={(event) => handleRoleChange(event, "asset")}
                         />
                         Add
-                        <span className="form-check-sign">
-                          <span className="check"></span>
-                        </span>
                       </Label>
                     </FormGroup>
                     <FormGroup check inline>
-                      <Label className="form-check-label">
+                      <Label>
                         <Input
-                          className="form-check-input"
                           type="checkbox"
                           checked={priviledges.asset.view || false}
                           name="view"
                           onChange={(event) => handleRoleChange(event, "asset")}
                         />
                         View
-                        <span className="form-check-sign">
-                          <span className="check"></span>
-                        </span>
                       </Label>
                     </FormGroup>
                     <FormGroup check inline>
-                      <Label className="form-check-label">
+                      <Label>
                         <Input
-                          className="form-check-input"
                           type="checkbox"
                           checked={priviledges.asset.del || false}
                           name="del"
                           onChange={(event) => handleRoleChange(event, "asset")}
                         />
                         Del
-                        <span className="form-check-sign">
-                          <span className="check"></span>
-                        </span>
+                      </Label>
+                    </FormGroup>
+                    <FormGroup check inline>
+                      <Label>
+                        <Input
+                          type="checkbox"
+                          checked={priviledges.asset.modify || false}
+                          name="modify"
+                          onChange={(event) => handleRoleChange(event, "asset")}
+                        />
+                        Modify
                       </Label>
                     </FormGroup>
                   </Col>
 
-                  <Col md="12">
-                    <Label>Branch:</Label> <br />
+                  <Col md="12" className="border mb-1">
+                    <Label className="border-bottom bg-info">Branch:</Label>{" "}
+                    <br />
                     <FormGroup check inline>
-                      <Label className="form-check-label">
+                      <Label>
                         <Input
-                          className="form-check-input"
                           type="checkbox"
                           checked={priviledges.branch.add || false}
                           name="add"
@@ -211,15 +231,11 @@ const RoleForm = ({ handleClose, open, id, initial_data }) => {
                           }
                         />
                         Add
-                        <span className="form-check-sign">
-                          <span className="check"></span>
-                        </span>
                       </Label>
                     </FormGroup>
                     <FormGroup check inline>
-                      <Label className="form-check-label">
+                      <Label>
                         <Input
-                          className="form-check-input"
                           type="checkbox"
                           checked={priviledges.branch.view || false}
                           name="view"
@@ -228,15 +244,11 @@ const RoleForm = ({ handleClose, open, id, initial_data }) => {
                           }
                         />
                         View
-                        <span className="form-check-sign">
-                          <span className="check"></span>
-                        </span>
                       </Label>
                     </FormGroup>
                     <FormGroup check inline>
-                      <Label className="form-check-label">
+                      <Label>
                         <Input
-                          className="form-check-input"
                           type="checkbox"
                           checked={priviledges.branch.del || false}
                           name="del"
@@ -245,19 +257,78 @@ const RoleForm = ({ handleClose, open, id, initial_data }) => {
                           }
                         />
                         Del
-                        <span className="form-check-sign">
-                          <span className="check"></span>
-                        </span>
                       </Label>
                     </FormGroup>
                   </Col>
 
-                  <Col md="12">
-                    <Label>Department:</Label> <br />
+                  <Col md="12" className="border mb-1">
+                    <Label className="border-bottom bg-info">Category:</Label>{" "}
+                    <br />
                     <FormGroup check inline>
-                      <Label className="form-check-label">
+                      <Label>
                         <Input
-                          className="form-check-input"
+                          type="checkbox"
+                          checked={priviledges.category.add || false}
+                          name="add"
+                          onChange={(event) =>
+                            handleRoleChange(event, "category")
+                          }
+                        />
+                        Add
+                      </Label>
+                    </FormGroup>
+                    <FormGroup check inline>
+                      <Label>
+                        <Input
+                          type="checkbox"
+                          checked={priviledges.category.view || false}
+                          name="view"
+                          onChange={(event) =>
+                            handleRoleChange(event, "category")
+                          }
+                        />
+                        View
+                      </Label>
+                    </FormGroup>
+                    <FormGroup check inline>
+                      <Label>
+                        <Input
+                          type="checkbox"
+                          checked={priviledges.category.del || false}
+                          name="del"
+                          onChange={(event) =>
+                            handleRoleChange(event, "category")
+                          }
+                        />
+                        Del
+                      </Label>
+                    </FormGroup>
+                  </Col>
+
+                  <Col md="12" className="border mb-1">
+                    <Label className="border-bottom bg-info">Company:</Label>{" "}
+                    <br />
+                    <FormGroup check inline>
+                      <Label>
+                        <Input
+                          type="checkbox"
+                          checked={priviledges.company.manage || false}
+                          name="manage"
+                          onChange={(event) =>
+                            handleRoleChange(event, "company")
+                          }
+                        />
+                        Manage
+                      </Label>
+                    </FormGroup>
+                  </Col>
+
+                  <Col md="12" className="border mb-1">
+                    <Label className="border-bottom bg-info">Department:</Label>{" "}
+                    <br />
+                    <FormGroup check inline>
+                      <Label>
+                        <Input
                           type="checkbox"
                           checked={priviledges.department.add || false}
                           name="add"
@@ -266,15 +337,11 @@ const RoleForm = ({ handleClose, open, id, initial_data }) => {
                           }
                         />
                         Add
-                        <span className="form-check-sign">
-                          <span className="check"></span>
-                        </span>
                       </Label>
                     </FormGroup>
                     <FormGroup check inline>
-                      <Label className="form-check-label">
+                      <Label>
                         <Input
-                          className="form-check-input"
                           type="checkbox"
                           checked={priviledges.department.view || false}
                           name="view"
@@ -283,15 +350,11 @@ const RoleForm = ({ handleClose, open, id, initial_data }) => {
                           }
                         />
                         View
-                        <span className="form-check-sign">
-                          <span className="check"></span>
-                        </span>
                       </Label>
                     </FormGroup>
                     <FormGroup check inline>
-                      <Label className="form-check-label">
+                      <Label>
                         <Input
-                          className="form-check-input"
                           type="checkbox"
                           checked={priviledges.department.del || false}
                           name="del"
@@ -300,68 +363,53 @@ const RoleForm = ({ handleClose, open, id, initial_data }) => {
                           }
                         />
                         Del
-                        <span className="form-check-sign">
-                          <span className="check"></span>
-                        </span>
                       </Label>
                     </FormGroup>
                   </Col>
 
-                  <Col md="12">
-                    <Label>POS</Label> <br />
+                  <Col md="12" className="border mb-1">
+                    <Label className="border-bottom bg-info">POS</Label> <br />
                     <FormGroup check inline>
-                      <Label className="form-check-label">
+                      <Label>
                         <Input
-                          className="form-check-input"
                           type="checkbox"
                           checked={priviledges.pos.sell || false}
                           name="sell"
                           onChange={(event) => handleRoleChange(event, "pos")}
                         />
                         Sell
-                        <span className="form-check-sign">
-                          <span className="check"></span>
-                        </span>
                       </Label>
                     </FormGroup>
                     <FormGroup check inline>
-                      <Label className="form-check-label">
+                      <Label>
                         <Input
-                          className="form-check-input"
                           type="checkbox"
                           checked={priviledges.pos.view || false}
                           name="view"
                           onChange={(event) => handleRoleChange(event, "pos")}
                         />
                         View
-                        <span className="form-check-sign">
-                          <span className="check"></span>
-                        </span>
                       </Label>
                     </FormGroup>
                     <FormGroup check inline>
-                      <Label className="form-check-label">
+                      <Label>
                         <Input
-                          className="form-check-input"
                           type="checkbox"
                           checked={priviledges.pos.modify || false}
                           name="modify"
                           onChange={(event) => handleRoleChange(event, "pos")}
                         />
                         Modify
-                        <span className="form-check-sign">
-                          <span className="check"></span>
-                        </span>
                       </Label>
                     </FormGroup>
                   </Col>
 
-                  <Col md="12">
-                    <Label>Products</Label> <br />
+                  <Col md="12" className="border mb-1">
+                    <Label className="border-bottom bg-info">Products</Label>{" "}
+                    <br />
                     <FormGroup check inline>
-                      <Label className="form-check-label">
+                      <Label>
                         <Input
-                          className="form-check-input"
                           type="checkbox"
                           checked={priviledges.product.add || false}
                           name="add"
@@ -370,15 +418,11 @@ const RoleForm = ({ handleClose, open, id, initial_data }) => {
                           }
                         />
                         Add
-                        <span className="form-check-sign">
-                          <span className="check"></span>
-                        </span>
                       </Label>
                     </FormGroup>
                     <FormGroup check inline>
-                      <Label className="form-check-label">
+                      <Label>
                         <Input
-                          className="form-check-input"
                           type="checkbox"
                           checked={priviledges.product.view || false}
                           name="view"
@@ -387,15 +431,11 @@ const RoleForm = ({ handleClose, open, id, initial_data }) => {
                           }
                         />
                         View
-                        <span className="form-check-sign">
-                          <span className="check"></span>
-                        </span>
                       </Label>
                     </FormGroup>
                     <FormGroup check inline>
-                      <Label className="form-check-label">
+                      <Label>
                         <Input
-                          className="form-check-input"
                           type="checkbox"
                           checked={priviledges.product.del || false}
                           name="del"
@@ -404,117 +444,103 @@ const RoleForm = ({ handleClose, open, id, initial_data }) => {
                           }
                         />
                         Del
-                        <span className="form-check-sign">
-                          <span className="check"></span>
-                        </span>
                       </Label>
                     </FormGroup>
                   </Col>
 
-                  <Col md="12">
-                    <Label>Staff</Label> <br />
+                  <Col md="12" className="border mb-1">
+                    <Label className="border-bottom bg-info">Staff</Label>{" "}
+                    <br />
                     <FormGroup check inline>
-                      <Label className="form-check-label">
+                      <Label>
                         <Input
-                          className="form-check-input"
                           type="checkbox"
                           checked={priviledges.staff.add || false}
                           name="add"
                           onChange={(event) => handleRoleChange(event, "staff")}
                         />
                         Add
-                        <span className="form-check-sign">
-                          <span className="check"></span>
-                        </span>
                       </Label>
                     </FormGroup>
                     <FormGroup check inline>
-                      <Label className="form-check-label">
+                      <Label>
                         <Input
-                          className="form-check-input"
                           type="checkbox"
                           checked={priviledges.staff.view || false}
                           name="view"
                           onChange={(event) => handleRoleChange(event, "staff")}
                         />
                         View
-                        <span className="form-check-sign">
-                          <span className="check"></span>
-                        </span>
                       </Label>
                     </FormGroup>
                     <FormGroup check inline>
-                      <Label className="form-check-label">
+                      <Label>
                         <Input
-                          className="form-check-input"
                           type="checkbox"
                           checked={priviledges.staff.del || false}
                           name="del"
                           onChange={(event) => handleRoleChange(event, "staff")}
                         />
                         Del
-                        <span className="form-check-sign">
-                          <span className="check"></span>
-                        </span>
+                      </Label>
+                    </FormGroup>
+                    <FormGroup check inline>
+                      <Label>
+                        <Input
+                          type="checkbox"
+                          checked={priviledges.staff.modify || false}
+                          name="modify"
+                          onChange={(event) => handleRoleChange(event, "staff")}
+                        />
+                        Modify
                       </Label>
                     </FormGroup>
                   </Col>
 
-                  <Col md="12">
-                    <Label>Stock</Label> <br />
+                  <Col md="12" className="border mb-1">
+                    <Label className="border-bottom bg-info">Stock</Label>{" "}
+                    <br />
                     <FormGroup check inline>
-                      <Label className="form-check-label">
+                      <Label>
                         <Input
-                          className="form-check-input"
                           type="checkbox"
                           checked={priviledges.stock.add || false}
                           name="add"
                           onChange={(event) => handleRoleChange(event, "stock")}
                         />
                         Add
-                        <span className="form-check-sign">
-                          <span className="check"></span>
-                        </span>
                       </Label>
                     </FormGroup>
                     <FormGroup check inline>
-                      <Label className="form-check-label">
+                      <Label>
                         <Input
-                          className="form-check-input"
                           type="checkbox"
                           checked={priviledges.stock.view || false}
                           name="view"
                           onChange={(event) => handleRoleChange(event, "stock")}
                         />
                         View
-                        <span className="form-check-sign">
-                          <span className="check"></span>
-                        </span>
                       </Label>
                     </FormGroup>
                     <FormGroup check inline>
-                      <Label className="form-check-label">
+                      <Label>
                         <Input
-                          className="form-check-input"
                           type="checkbox"
                           checked={priviledges.stock.del || false}
                           name="del"
                           onChange={(event) => handleRoleChange(event, "stock")}
                         />
                         Del
-                        <span className="form-check-sign">
-                          <span className="check"></span>
-                        </span>
                       </Label>
                     </FormGroup>
                   </Col>
 
-                  <Col md="12">
-                    <Label>Ticket</Label> <br />
+                  <Col md="12" className="border mb-1">
+                    <Label className="border-bottom bg-info">Ticket</Label>{" "}
+                    <br />
                     <FormGroup check inline>
-                      <Label className="form-check-label">
+                      <Label>
                         <Input
-                          className="form-check-input"
                           type="checkbox"
                           checked={priviledges.ticket.create || false}
                           name="create"
@@ -523,26 +549,37 @@ const RoleForm = ({ handleClose, open, id, initial_data }) => {
                           }
                         />
                         Create
-                        <span className="form-check-sign">
-                          <span className="check"></span>
-                        </span>
                       </Label>
                     </FormGroup>
                     <FormGroup check inline>
-                      <Label className="form-check-label">
+                      <Label>
                         <Input
-                          className="form-check-input"
                           type="checkbox"
-                          checked={priviledges.ticket.assign || false}
-                          name="assign"
+                          checked={priviledges.ticket.manage || false}
+                          name="manage"
                           onChange={(event) =>
                             handleRoleChange(event, "ticket")
                           }
                         />
-                        Assign
-                        <span className="form-check-sign">
-                          <span className="check"></span>
-                        </span>
+                        Manage
+                      </Label>
+                    </FormGroup>
+                  </Col>
+
+                  <Col md="12" className="border mb-1">
+                    <Label className="border-bottom bg-info">Report:</Label>{" "}
+                    <br />
+                    <FormGroup check inline>
+                      <Label>
+                        <Input
+                          type="checkbox"
+                          checked={priviledges.report.manage || false}
+                          name="manage"
+                          onChange={(event) =>
+                            handleRoleChange(event, "report")
+                          }
+                        />
+                        Manage
                       </Label>
                     </FormGroup>
                   </Col>
@@ -554,11 +591,7 @@ const RoleForm = ({ handleClose, open, id, initial_data }) => {
             <Button color="secondary" onClick={handleClose}>
               Close
             </Button>
-            <Button
-              color="primary"
-              disabled={  sending}
-              type="submit"
-            >
+            <Button color="primary" disabled={sending} type="submit">
               {sending ? (
                 <span>
                   {" "}
@@ -569,7 +602,7 @@ const RoleForm = ({ handleClose, open, id, initial_data }) => {
               )}
             </Button>
           </ModalFooter>
-        </form>
+        </Form>
       </Modal>
     </Fragment>
   );

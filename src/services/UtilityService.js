@@ -16,6 +16,7 @@ const Utility = {
      logout: () => {
         localStorage.removeItem('staff_token'); 
         localStorage.removeItem('name');  
+        localStorage.removeItem('acl');  
         window.location.href = '/sign-in'; 
     }
 }

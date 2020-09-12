@@ -104,6 +104,7 @@ const StaffList = ({
   };
   const assignACL = (e, row) => {
     e.persist();
+    rowData(row);
     setId(row.id);
     setACL();
   };
