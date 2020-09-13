@@ -1,57 +1,66 @@
-import React, { useContext, useState, Fragment } from 'react';
-import { observer } from 'mobx-react';
-import { Card, CardBody, CardHeader, Button, Row, Col } from 'reactstrap'
-import AssetStore from '../../stores/AssetStore';
-import AddAsset from './Components/AddAsset';
-import AssetList from './Components/AssetList';
+import React, { useContext, useState, Fragment } from "react";
+import { observer } from "mobx-react";
+import { Card, CardBody, CardHeader, Button, Row, Col } from "reactstrap";
+import AssetStore from "../../stores/AssetStore";
+import AddAsset from "./Components/AddAsset";
+import AssetList from "./Components/AssetList";
+import Utility from "../../services/UtilityService";
 
-const Asset = () => { 
-  const assetStore=  useContext(AssetStore);
-  const { info:assets, removeAsset, deleting} = assetStore;  
-  const [mode, setMode] = useState('');
-  const [rowData, setRowData] = useState(); 
-  const [modal, setModal] = useState(false);   
+const Asset = () => {
+  const assetStore = useContext(AssetStore);
+  const { info: assets, removeAsset, deleting } = assetStore;
+  const [mode, setMode] = useState("");
+  const [rowData, setRowData] = useState();
+  const [modal, setModal] = useState(false);
   const handleClose = () => {
-    setModal(!modal);  
-  }
+    setModal(!modal);
+  };
   const createAsset = () => {
-    setModal(true); 
-    setMode('Add'); 
-  }  
-    return( 
-      <Fragment>
-      <Card className='mt-2'>
-         <CardHeader>
-         </CardHeader>
-         <CardBody>
-         <Row>
-           <Col md="5" sm="12">
-             <h5>Asset Management</h5>
-          
-           </Col>
-           <Col md={{ size: 3, offset: 4 }} sm="12"> 
-           {/* <Button color="secondary" className='float-right' onClick={createAsset}
-           >Add Asset</Button>{' '} */}
-           </Col>
-           <Col md="12" sm="12" className='mt-2'>
-             <AssetList deleting={deleting} createAsset={createAsset} data={assets} setMode={setMode} toggle={handleClose} removeData={removeAsset} rowData={setRowData} /> 
-           </Col>
-         </Row>
-         <AddAsset mode={mode} open={modal} handleClose={handleClose} initial_data={rowData} /> 
+    setModal(true);
+    setMode("Add");
+  };
 
-       {/* <Modal isOpen={modal} toggle={toggle}>
-           <ModalHeader toggle={toggle} close={closeBtn}>{title}</ModalHeader>
-           <ModalBody>
-               <AddDepartment mode={mode} open={modal}  initial_data={rowData} />
-           </ModalBody>
-       </Modal>  */}
-
-         </CardBody>
-       </Card>
-   
-   </Fragment>  
-
-    )
-}
+  let canAdd = Utility.canAccess("asset", "add");
+  let canDel = Utility.canAccess("asset", "del");
+  let canView = Utility.canAccess("asset", "view");
+  let canModify = Utility.canAccess("asset", "modify");
+  return (
+    <Fragment>
+      <Card className="mt-2">
+        <CardHeader>
+          <h5>Asset Management</h5>
+        </CardHeader>
+        <CardBody>
+          <Row>
+            <Col md="12" sm="12" className="mt-2">
+              {canView ? (
+                <AssetList
+                  canAdd={canAdd}
+                  canDel={canDel}
+                  canModify={canModify}
+                  deleting={deleting}
+                  createAsset={createAsset}
+                  data={assets}
+                  setMode={setMode}
+                  toggle={handleClose}
+                  removeData={removeAsset}
+                  rowData={setRowData}
+                />
+              ) : (
+                "You do not have access to view"
+              )}
+            </Col>
+          </Row>
+          <AddAsset
+            mode={mode}
+            open={modal}
+            handleClose={handleClose}
+            initial_data={rowData}
+          />
+        </CardBody>
+      </Card>
+    </Fragment>
+  );
+};
 
 export default observer(Asset);

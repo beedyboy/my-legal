@@ -15,11 +15,13 @@ import {
 import PerfectScrollBar from "react-perfect-scrollbar";
 import { observer } from "mobx-react";
 import Status from "./Status";
-import AssetStore from "../../../stores/AssetStore"; 
+import AssetStore from "../../../stores/AssetStore";
 import TransferDept from "../../../components/Asset/TransferDept";
 import TransferIndividual from "../../../components/Asset/TransferIndividual";
 import MyAllocations from "../../../components/Asset/MyAllocations";
+import Utility from "../../../services/UtilityService";
 
+let canModify = Utility.canAccess("asset", "modify");
 const AssetDetails = (props) => {
   const assetStore = useContext(AssetStore);
   const {
@@ -31,11 +33,11 @@ const AssetDetails = (props) => {
     myAllocation,
     toggleClose,
     toggleStatus,
-  } = assetStore; 
+  } = assetStore;
   const [modal, setModal] = useState(false);
   const [deptModal, setDeptModal] = useState(false);
   const [indModal, setIndModal] = useState(false);
-  const [dropdownOpen, setOpen] = useState(false); 
+  const [dropdownOpen, setOpen] = useState(false);
   const handleClose = () => {
     setModal(!modal);
   };
@@ -75,20 +77,37 @@ const AssetDetails = (props) => {
                 <CardBody>
                   <h6 className="m-b-20 p-b-5 b-b-default f-w-600">
                     Asset Information
-                    <ButtonDropdown isOpen={dropdownOpen} toggle={toggle}>
-                      <DropdownToggle caret color="primary">
-                        Transfer
-                      </DropdownToggle>
-                      <DropdownMenu>
-                        <DropdownItem onClick={toggleIndividual}>Individual</DropdownItem>
-                        <DropdownItem onClick={toggleDepartmental}>Department</DropdownItem>
-                      </DropdownMenu>
-                    </ButtonDropdown>{" "}
-                    <Button color="danger">Maintenance</Button>{" "}
-                    {/* <Button color="secondary">Transfer</Button>{" "} */}
+                    {canModify ? (
+                      <Fragment>
+                        <ButtonDropdown isOpen={dropdownOpen} toggle={toggle}>
+                          <DropdownToggle caret color="primary">
+                            Transfer
+                          </DropdownToggle>
+                          <DropdownMenu>
+                            <DropdownItem onClick={toggleIndividual}>
+                              Individual
+                            </DropdownItem>
+                            <DropdownItem onClick={toggleDepartmental}>
+                              Department
+                            </DropdownItem>
+                          </DropdownMenu>
+                        </ButtonDropdown>{" "}
+                        <Button color="warning">Maintenance</Button>{" "}
+                      </Fragment>
+                    ) : null}
                   </h6>
-                  <TransferDept id={parseInt(props.match.params.id)} mode="Add" handleClose={toggleDepartmental} open={deptModal} />
-                  <TransferIndividual id={parseInt(props.match.params.id)} mode="Add" handleClose={toggleIndividual} open={indModal} />
+                  <TransferDept
+                    id={parseInt(props.match.params.id)}
+                    mode="Add"
+                    handleClose={toggleDepartmental}
+                    open={deptModal}
+                  />
+                  <TransferIndividual
+                    id={parseInt(props.match.params.id)}
+                    mode="Add"
+                    handleClose={toggleIndividual}
+                    open={indModal}
+                  />
                   <Row>
                     <Col md="12">
                       <p className="m-b-10 f-w-600">Name</p>
@@ -118,28 +137,20 @@ const AssetDetails = (props) => {
                         {asset && asset.created_at}
                       </h6>
                     </Col>
-                    {/* <Col md="12">
-                      <p className="m-b-10 f-w-600">Ticket Manager
-                        <Button size="sm" color="warning" onClick={toggleAssign}>
-                          <i className="fa fa-edit"></i>
-                        </Button></p>
-                      <h6 className="text-muted f-w-400">
-                        {" "}
-                        {asset && asset.assigned_to}
-                      </h6>
-                      <AssignTicket
-                         open={assign}
-                         handleClose={toggleAssign} 
-                         asset={asset.id}
-                      />
-                    </Col> */}
+
                     <Col md="12">
                       <p className="m-b-10 f-w-600">Status</p>
                       <h6 className="text-muted f-w-400">
-                        <Badge>{asset && asset.status}</Badge>
-                        <Button size="sm" color="warning" onClick={handleClose}>
-                          <i className="fa fa-edit"></i>
-                        </Button>
+                        <Badge>{asset && asset.status}</Badge>{" "}
+                        {canModify ? (
+                          <Button
+                            size="sm"
+                            color="warning"
+                            onClick={handleClose}
+                          >
+                            <i className="fa fa-edit"></i>
+                          </Button>
+                        ) : null}
                       </h6>
                       <Status
                         open={modal}

@@ -5,6 +5,9 @@ import { Link } from "react-router-dom";
 
 const AssetList = ({
   data,
+  canAdd,
+  canDel,
+  canModify,
   setMode,
   removeData,
   rowData,
@@ -57,23 +60,40 @@ const AssetList = ({
       sortable: true,
       cell: (row) => (
         <div>
-          <Button size="sm" color="warning" onClick={(e) => editData(e, row)}>
-            <i className="fa fa-edit"></i>
-          </Button>{" "}
-          <Link to={`/asset/${row.id}/view`} className="btn btn-info btn-sm">
-            View
-          </Link>{" "}
-          <Button
-            size="sm"
-            color="danger"
-            onClick={(e) => {
-              if (window.confirm("Delete the item?")) {
-                deleteData(e, row.id);
-              }
-            }}
-          >
-            <i className="fa fa-trash"></i>
-          </Button>
+          {canModify ? (
+            <Fragment>
+              <Button
+                size="sm"
+                color="warning"
+                onClick={(e) => editData(e, row)}
+              >
+                <i className="fa fa-edit"></i>
+              </Button>{" "}
+              <Link
+                to={`/asset/${row.id}/view`}
+                className="btn btn-info btn-sm"
+              >
+                View
+              </Link>{" "}
+            </Fragment>
+          ) : (
+            ""
+          )}
+          {canDel ? (
+            <Button
+              size="sm"
+              color="danger"
+              onClick={(e) => {
+                if (window.confirm("Delete the item?")) {
+                  deleteData(e, row.id);
+                }
+              }}
+            >
+              <i className="fa fa-trash"></i>
+            </Button>
+          ) : (
+            ""
+          )}
         </div>
       ),
     },
@@ -92,33 +112,43 @@ const AssetList = ({
       <Row>
         <Col md="12" sm="12">
           <div className="m-b-2 ">
-            {selectedRows.length > 0 ? (
-              <Button
-                color="info"
-                className="float-right my-1"
-                disabled={deleting}
-                onClick={transfer}
-              >
-                {" "}
-                {deleting ? (
-                  <span>
+            {canModify ? (
+              <Fragment>
+                {selectedRows.length > 0 ? (
+                  <Button
+                    color="info"
+                    className="float-right my-1"
+                    disabled={deleting}
+                    onClick={transfer}
+                  >
                     {" "}
-                    Transfering <i className="fa fa-spinner"></i>
-                  </span>
+                    {deleting ? (
+                      <span>
+                        {" "}
+                        Transfering <i className="fa fa-spinner"></i>
+                      </span>
+                    ) : (
+                      "Transfer"
+                    )}
+                  </Button>
                 ) : (
-                  "Transfer"
-                )}
-              </Button>
+                  ""
+                )}{" "}
+              </Fragment>
+            ) : null}
+            {canAdd ? (
+              <Fragment>
+                <Button
+                  color="secondary"
+                  className="float-right my-1"
+                  onClick={createAsset}
+                >
+                  Add Asset
+                </Button>{" "}
+              </Fragment>
             ) : (
               ""
-            )}{" "}
-            <Button
-              color="secondary"
-              className="float-right my-1"
-              onClick={createAsset}
-            >
-              Add Asset
-            </Button>{" "}
+            )}
           </div>
         </Col>
         <Col md="12">

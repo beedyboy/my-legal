@@ -16,18 +16,50 @@ const Sidebar = () => {
     }));
   };
 
-  let access = Utility.get("acl");
-  let acl;
+  let totalAsset =
+    Utility.canAccess("asset", "add") ||
+    Utility.canAccess("asset", "view") ||
+    Utility.canAccess("asset", "del") ||
+    Utility.canAccess("asset", "modify");
 
-  function canAccess(key, priviledge) {
-    if (access && access.length > 0) {
-      acl = JSON.parse(access);
-      return acl[key][priviledge];
-    }
-    return false;
-  }
-  // console.log(canAccess('asset', 'add'));
+  let totalBranch =
+    Utility.canAccess("branch", "add") ||
+    Utility.canAccess("branch", "view") ||
+    Utility.canAccess("branch", "del");
 
+    let company = Utility.canAccess("company", "manage");
+  let totalCategory =
+    Utility.canAccess("category", "add") ||
+    Utility.canAccess("category", "view") ||
+    Utility.canAccess("category", "del");
+
+  let totalDept =
+    Utility.canAccess("department", "add") ||
+    Utility.canAccess("department", "view") ||
+    Utility.canAccess("department", "del");
+
+    let totalPos =
+    Utility.canAccess("pos", "sell") ||
+    Utility.canAccess("pos", "view") ||
+    Utility.canAccess("pos", "modify");
+    
+    let totalProduct =
+    Utility.canAccess("product", "add") ||
+    Utility.canAccess("product", "view") ||
+    Utility.canAccess("product", "del");
+
+
+  let totalStaff =
+    Utility.canAccess("staff", "add") ||
+    Utility.canAccess("staff", "view") ||
+    Utility.canAccess("staff", "del") ||
+    Utility.canAccess("staff", "modify");
+
+  let totalTicket =
+    Utility.canAccess("ticket", "create") ||
+    Utility.canAccess("ticket", "manage");
+
+     
   return (
     <Fragment>
       <ul className="sidebar_menu">
@@ -40,34 +72,48 @@ const Sidebar = () => {
           </Link>
         </li>
 
-        <li className="super">
-          <span className="icon">
-            <i className="fa fa-product-hunt" aria-hidden="true"></i>
-          </span>
-          <span
-            className="title"
-            onClick={(e) => getSuper("asset", superMenu.asset)}
-          >
-            Asset<i className="fa fa-chevron-down caret"></i>
-          </span>
-          <ul className={`submenu ${superMenu.asset ? " show" : ""}`}>
-            <li>
-              <Link to="/asset">Manage Asset </Link>
-            </li>
-            <li>
-              <Link to="/maintenance">Maintenance </Link>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <Link to="/staff">
+        {totalAsset ? (
+          <li className="super">
             <span className="icon">
-              <i className="fa fa-group" aria-hidden="true"></i>
+              <i className="fa fa-product-hunt" aria-hidden="true"></i>
             </span>
-            <span className="title">Staff</span>
-          </Link>
-        </li>
+            <span
+              className="title"
+              onClick={(e) => getSuper("asset", superMenu.asset)}
+            >
+              Asset<i className="fa fa-chevron-down caret"></i>
+            </span>
+            <ul className={`submenu ${superMenu.asset ? " show" : ""}`}>
+              <li>
+                <Link to="/asset">Manage Asset </Link>
+              </li>
+              {Utility.canAccess("asset", "view") ? (
+                <li>
+                  <Link to="/maintenance">Maintenance </Link>
+                </li>
+              ) : (
+                ""
+              )}
+            </ul>
+          </li>
+        ) : (
+          ""
+        )}
 
+        {totalStaff ? (
+          <li>
+            <Link to="/staff">
+              <span className="icon">
+                <i className="fa fa-group" aria-hidden="true"></i>
+              </span>
+              <span className="title">Staff</span>
+            </Link>
+          </li>
+        ) : (
+          ""
+        )}
+        {totalPos || totalProduct?
+        <Fragment>
         <li className="super">
           <span className="icon">
             <i className="fa fa-shopping-cart" aria-hidden="true"></i>
@@ -79,35 +125,52 @@ const Sidebar = () => {
             Inventory<i className="fa fa-chevron-down caret"></i>
           </span>
           <ul className={`submenu ${superMenu.inventory ? " show" : ""}`}>
-            <li>
+           {totalProduct? <li>
               <Link to="/product">Product</Link>
             </li>
-            <li>
+            : ''}
+           {totalPos? <li>
               <Link to="/pos">pos</Link>
-            </li>
+            </li> : ''}
           </ul>
         </li>
-
-        <li className="super">
-          <span className="icon">
-            <i className="fa fa-ticket" aria-hidden="true"></i>
-          </span>
-          <span
-            className="title"
-            onClick={(e) => getSuper("ticketing", superMenu.ticketing)}
-          >
-            Ticketing<i className="fa fa-chevron-down caret"></i>
-          </span>
-          <ul className={`submenu ${superMenu.ticketing ? " show" : ""}`}>
-            <li>
-              <Link to="/admin/ticket">Admin </Link>
+        </Fragment>
+        : ''}
+        {totalTicket ? (
+          <Fragment>
+            <li className="super">
+              <span className="icon">
+                <i className="fa fa-ticket" aria-hidden="true"></i>
+              </span>
+              <span
+                className="title"
+                onClick={(e) => getSuper("ticketing", superMenu.ticketing)}
+              >
+                Ticketing<i className="fa fa-chevron-down caret"></i>
+              </span>
+              <ul className={`submenu ${superMenu.ticketing ? " show" : ""}`}>
+                {Utility.canAccess("ticket", "manage") ? (
+                  <li>
+                    <Link to="/admin/ticket">Admin </Link>
+                  </li>
+                ) : (
+                  ""
+                )}
+                {Utility.canAccess("ticket", "create") ? (
+                  <li>
+                    <Link to="/ticket">Ticket </Link>
+                  </li>
+                ) : (
+                  ""
+                )}
+              </ul>
             </li>
-            <li>
-              <Link to="/ticket">Ticket </Link>
-            </li>
-          </ul>
-        </li>
-
+          </Fragment>
+        ) : (
+          ""
+        )}
+         {totalCategory || totalBranch || totalDept || company ?
+         <Fragment>
         <li className="super">
           <span className="icon">
             <i className="fa fa-cog" aria-hidden="true"></i>
@@ -119,31 +182,55 @@ const Sidebar = () => {
             Settings<i className="fa fa-chevron-down caret"></i>
           </span>
           <ul className={`submenu ${superMenu.settings ? " show" : ""}`}>
-            <li>
-              <Link to="/branch">Branch </Link>
-            </li>
-            <li>
-              <Link to="/company">Company </Link>
-            </li>
-            <li>
-              <Link to="/department">Department </Link>
-            </li>
-            <li>
-              <Link to="/category">Category </Link>
-            </li>
-            <li>
-              <Link to="/subcategory">Sub Category</Link>
-            </li>
+            {totalBranch ? (
+              <li>
+                <Link to="/branch">Branch </Link>
+              </li>
+            ) : (
+              ""
+            )}
+            {company ? (
+              <li>
+                <Link to="/company">Company </Link>
+              </li>
+            ) : (
+              ""
+            )}
+            {totalDept ? (
+              <li>
+                <Link to="/department">Department </Link>
+              </li>
+            ) : (
+              ""
+            )}
+            {totalCategory ? (
+              <Fragment>
+                <li>
+                  <Link to="/category">Category </Link>
+                </li>
+                <li>
+                  <Link to="/subcategory">Sub Category</Link>
+                </li>
+              </Fragment>
+            ) : (
+              ""
+            )}
           </ul>
         </li>
-        <li>
-          <Link to="/report">
-            <span className="icon">
-              <i className="fa fa-bar-chart" aria-hidden="true"></i>
-            </span>
-            <span className="title">Report</span>
-          </Link>
-        </li>
+        </Fragment>
+        :''}
+        {Utility.canAccess("report", "manage") ? (
+          <li>
+            <Link to="/report">
+              <span className="icon">
+                <i className="fa fa-bar-chart" aria-hidden="true"></i>
+              </span>
+              <span className="title">Report</span>
+            </Link>
+          </li>
+        ) : (
+          ""
+        )}
       </ul>
     </Fragment>
   );

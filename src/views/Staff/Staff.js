@@ -6,6 +6,7 @@ import StaffList from './Components/StaffList';
 import AddStaff from './Components/AddStaff';
 import AddLogin from './Components/AddLogin';
 import RoleForm from './Components/RoleForm';
+import Utility from '../../services/UtilityService';
 
 const Staff = () => { 
   const userStore = useContext(UserStore);
@@ -37,22 +38,29 @@ const Staff = () => {
     setModal(true); 
     setMode('Add'); 
   }  
+  let canDel = Utility.canAccess("staff", "del");
+  let canModify = Utility.canAccess("staff", "modify");
     return( 
       <Fragment>
       <Card className='mt-2'>
          <CardHeader>
-         </CardHeader>
-         <CardBody>
-         <Row>
+           <Row>
            <Col md="5" sm="12">
              <h5>Staff Management</h5> 
            </Col>
            <Col md={{ size: 3, offset: 4 }} sm="12"> 
-           <Button color="secondary" className='float-right' onClick={createStaff}
-           >Add Staff</Button>{' '}
+         {Utility.canAccess("staff", "add") ?
+          <Fragment> <Button color="secondary" className='float-right' onClick={createStaff}
+          >Add Staff</Button>{' '}</Fragment>
+          :''}
            </Col>
+           </Row>
+         </CardHeader>
+         <CardBody>
+         <Row>
+           
            <Col md="12" sm="12" className='mt-2'>
-             <StaffList  data={users} setMode={setMode} setACL={assignACL} setId={setId} setLogin={toggleLogin} toggle={handleClose} removeData={removeUser} rowData={setRowData} /> 
+             <StaffList canDel={canDel} canModify={canModify} data={users} setMode={setMode} setACL={assignACL} setId={setId} setLogin={toggleLogin} toggle={handleClose} removeData={removeUser} rowData={setRowData} /> 
            </Col>
          </Row>
          <AddStaff mode={mode} open={modal} handleClose={handleClose} initial_data={rowData} />  

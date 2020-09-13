@@ -4,6 +4,7 @@ import UserStore from "../../../stores/UserStore";
 import { Link } from "react-router-dom";
 import ReactHtmlParser from "react-html-parser";
 import { observer } from "mobx-react";
+import Utility from "../../../services/UtilityService";
 
 const StaffDetails = (props) => {
   const userStore = useContext(UserStore);
@@ -45,6 +46,8 @@ const StaffDetails = (props) => {
     payload += "</div>";
     return add;
   };
+  
+  let canView = Utility.canAccess("staff", "view");
   return (
     <Fragment>
       <Row>
@@ -58,11 +61,11 @@ const StaffDetails = (props) => {
                   Back to Staff List
                 </Link>
               </h6>
-            </div>
-            {/* <h6 className="text-right">Edit Profile</h6> */}
+            </div> 
           </div>
         </Col>
         <Col md="12" sm="12">
+          {canView?
           <div className="card-block  border-right">
             <h6 className="m-b-20 p-b-5 b-b-default f-w-600">Information</h6>
             <Row>
@@ -116,6 +119,7 @@ const StaffDetails = (props) => {
             {showAccess()}
             {ReactHtmlParser(payload)}
           </div>
+          : 'You do not have access to this page'}
         </Col>
       </Row>
     </Fragment>

@@ -1,4 +1,4 @@
-import React, { Fragment, useMemo, useState } from "react";
+import React, { Fragment, useMemo } from "react";
 import DataTable from "react-data-table-component";
 import { Link } from "react-router-dom";
 import {
@@ -21,9 +21,9 @@ const StaffList = ({
   removeData,
   rowData,
   toggle,
+  canDel,
+  canModify,
 }) => {
-  const [dropdownOpen, setOpen] = useState(false);
-  const toggleAccess = () => setOpen(!dropdownOpen);
   const columns = useMemo(() => [
     {
       name: "Name",
@@ -56,37 +56,56 @@ const StaffList = ({
       sortable: true,
       cell: (row) => (
         <div>
-          <Button size="sm" color="info" onClick={(e) => editData(e, row)}>
-            <i className="fa fa-edit"></i>
-          </Button>{" "}
-          <Button
-            size="sm"
-            color="danger"
-            onClick={(e) => {
-              if (window.confirm("Delete this staff?")) {
-                deleteData(e, row.id);
-              }
-            }}
-          >
-            <i className="fa fa-trash"></i>
-          </Button>{" "}
-          <Fragment>
-            <UncontrolledButtonDropdown size="sm">
-              <DropdownToggle caret color="warning">
-                Set
-              </DropdownToggle>
-              <DropdownMenu>
-                <DropdownItem size="sm" onClick={(e) => assignACL(e, row)}>
-                  <i className="fa fa-key"></i> Roles
-                </DropdownItem>
-                {row.can_login === "No" ? (
-                  <DropdownItem size="sm" onClick={(e) => createLogin(e, row)}>
-                    <i className="fa fa-plus"></i> Login
+          {canModify ? (
+            <Fragment>
+              <Button size="sm" color="info" onClick={(e) => editData(e, row)}>
+                <i className="fa fa-edit"></i>
+              </Button>{" "}
+            </Fragment>
+          ) : (
+            ""
+          )}
+          {canDel ? (
+            <Fragment>
+              <Button
+                size="sm"
+                color="danger"
+                onClick={(e) => {
+                  if (window.confirm("Delete this staff?")) {
+                    deleteData(e, row.id);
+                  }
+                }}
+              >
+                <i className="fa fa-trash"></i>
+              </Button>{" "}
+            </Fragment>
+          ) : (
+            ""
+          )}
+          {canModify ? (
+            <Fragment>
+              <UncontrolledButtonDropdown size="sm">
+                <DropdownToggle caret color="warning">
+                  Set
+                </DropdownToggle>
+                <DropdownMenu>
+                  <DropdownItem size="sm" onClick={(e) => assignACL(e, row)}>
+                    <i className="fa fa-key"></i> Roles
                   </DropdownItem>
-                ) : null}
-              </DropdownMenu>
-            </UncontrolledButtonDropdown>
-          </Fragment>
+                  {row.can_login === "No" ? (
+                    <DropdownItem
+                      size="sm"
+                      onClick={(e) => createLogin(e, row)}
+                    >
+                      <i className="fa fa-plus"></i> Login
+                    </DropdownItem>
+                  ) : null}
+                </DropdownMenu>
+              </UncontrolledButtonDropdown>
+            </Fragment>
+          ) : (
+            ""
+          )}
         </div>
       ),
     },

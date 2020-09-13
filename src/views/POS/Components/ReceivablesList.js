@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState, Fragment } from "react";
 import DataTable from "react-data-table-component";
-import { Row, Col, Button, FormGroup, Label } from "reactstrap";
+import { Row, Col, Button } from "reactstrap";
 import SalesStore from "../../../stores/SalesStore";
 import styled from "styled-components";
-import AsyncSelect from "react-select/async";
+// import AsyncSelect from "react-select/async";
 import { observer } from "mobx-react";
 
-const ReceivablesList = () => {
+const ReceivablesList = ({ canModify }) => {
   const salesStore = useContext(SalesStore);
   const {
     payNow,
@@ -114,17 +114,19 @@ const ReceivablesList = () => {
       sortable: true,
       cell: (row) => (
         <div>
-          <Button
-            size="sm"
-            color="success"
-            onClick={(key) => {
-              if (window.confirm("Pay for this item?")) {
-                pay(row.id);
-              }
-            }}
-          >
-            <i className="fa fa-money"></i>
-          </Button>
+          {canModify ? (
+            <Button
+              size="sm"
+              color="success"
+              onClick={(key) => {
+                if (window.confirm("Pay for this item?")) {
+                  pay(row.id);
+                }
+              }}
+            >
+              <i className="fa fa-money"></i>
+            </Button>
+          ) : null}
         </div>
       ),
     },
