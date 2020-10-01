@@ -1,17 +1,18 @@
 import React, { Fragment } from 'react';
-import ReactDOM from 'react-dom'; 
+// import ReactDOM from 'react-dom'; 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-fancybox/lib/fancybox.css'
 import 'font-awesome/css/font-awesome.min.css';
-import 'react-perfect-scrollbar/dist/css/styles.css';
+import 'react-perfect-scrollbar/dist/css/styles.css'; 
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 import 'aos/dist/aos.css'; 
+import { render } from 'react-snapshot';
 import App from './App';
-import * as serviceWorker from './serviceWorker';
-import Responder from './services/Beedy';
+import * as serviceWorker from './serviceWorker'; 
 
-ReactDOM.render( 
-   <Fragment>
-      <Responder />
+render( 
+   <Fragment> 
       <App />
    </Fragment>,
   document.getElementById('root')

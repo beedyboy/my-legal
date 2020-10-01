@@ -1,19 +1,2 @@
-
-export { default as Asset } from "./Asset";
-export { default as Branch } from "./Branch";
-export { default as Category } from "./Category";
-export { default as Company } from "./Company";
-export { default as Dashboard } from "./Dashboard";
-export { default as Department } from "./Department";
-export { default as NotFound } from "./NotFound";
-export { default as Maintenance } from "./Maintenance";
-export { default as POS } from "./POS";
-export { default as Product } from "./Product";
-export { default as ProductDetails } from "./Product/Components/ProductDetails";
-export { default as Profile } from "./Profile";
-export { default as Report } from "./Report";
-export { default as SignIn } from "./SignIn";
-export { default as Staff } from "./Staff";
-export { default as SubCategory } from "./SubCategory";
-export { default as Ticket } from "./Ticket";
-export { default as TicketAdmin } from "./TicketAdmin";
+export { default as Home } from "./Home";
+export { default as About } from "./About";

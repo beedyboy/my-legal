@@ -1,0 +1,90 @@
+@media (max-width: 767.98px) {
+  .pb_offcanvas-header_v1 .pb_toggle-menu {
+    top: 13px;
+  }
+  .top_navbar.scrolled .navbar-nav {
+    background: none;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  .top_navbar .nav-link {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+}
+@media (max-width: 991.98px) {
+  .section {
+    padding: 3em 0;
+  }
+  .site-menu-toggle {
+    margin-right: 15px;
+    display: block;
+    top: 10px;
+    position: relative;
+  }
+  .site-menu-toggle span {
+    background: #000;
+  }
+  .top_navbar.scrolled .navbar-nav {
+    background: none;
+    border-radius: 0px;
+    padding-left: 0rem !important;
+    padding-right: 0rem !important;
+  }
+  .top_navbar.scrolled.pb_scrolled-light .navbar-nav {
+    background: none;
+    border-radius: 0px;
+    padding-left: 0rem !important;
+    padding-right: 0rem !important;
+  }
+  .site-hero-inner .heading {
+    font-size: 40px;
+  }
+  .site-hero-inner .sub-heading {
+    font-size: 18px;
+  }
+  .top_navbar .nav-link {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+  .top_navbar .navbar-nav {
+    border-radius: 0px;
+  }
+  .top_navbar .navbar-nav a {
+    color: #000;
+  }
+  .top_navbar {
+    background: #fff;
+    padding: 15px 15px;
+  }
+  .top_navbar .navbar-brand {
+    color: #000 !important;
+    font-family: "Playfair Display", times, serif;
+    margin-left: 15px;
+  }
+  .top_navbar .navbar-nav {
+    background: #fff !important;
+  }
+  .top_navbar .navbar-toggler {
+    color: black !important;
+    border-color: black !important;
+    cursor: pointer;
+  }
+  .top_navbar ul li a {
+    color: #000 !important;
+  }
+  .top_navbar ul > li.cta-btn > a > span {
+    border: none;
+    background: #ff0000;
+    color: #fff;
+  }
+  .heading-serif, .heading, .testimonial-section .heading, .slider-section .heading, .blog-post-entry .heading {
+    font-size: 25px; }
+}
+
+@media (max-width: 1199.98px) {
+  .top_navbar .nav-link {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+}
