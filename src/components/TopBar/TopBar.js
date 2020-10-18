@@ -42,7 +42,7 @@ const TopBar = (props) => {
           <Collapse isOpen={isOpen} navbar id="templateux-navbar-nav">
             <Nav navbar className="ml-auto">
               <NavItem className="nav-item">
-                <Link className="nav-link" to="#section-home">
+                <Link className="nav-link" to="/">
                   Home
                 </Link>
               </NavItem>
@@ -52,12 +52,12 @@ const TopBar = (props) => {
                 </Link>
               </NavItem>
               <NavItem className="nav-item">
-                <Link className="nav-link" to="#section-about">
+                <Link className="nav-link" to="/contact">
                   Contact us
                 </Link>
               </NavItem>
               <NavItem className="nav-item">
-                <Link className="nav-link" to="#section-about">
+                <Link className="nav-link" to="practise-area">
                   Practise areas
                 </Link>
               </NavItem>

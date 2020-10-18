@@ -43,7 +43,7 @@ const Footer = () => {
                     <dd>info@my-legalsolutions.com</dd>
                   </dl>
                   <div className="whatsapp">
-            <a href="https://api.whatsapp.com/send?phone=2348027590165&amp;text=&amp;source=&amp;data=&amp;app_absent=" className="float" target="_blank">
+            <a href="https://api.whatsapp.com/send?phone=2348086275220&amp;text=hello guys;source=&amp;data=&amp;app_absent=" className="float" target="_blank">
               <i className="fa fa-whatsapp my-float"></i>
             </a>
           </div>
