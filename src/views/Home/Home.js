@@ -37,11 +37,19 @@ const Home = () => {
   };
   return (
     <Fragment>
-      <Helmet>
-        <title>My Legal Solution</title>
+         <Helmet>
+        <title>MyLegal Solutions - Online Legal Consultants in Nigeria </title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#000000" />
-        <meta name="description" content="For your organization" />
+        <meta property="og:title" content="My Legal Solutions Nigeria" />
+        <meta property="og:site_name" content="My Legal Solutions Nigeria" />
+        <meta property="og:image"  content="www.mylegalsolutions.org/facebook.html" />
+        <meta name="description"
+      content="My Legal Solutions is a Nigerian Online law firm that provides more than just high quality and practical legal solutions to our clients. We focus our practice on a wide range of commercial and corporate dispute resolution matters encompassing litigation, arbitration and mediation all online and professional. We also provide corporate law advice encompassing drafting and reviewing of joint venture agreements, wills, partnership agreements as well as banking and security documentation." />
+        <meta name="keywords"
+      content="law,lagos,nigeria,commercial dispute,corporate dispute,litigation,arbitration,mediation,corporate law advice,joint venture agreement,real estate, partnership agreement,banking documentation,security documentation,complex cross-border disputes,simple claims,straight forward claims,Singapore,law,drafting,reviewing" />
+        <meta name="copyright" content="MyLegal Solutions Nigeria" />
+        <meta name="author" content="solution influx limited" />
       </Helmet>
       {/* <Row className="mt-2">
         <Col md="12">
@@ -137,14 +145,14 @@ const Home = () => {
                 <Link
                   to="https://vimeo.com/channels/staffpicks/93951774"
                   data-fancybox
-                  className="btn btn-sm btn-danger text-white py-2 mr-3 text-uppercase letter-spacing-1"
+                  className="btn btn-sm btn-danger text-white py-2 mr-3 mb-1  text-uppercase letter-spacing-1"
                 >
                   Discover More
                 </Link>{" "}
                 <Link
                   to="https://vimeo.com/channels/staffpicks/93951774"
                   data-fancybox
-                  className="btn btn-sm btn-secondary text-white py-2 mr-3 text-uppercase letter-spacing-1"
+                  className="btn btn-sm btn-secondary text-white py-2 mr-3 mb-1  text-uppercase letter-spacing-1"
                 >
                   Meet Our Team
                 </Link>

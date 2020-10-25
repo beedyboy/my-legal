@@ -58,7 +58,7 @@ const TopBar = (props) => {
               </NavItem>
               <NavItem className="nav-item">
                 <Link className="nav-link" to="practise-area">
-                  Practise areas
+                  Practice areas
                 </Link>
               </NavItem>
               <NavItem className="nav-item cta-btn ml-xl-2 ml-lg-2 ml-md-0 ml-sm-0 ml-0">

@@ -1,27 +1,37 @@
 import React, { Fragment } from "react";
 import Helmet from "react-helmet";
-import { Row, Col, Container } from "reactstrap";
+import {
+  Row,
+  Col,
+  Container,
+  ListGroup,
+  ListGroupItem
+} from "reactstrap";
 import { Link } from "react-router-dom";
 const Practise = () => {
   return (
     <Fragment>
-      <Helmet>
-        <title>My Legal Solution | Practise Area</title>
+      <Helmet> 
+        <title>MyLegal Solutions - Online Legal Consultants in Nigeria |  Practise Area</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#000000" />
-        <meta name="description" content="For your organization" />
+        <meta property="og:title" content="My Legal Solutions Nigeria" />
+        <meta property="og:site_name" content="My Legal Solutions Nigeria" />
+        <meta property="og:image"  content="www.mylegalsolutions.org/facebook.html" />
+        <meta name="description"
+      content="My Legal Solutions is a Nigerian Online law firm that provides more than just high quality and practical legal solutions to our clients. We focus our practice on a wide range of commercial and corporate dispute resolution matters encompassing litigation, arbitration and mediation all online and professional. We also provide corporate law advice encompassing drafting and reviewing of joint venture agreements, wills, partnership agreements as well as banking and security documentation." />
+        <meta name="keywords"
+      content="law,lagos,nigeria,commercial dispute,corporate dispute,litigation,arbitration,mediation,corporate law advice,joint venture agreement,real estate, partnership agreement,banking documentation,security documentation,complex cross-border disputes,simple claims,straight forward claims,Singapore,law,drafting,reviewing" />
+        <meta name="copyright" content="MyLegal Solutions Nigeria" />
+        <meta name="author" content="solution influx limited" />
       </Helmet>
-      {/* <Row className="mt-2">
-        <Col md="12">
-            <section className="mt-2 hp-banner">
-                <img src="/images/law-city.jpg" alt="law town" className="hero-slide" />
-            </section>
-        </Col>
-      </Row> */}
       
+
       <section
         className="site-hero overlay"
-        style={{ backgroundImage: `url(images/practise-area-my-legal-solution.jpg)` }}
+        style={{
+          backgroundImage: `url(images/practise-area-my-legal-solution.jpg)`,
+        }}
         data-stellar-background-ratio="0.5"
         id="section-Practise"
       >
@@ -40,12 +50,12 @@ const Practise = () => {
           </div>
         </Link>
       </section>
-<section>
-<h1 className="text-center">Practise Area</h1>
+      <section>
+        <h1 className="text-center">Our Area of Pratice</h1>
 
-<div className="divider"></div>
-</section>
-      <section className="py-5 bg-light" id="section-Practise">
+        <div className="divider"></div>
+      </section>
+      <section className="py-4 bg-light" id="section-Practise">
         <Container>
           <Row className="row align-items-center">
             <Col
@@ -55,153 +65,160 @@ const Practise = () => {
               data-aos="fade-up"
             >
               <img
-                src="images/justice-map.jpg"
+                src="images/mls-gavel.jpg"
                 alt="what we do"
                 className="img-fluid rounded"
                 height="120"
               />
             </Col>
             <Col md="12" lg="7" className="order-lg-1" data-aos="fade-up">
-              <h2 className="heading mb-3  text-uppercase">
-                <span className="text-danger">Our</span> Firm!
-              </h2>
-              <p className="mb-5">
-                MyLegal Solutions is an online Legal service provider, created
-                to fill the need for understandable and efficient Legal
-                solutions by offering you the convenience and quality of
-                in-house and business Legal consultancy services and other
-                facilities in the field of Law. Through our services, we give
-                you the opportunity to get answers to all your legal questions
-                On-line, wherever in the world you may be.
+              <h3 className="heading mb-3 border-left">
+                Below are Our Areas of Practice at My-Legal Solutions, with our
+                Attorneys with a cummulatiive years of experience of more than
+                50 years.
+              </h3>
+              {/* <p className="mb-5">
+              Below are Our Areas of Practice at My-Legal Solutions, with our Attorneys with a cummulatiive years of experience of more than 50 years.
+              </p> */}
+              <p>
+                In an ever growing world of Business, Family and various
+                associations we have with individuals, organizations of even the
+                government; it is more than ever essential to have and use
+                professional legal service in forms of MOU Drafting and
+                enforcement, Contracts drafting and enforcement, Divorce and
+                disputes settlement and so on depending on the case matter. We
+                at My-Legal Solutions pride ourselves in our professionalism and
+                have carefully selected below; areas of legal practice our
+                Attorneys handle, within Nigeria and cross-border matters
               </p>
             </Col>
           </Row>
         </Container>
       </section>
-      <section>
+
+      {/* <section className="heading mb-3"> */}
+      <section className="py-3 bg-light">
         <Container>
-        <Row>
-          <Col md="12">
-            <h2 className="text-center">
-              {" "}
-              <span className="text-danger">Our</span> TEAM
-            </h2>
-            <p>
-              Our team of lawyers is made up of experienced practitioners who
-              together bring with them a wealth of technical and practical
-              knowledge in local and cross-border matters
-            </p>
-          </Col>
-          <Col md="6">
-            <h3>Olalekan ELusoji</h3>
-
-            <p>
-              <strong>B.A., J.D., Barrister &amp; Solicitor</strong>
-            </p>
-
-            <blockquote>
-              <img
-                src="images/mls-2.jpg"
-                alt="what we do"
-                className="img-fluid rounded float-left"
-                
-                height="120"
-                width="130"
-              />
-
-              <p>
-                Jeffrey Abrams is fluent in both the French and Spanish
-                languages. He received his Bachelor of Arts degree from the
-                University of Toronto and graduated with high distinction.
-                Concurrently, he obtained his Bachelor of Laws degree from
-                Osgoode Hall Law School of York University. He is a lawyer in
-                the Province of Ontario, Canada.
-              </p>
-
-              <p>
-                Mr. Abrams' primary role as a lawyer within the firm is to
-                assist clients and prospective clients in determining whether
-                they might be eligible for Immigration to Canada and how Abrams
-                & Krochak might be able to offer assistance. He does this by
-                reviewing and considering responses given by persons visiting
-                this website who complete the convenient online questionnaire.
-                He also responds to questions relating to eligibility
-                assessments, once the questionnaire is completed and the
-                assessment is made. As well, Mr. Abrams assists people to choose
-                the category of Canada Immigration which best suits their
-                qualifications and aspirations.
-              </p>
-   </blockquote>
-          </Col>
-          <Col md="6">
-            <h3>Second Person</h3>
-
-            <p>
-              <strong>B.A., J.D., Barrister &amp; Solicitor</strong>
-            </p>
-
-            <blockquote>
-              <img
-                src="images/mls-1.jpg"
-                alt="what we do"
-                className="img-fluid rounded float-left"
-                
-                height="120"
-                width="130"
-              />
-
-              <p>
-                Jeffrey Abrams is fluent in both the French and Spanish
-                languages. He received his Bachelor of Arts degree from the
-                University of Toronto and graduated with high distinction.
-                Concurrently, he obtained his Bachelor of Laws degree from
-                Osgoode Hall Law School of York University. He is a lawyer in
-                the Province of Ontario, Canada.
-              </p>
-
-              <p>
-                Mr. Abrams' primary role as a lawyer within the firm is to
-                assist clients and prospective clients in determining whether
-                they might be eligible for Immigration to Canada and how Abrams
-                & Krochak might be able to offer assistance. He does this by
-                reviewing and considering responses given by persons visiting
-                this website who complete the convenient online questionnaire.
-                He also responds to questions relating to eligibility
-                assessments, once the questionnaire is completed and the
-                assessment is made. As well, Mr. Abrams assists people to choose
-                the category of Canada Immigration which best suits their
-                qualifications and aspirations.
-              </p>
-
-              
-            </blockquote>
-          </Col>
-            </Row>
-       
-        <Row>
-          <Col>
-            <h2 className="heading mb-3  text-uppercase">
-              <span className="text-danger">Our</span> MISSION & VISION
-            </h2>
-            Our vision is to provide our clients with skilled legal advice in a
-            timely and efficient manner. We strive to handle each matter with
-            accountability and responsiveness, as if we were representing
-            ourselves. ... Our vision reflects our values: integrity, service,
-            excellence and teamwork.
-          </Col>
-          <Col>
-            <h2 className="heading mb-3  text-uppercase">
-              <span className="text-danger">CORPORATE</span>
-              SOCIAL RESPONSIBILITY
-            </h2>
-            Each year the firm supports a nominated charity and encourages fund
-            raising activities organized by the Social and Charity Committee.
-            This year our chosen charity is The Children gifted school for the
-            Blind.
-          </Col>
-        </Row>
+          <Row>
+            <Col md="4" sm="12">
+              <h3 className="text-center">Area of Pratice</h3>
+              <ListGroup>
+                <ListGroupItem color="success">
+                  Admiralty and Shipping
+                </ListGroupItem>
+                <ListGroupItem color="success">Criminal law</ListGroupItem>
+                <ListGroupItem color="success">Real Estate</ListGroupItem>
+                <ListGroupItem color="success">Probate Law</ListGroupItem>
+                <ListGroupItem color="success">Business Law</ListGroupItem>
+                <ListGroupItem color="success">Corporate Law</ListGroupItem>
+                <ListGroupItem color="success">Music Law</ListGroupItem>
+                <ListGroupItem color="success">Employment Law</ListGroupItem>
+                <ListGroupItem color="success">
+                  Fraud & Asset Recovery
+                </ListGroupItem>
+                <ListGroupItem color="success">Tort</ListGroupItem>
+                <ListGroupItem color="success">Family Law</ListGroupItem>
+              </ListGroup>
+            </Col>
+            <Col md="8" sm="12">
+              <Row className="mt-4">
+                <Col md="12">
+                  <h5 className="text-danger border-bottom">
+                    Admiralty and Shipping
+                  </h5>
+                  <p>
+                    Bills of lading disputes, Cargo claims, Charter party
+                    disputes, Collision claims, Demurrage claims, Freight claims
+                  </p>
+                </Col>
+                <Col md="12">
+                  <h5 className="text-danger border-bottom">Criminal law</h5>
+                  <p> 
+                    Search and Arrest / bail application, Drunk driving, parole
+                    probation, violent crimes, homicide, juvenile law
+                  </p>
+                </Col>
+                <Col md="12">
+                  <h5 className="text-danger border-bottom">Real Estate</h5>
+                  <p>
+                    Home Buying / Selling, Landlord / Tenant, Mortgage and
+                    Foreclosure, Construction disputes
+                  </p>
+                </Col>
+                <Col md="12">
+                  <h5 className="text-danger border-bottom">Probate Law</h5>
+                  <p>
+                    Wills / Letter of Administration, Administration of Estates,
+                    Assent, Codicil, Estate Planning
+                  </p>
+                </Col>
+                <Col md="12">
+                  <h5 className="text-danger border-bottom">Business Law</h5>
+                  <p>
+                    Cross-border and multi-jurisdictional claims,
+                    Distributorship agreements, International Sale of Goods,
+                    Mareva and other forms of interlocutory injunctions,
+                    Franchise law
+                  </p>
+                </Col>
+                <Col md="12">
+                  <h5 className="text-danger border-bottom">Corporate Law</h5>
+                  <p>
+                    Incorporation of company / Business Name, Corporate
+                    Governance, Company winding up/ judicial management, Joint
+                    Venture Agreements / Partnership
+                  </p>
+                </Col>
+                <Col md="12">
+                  <h5 className="text-danger border-bottom">Music Law</h5>
+                  <p>
+                  Privacy and Record label Agreements
+                  </p>
+                </Col>
+                <Col md="12">
+                  <h5 className="text-danger border-bottom">Employment Law</h5>
+                  <p>
+                  Confidentiality clauses, Disputes involving employment law matters
+                  Worker Compensation,
+                  General advice on employment matters,
+                  Restraint of trade clauses,
+                  Reviewing and drafting of employment contracts
+                  </p>
+                </Col>
+                <Col md="12">
+                  <h5 className="text-danger border-bottom">Fraud & Asset Recovery</h5>
+                  <p>
+                  Advice on fraud cases and strategies,
+                  Constructive trust issues knowing receipt & knowing assistance,
+                  Pre-action discovery to trace movement of funds,
+                  Debt Recovery,
+                  Fundamental Human Rights,
+                  Unlawful Detention,
+                  Malicious Prosecution,
+                  Immigrations / Customs Service and
+                  Citizenship, business permit, residential permit, expatriate quota.
+                  smuggling of illegal goods, unlawful seizure of goods.
+                  </p>
+                </Col>
+                <Col md="12">
+                  <h5 className="text-danger border-bottom">Tort</h5>
+                  <p>
+                  Defamation actions,
+                  Trespass, nuisance, assault and battery,
+                  Negligence claims including medical and other professional negligence matters
+                  </p>
+                </Col> 
+                <Col md="12">
+                  <h5 className="text-danger border-bottom">Family Law</h5>
+                  <p> 
+                    Divorce, child support, child custody, spousal support/Alimony. 
+                  </p>
+                </Col> 
+              </Row>
+            </Col>
+          </Row>
         </Container>
-         </section>
+      </section>
     </Fragment>
   );
 };

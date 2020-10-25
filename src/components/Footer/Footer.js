@@ -9,7 +9,7 @@ const Footer = () => {
           <Col md="12" className="footer-section py-2">
             <Container>
               <Row>
-                <Col md="4" className="mb-5 company-info-nav-list">
+                <Col md="3" className="mb-5 company-info-nav-list">
                   <h3>company</h3>
                   <ul className="list-unstyled link">
                     <li>
@@ -26,7 +26,7 @@ const Footer = () => {
                     </li>
                   </ul>
                 </Col>
-                <Col md="4" className="mb-5 company-info-nav-list">
+                <Col md="3" className="mb-5 company-info-nav-list">
                   <div className="info-heading">Reach us</div>
                   <dl className="list-unstyled link">
                   <dt>Registered Office</dt>
@@ -48,6 +48,16 @@ const Footer = () => {
             </a>
           </div>
                 </Col>
+                 <Col md="6" className="mb-5 company-info-nav-list">
+                 <div className="mapouter">
+<div className="gmap_canvas">
+  <iframe id="gmap_canvas"
+ src="https://maps.google.com/maps?q=%20Kabsal%20Complex%2C%201%20Olabisi%20Street%2C%20Majek%201st%20Gate%2C%20Lekki-Epe%20Expressway%2C%20Lagos.%20&amp;t=&amp;z=13&amp;ie=UTF8&amp;iwloc=&amp;output=embed"
+ marginheight="0" marginwidth="0" frameborder="0" height="300"
+ scrolling="no" width="100%"></iframe></div> 
+            </div>  
+                </Col>
+               
               </Row>
             </Container>
           </Col>
@@ -109,31 +119,16 @@ const Footer = () => {
                 <div className="left">
                   <span className="left-column">
                     &copy;
-                    <script
-                      data-cfasync="false"
-                      src="../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"
-                    ></script>
-                    <script type="5cb52d541497c2531e7a1ef3-text/javascript">
-                      document.write(new Date().getFullYear());
-                    </script>{" "}
-                    {/* <span className="footerlogo">
-                <img
-                  src="images/footer-logo.svg"
-                  alt="quinn emanuel urquhart &amp; sullivan, llp"
-                  title="quinn emanuel urquhart &amp; sullivan, llp"
-                />
-              </span> */}
+                 {new Date().getFullYear()}
+                     {" "}
+                    
                   </span>
-                  <samp className="first">|</samp>
-                  <Link to="offices/index.html" title="Contact Us">
-                    Contact Us
-                  </Link>
+                  
                   <samp className="last">|</samp>
                   <span className="copyRight">
-                    All rights reserved. My Legal Solutions. Prior results do
-                    not guarantee similar outcome. Amounts listed may be
-                    aggregates.
+              All rights reserved. My Legal Solutions. 
                     <br />
+                    Designed by <a href="https://solutioninflux.com" target="_blank" className="text-info"> Solution Influx</a>
                   </span>
                 </div>
               </div>

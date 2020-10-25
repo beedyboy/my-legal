@@ -39,13 +39,13 @@ const Testimony = (props) => {
     <Fragment>
        <Slider {...settings}>
        <div className="testimonial text-center slider-item">
-                  <div className="author-image mb-3">
+                  {/* <div className="author-image mb-3">
                     <img
                       src="/images/person_1.jpg"
                       alt="placeholder"
                       className="rounded-circle mx-auto"
                     />
-                  </div>
+                  </div> */}
                   <blockquote>
                     <p>
                       &ldquo;A small river named Duden flows by their place and
@@ -59,13 +59,13 @@ const Testimony = (props) => {
                   </p>
                 </div>
                 <div className="testimonial text-center slider-item">
-                  <div className="author-image mb-3">
+                  {/* <div className="author-image mb-3">
                     <img
                       src="/images/person_2.jpg"
                       alt="placeholder"
                       className="rounded-circle mx-auto"
                     />
-                  </div>
+                  </div> */}
                   <blockquote>
                     <p>
                       &ldquo;Even the all-powerful Pointing has no control about
@@ -80,13 +80,13 @@ const Testimony = (props) => {
                   </p>
                 </div>
                 <div className="testimonial text-center slider-item">
-                  <div className="author-image mb-3">
+                  {/* <div className="author-image mb-3">
                     <img
                       src="/images/person_3.jpg"
                       alt="placeholder"
                       className="rounded-circle mx-auto"
                     />
-                  </div>
+                  </div> */}
                   <blockquote>
                     <p>
                       &ldquo;When she reached the first hills of the Italic
@@ -100,13 +100,13 @@ const Testimony = (props) => {
                   </p>
                 </div>
                 <div className="testimonial text-center slider-item">
-                  <div className="author-image mb-3">
+                  {/* <div className="author-image mb-3">
                     <img
                       src="/images/person_1.jpg"
                       alt="placeholder"
                       className="rounded-circle mx-auto"
                     />
-                  </div>
+                  </div> */}
                   <blockquote>
                     <p>
                       &ldquo;A small river named Duden flows by their place and
@@ -120,13 +120,13 @@ const Testimony = (props) => {
                   </p>
                 </div>
                 <div className="testimonial text-center slider-item">
-                  <div className="author-image mb-3">
+                  {/* <div className="author-image mb-3">
                     <img
                       src="/images/person_2.jpg"
                       alt="placeholder"
                       className="rounded-circle mx-auto"
                     />
-                  </div>
+                  </div> */}
                   <blockquote>
                     <p>
                       &ldquo;Even the all-powerful Pointing has no control about
