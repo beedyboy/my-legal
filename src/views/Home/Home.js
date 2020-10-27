@@ -51,13 +51,7 @@ const Home = () => {
         <meta name="copyright" content="MyLegal Solutions Nigeria" />
         <meta name="author" content="solution influx limited" />
       </Helmet>
-      {/* <Row className="mt-2">
-        <Col md="12">
-            <section className="mt-2 hp-banner">
-                <img src="/images/law-city.jpg" alt="law town" className="hero-slide" />
-            </section>
-        </Col>
-      </Row> */}
+      
       <section
         className="site-hero overlay"
         style={{ backgroundImage: `url(images/law-city.jpg)` }}
@@ -195,8 +189,7 @@ const Home = () => {
                   <a href="the-firm/our-notable-victories">
                     <div className="news-type">Firm News</div>
                     <h3>
-                      Victory: Qualcomm Settlement on the Heels ofMLS
-                      Trial Wins
+                     We are 10years better
                     </h3>
                   </a>
                 </div>

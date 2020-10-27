@@ -48,7 +48,7 @@ const TopBar = (props) => {
               </NavItem>
               <NavItem className="nav-item">
                 <Link className="nav-link" to="/about">
-                  About
+                  About Us
                 </Link>
               </NavItem>
               <NavItem className="nav-item">

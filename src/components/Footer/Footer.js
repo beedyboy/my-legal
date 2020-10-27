@@ -6,7 +6,7 @@ const Footer = () => {
     <Fragment>
       <footer>
         <Row>
-          <Col md="12" className="footer-section py-2">
+          <Col md="12" className="footer-section">
             <Container>
               <Row>
                 <Col md="3" className="mb-5 company-info-nav-list">
@@ -27,7 +27,7 @@ const Footer = () => {
                   </ul>
                 </Col>
                 <Col md="3" className="mb-5 company-info-nav-list">
-                  <div className="info-heading">Reach us</div>
+                  <h3>Reach us</h3>
                   <dl className="list-unstyled link">
                   <dt>Registered Office</dt>
                     <dd> 

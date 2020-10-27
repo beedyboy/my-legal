@@ -5,6 +5,7 @@ import TopBar from "../components/TopBar/TopBar";
 import "./styles.css";
 import "./media.css";
 import Footer from "../components/Footer/Footer";
+import PerfectScrollBar from 'react-perfect-scrollbar';
 
 const Layout = (props) => {
   const { children } = props;
@@ -36,8 +37,11 @@ const Layout = (props) => {
   return (
     <Fragment>
       <TopBar scroll={scroll} />
-      <section className="main_container">
+      {/* <section className="main_container"> */}
+      <PerfectScrollBar>
       {children}
+      </PerfectScrollBar>
+      
         {/* <Container fluid={true}>
           <Row>
             <Col md="12">
@@ -45,8 +49,8 @@ const Layout = (props) => {
             </Col>
           </Row>
         </Container> */}
-      </section>
       <Footer />
+      {/* </section> */}
     </Fragment>
   );
 };
