@@ -3919,10 +3919,10 @@ dashdash@^1.12.0:
   dependencies:
     assert-plus "^1.0.0"
 
-data-hero@^1.2.9:
-  version "1.2.9"
-  resolved "https://registry.yarnpkg.com/data-hero/-/data-hero-1.2.9.tgz#cd257967cd03276a82a2aecf045f8dcaaa797807"
-  integrity sha512-iSVK+a9I8SRc65RMg/M/f4NSDrfjcZCTBHvybTilY23M3lBfCLgbOLyRwSNW9+Z9mFRBFDdrcPMMWo4l+rMKxA==
+data-hero@^1.6.4:
+  version "1.6.4"
+  resolved "https://registry.yarnpkg.com/data-hero/-/data-hero-1.6.4.tgz#5e7a676ded26bfaa3f9fef13cea9ba0f1fe7a887"
+  integrity sha512-GYUz5U9dGdBkcjwo7qWLcPGAdBdONvyz25eJsjqbY5vlDHn+Liu8z70DwIWNjCkK+Tbve/p5GNlgZQquJ5guVg==
   dependencies:
     typescript "^3.9.3"
 
@@ -11363,7 +11363,12 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
-typescript@^3.9.3, typescript@^3.9.6:
+typescript@^3.9.3:
+  version "3.9.9"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.9.9.tgz#e69905c54bc0681d0518bd4d587cc6f2d0b1a674"
+  integrity sha512-kdMjTiekY+z/ubJCATUPlRDl39vXYiMV9iyeMuEuXZh2we6zz80uovNN2WlAxmmdE/Z/YQe+EbOEXB5RHEED3w==
+
+typescript@^3.9.6:
   version "3.9.7"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.9.7.tgz#98d600a5ebdc38f40cb277522f12dc800e9e25fa"
   integrity sha512-BLbiRkiBzAwsjut4x/dsibSTB6yWpwT5qWmC2OfuCg3GgVQCSgMs4vEctYPhsaGtd0AeuuHMkjZ2h2WG8MSzRw==

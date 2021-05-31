@@ -95,7 +95,8 @@ For Further Enquiries, kindly give us a Call ,Email or WhatsApp and we will Prov
                 <div className="social-information">
                   {" "}
                   <i className="fa fa-map-marker"></i>
-                  <p>Suite 25/26, Kabsal Complex, 1 Olabisi Street, Majek 1st Gate, Lekki-Epe, Expressway, Lagos</p>
+                  <p>11/12 Lore Plaza 1, Olabisi Seriki Street, Majek 1st
+                        Gate, Lekki-Epe Expressway, Lagos.</p>
                 </div>
                 <div className="social-information">
                   {" "}

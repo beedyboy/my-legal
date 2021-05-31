@@ -29,11 +29,15 @@ const Footer = () => {
                 <Col md="3" className="mb-5 company-info-nav-list">
                   <h3>Reach us</h3>
                   <dl className="list-unstyled link">
-                  <dt>Registered Office</dt>
-                    <dd> 
-                      <address>Ajah Lagos</address> 
+                    <dt>Registered Office</dt>
+                    <dd>
+                      <address>
+                        11/12 Lore Plaza 1, Olabisi Seriki Street, Majek 1st
+                        Gate, Lekki-Epe Expressway, Lagos.
+                      </address>
                     </dd>
-                    <dt>Registered number  <i className="fa fa-phone"></i> 
+                    <dt>
+                      Registered number <i className="fa fa-phone"></i>
                     </dt>
                     <dd>+(234) 706-589-2902</dd>
                     <dt>
@@ -43,21 +47,33 @@ const Footer = () => {
                     <dd>info@my-legalsolutions.com</dd>
                   </dl>
                   <div className="whatsapp">
-            <a href="https://api.whatsapp.com/send?phone=2348086275220&amp;text=hello guys;source=&amp;data=&amp;app_absent=" className="float" target="_blank">
-              <i className="fa fa-whatsapp my-float"></i>
-            </a>
-          </div>
+                    <a
+                      href="https://api.whatsapp.com/send?phone=2348086275220&amp;text=hello guys;source=&amp;data=&amp;app_absent="
+                      className="float"
+                      target="_blank"
+                    >
+                      <i className="fa fa-whatsapp my-float"></i>
+                    </a>
+                  </div>
                 </Col>
-                 <Col md="6" className="mb-5 company-info-nav-list">
-                 <div className="mapouter">
-<div className="gmap_canvas">
-  <iframe id="gmap_canvas"
- src="https://maps.google.com/maps?q=%20Kabsal%20Complex%2C%201%20Olabisi%20Street%2C%20Majek%201st%20Gate%2C%20Lekki-Epe%20Expressway%2C%20Lagos.%20&amp;t=&amp;z=13&amp;ie=UTF8&amp;iwloc=&amp;output=embed"
- marginheight="0" marginwidth="0" frameborder="0" height="300"
- scrolling="no" width="100%"></iframe></div> 
-            </div>  
+                <Col md="6" className="mb-5 company-info-nav-list">
+                  <div className="mapouter">
+                    <div className="gmap_canvas">
+                     
+                      <iframe
+                        id="gmap_canvas"
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1982.2059900442512!2d3.6540871378807047!3d6.469382849179594!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103bf9d411df09dd%3A0xe6630c6fbba82b5a!2sLAW%20OFFICE%20(My%20legal%20Solutions%20Chambers)!5e0!3m2!1sen!2sng!4v1622441474709!5m2!1sen!2sng"
+                        marginheight="0"
+                        marginwidth="0"
+                        frameborder="0"
+                        height="300"
+                        scrolling="no"
+                        allowfullscreen="true"
+                        loading="lazy"
+                      ></iframe>
+                    </div>
+                  </div>
                 </Col>
-               
               </Row>
             </Container>
           </Col>
@@ -119,16 +135,22 @@ const Footer = () => {
                 <div className="left">
                   <span className="left-column">
                     &copy;
-                 {new Date().getFullYear()}
-                     {" "}
-                    
+                    {new Date().getFullYear()}{" "}
                   </span>
-                  
+
                   <samp className="last">|</samp>
                   <span className="copyRight">
-              All rights reserved. My Legal Solutions. 
+                    All rights reserved. My Legal Solutions.
                     <br />
-                    Designed by <a href="https://solutioninflux.com" target="_blank" className="text-info"> Solution Influx</a>
+                    Designed by{" "}
+                    <a
+                      href="https://solutioninflux.com"
+                      target="_blank"
+                      className="text-info"
+                    >
+                      {" "}
+                      Solution Influx
+                    </a>
                   </span>
                 </div>
               </div>
@@ -141,4 +163,3 @@ const Footer = () => {
 };
 
 export default Footer;
-

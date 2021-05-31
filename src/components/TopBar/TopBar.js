@@ -61,11 +61,11 @@ const TopBar = (props) => {
                   Practice areas
                 </Link>
               </NavItem>
-              <NavItem className="nav-item cta-btn ml-xl-2 ml-lg-2 ml-md-0 ml-sm-0 ml-0">
+              {/* <NavItem className="nav-item cta-btn ml-xl-2 ml-lg-2 ml-md-0 ml-sm-0 ml-0">
                 <Link className="nav-link" to="#j">
                   <span className="pb_rounded-4 px-4 rounded">Get Started</span>
                 </Link>
-              </NavItem>
+              </NavItem> */}
             </Nav>
           </Collapse>
         </Container>

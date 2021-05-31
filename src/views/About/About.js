@@ -5,17 +5,26 @@ import { Link } from "react-router-dom";
 const About = () => {
   return (
     <Fragment>
-        <Helmet>
-        <title>MyLegal Solutions - Online Legal Consultants in Nigeria |  About Us</title>
+      <Helmet>
+        <title>
+          MyLegal Solutions - Online Legal Consultants in Nigeria | About Us
+        </title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#000000" />
         <meta property="og:title" content="My Legal Solutions Nigeria" />
         <meta property="og:site_name" content="My Legal Solutions Nigeria" />
-        <meta property="og:image"  content="www.mylegalsolutions.org/facebook.html" />
-        <meta name="description"
-      content="My Legal Solutions is a Nigerian Online law firm that provides more than just high quality and practical legal solutions to our clients. We focus our practice on a wide range of commercial and corporate dispute resolution matters encompassing litigation, arbitration and mediation all online and professional. We also provide corporate law advice encompassing drafting and reviewing of joint venture agreements, wills, partnership agreements as well as banking and security documentation." />
-        <meta name="keywords"
-      content="law,lagos,nigeria,commercial dispute,corporate dispute,litigation,arbitration,mediation,corporate law advice,joint venture agreement,real estate, partnership agreement,banking documentation,security documentation,complex cross-border disputes,simple claims,straight forward claims,Singapore,law,drafting,reviewing" />
+        <meta
+          property="og:image"
+          content="www.mylegalsolutions.org/facebook.html"
+        />
+        <meta
+          name="description"
+          content="My Legal Solutions is a Nigerian Online law firm that provides more than just high quality and practical legal solutions to our clients. We focus our practice on a wide range of commercial and corporate dispute resolution matters encompassing litigation, arbitration and mediation all online and professional. We also provide corporate law advice encompassing drafting and reviewing of joint venture agreements, wills, partnership agreements as well as banking and security documentation."
+        />
+        <meta
+          name="keywords"
+          content="law,lagos,nigeria,commercial dispute,corporate dispute,litigation,arbitration,mediation,corporate law advice,joint venture agreement,real estate, partnership agreement,banking documentation,security documentation,complex cross-border disputes,simple claims,straight forward claims,Singapore,law,drafting,reviewing"
+        />
         <meta name="copyright" content="MyLegal Solutions Nigeria" />
         <meta name="author" content="solution influx limited" />
       </Helmet>
@@ -40,11 +49,11 @@ const About = () => {
           </div>
         </Link>
       </section>
-<section>
-<h1 className="text-center">About Our  Services</h1>
+      <section>
+        <h1 className="text-center">About Our Services</h1>
 
-<div className="divider"></div>
-</section>
+        <div className="divider"></div>
+      </section>
       <section className="py-5 bg-light" id="section-about">
         <Container>
           <Row className="row align-items-center">
@@ -72,7 +81,17 @@ const About = () => {
                 in-house and business Legal consultancy services and other
                 facilities in the field of Law. Through our services, we give
                 you the opportunity to get answers to all your legal questions
-                On-line, wherever in the world you may be.
+                Online, for which you would not have to make a trip into a law
+                office. We also provide value to you by simplifying the
+                communication process between Client and Solicitor. We collect
+                information beforehand and enlist lawyers practicing in that
+                area of your problem. We also save the amount of time and money
+                you spend consulting with a lawyer to determine you have a case
+                or not. Responses to your questions, which are given by our team
+                of lawyers are personalized and tailored to your specific
+                situation and we treat every issue you bring to us as private
+                and confidential. Our system provides you with information that
+                enables you to make right decisions.
               </p>
             </Col>
           </Row>
@@ -80,128 +99,141 @@ const About = () => {
       </section>
       <section>
         <Container>
-        <Row>
-          <Col md="12">
-            <h2 className="text-center">
-              {" "}
-              <span className="text-danger">Our</span> TEAM
-            </h2>
-            <p>
-              Our team of lawyers is made up of experienced practitioners who
-              together bring with them a wealth of technical and practical
-              knowledge in local and cross-border matters
-            </p>
-          </Col>
-          <Col md="6">
-            <h3>Olalekan ELusoji</h3>
-
-            <p>
-              <strong>B.A., J.D., Barrister &amp; Solicitor</strong>
-            </p>
-
-            <blockquote>
-              <img
-                src="images/mls-2.jpg"
-                alt="what we do"
-                className="img-fluid rounded float-left"
-                
-                height="120"
-                width="130"
-              />
-
+          <Row>
+            <Col md="12">
+              <h2 className="text-center">
+                {" "}
+                <span className="text-danger">Our</span> TEAM
+              </h2>
               <p>
-                Jeffrey Abrams is fluent in both the French and Spanish
-                languages. He received his Bachelor of Arts degree from the
-                University of Toronto and graduated with high distinction.
-                Concurrently, he obtained his Bachelor of Laws degree from
-                Osgoode Hall Law School of York University. He is a lawyer in
-                the Province of Ontario, Canada.
+                We are intellectually equipped in our firm to render to your
+                good selves any of the services that may be required. The
+                following seasoned legal practitioners and supporting staff are
+                on seat and readily available.
               </p>
+            </Col>
 
-              <p>
-                Mr. Abrams' primary role as a lawyer within the firm is to
-                assist clients and prospective clients in determining whether
-                they might be eligible for Immigration to Canada and how Abrams
-                & Krochak might be able to offer assistance. He does this by
-                reviewing and considering responses given by persons visiting
-                this website who complete the convenient online questionnaire.
-                He also responds to questions relating to eligibility
-                assessments, once the questionnaire is completed and the
-                assessment is made. As well, Mr. Abrams assists people to choose
-                the category of Canada Immigration which best suits their
-                qualifications and aspirations.
-              </p>
-   </blockquote>
-          </Col>
-          <Col md="6">
-            <h3>Second Person</h3>
+            <Col md="6">
+              <h3>OLALEKAN ELUSOJI ESQ</h3>
 
-            <p>
-              <strong>B.A., J.D., Barrister &amp; Solicitor</strong>
-            </p>
+               
+              <p className="ml-5 pl-2">
+          (Principal)
+          </p>
 
-            <blockquote>
-              <img
-                src="images/mls-1.jpg"
-                alt="what we do"
-                className="img-fluid rounded float-left"
-                
-                height="120"
-                width="130"
-              />
+              <blockquote>
+                <img
+                  src="images/mls-2.jpg"
+                  alt="what we do"
+                  className="img-fluid rounded float-left"
+                  height="120"
+                  width="130"
+                />
 
-              <p>
-                Jeffrey Abrams is fluent in both the French and Spanish
-                languages. He received his Bachelor of Arts degree from the
-                University of Toronto and graduated with high distinction.
-                Concurrently, he obtained his Bachelor of Laws degree from
-                Osgoode Hall Law School of York University. He is a lawyer in
-                the Province of Ontario, Canada.
-              </p>
+                <p>
+                  A vast experienced legal practitioner and very result oriented
+                  in legal fields with effectiveness, efficiency and
+                  punctuality. He co-ordinates the briefs of the firm generally.
+                  He is very accessible and discharges obligations with great
+                  sense of responsibility.
+                </p>
+              </blockquote>
+            </Col>
+            <Col md="6">
+              <h3>ABIODUN OGUNDARE ESQ</h3>
+              <div className="ml-5"> (Partner/Head of Chambers)</div>
 
-              <p>
-                Mr. Abrams' primary role as a lawyer within the firm is to
-                assist clients and prospective clients in determining whether
-                they might be eligible for Immigration to Canada and how Abrams
-                & Krochak might be able to offer assistance. He does this by
-                reviewing and considering responses given by persons visiting
-                this website who complete the convenient online questionnaire.
-                He also responds to questions relating to eligibility
-                assessments, once the questionnaire is completed and the
-                assessment is made. As well, Mr. Abrams assists people to choose
-                the category of Canada Immigration which best suits their
-                qualifications and aspirations.
-              </p>
+              <blockquote>
+                <img
+                  src="images/mls-1.jpg"
+                  alt="what we do"
+                  className="img-fluid rounded float-left"
+                  height="120"
+                  width="130"
+                />
 
-              
-            </blockquote>
-          </Col>
-            </Row>
-       
-        <Row>
-          <Col>
-            <h2 className="heading mb-3  text-uppercase">
-              <span className="text-danger">Our</span> MISSION & VISION
-            </h2>
-            Our vision is to provide our clients with skilled legal advice in a
-            timely and efficient manner. We strive to handle each matter with
-            accountability and responsiveness, as if we were representing
-            ourselves. ... Our vision reflects our values: integrity, service,
-            excellence and teamwork.
-          </Col>
-          <Col>
-            <h2 className="heading mb-3  text-uppercase">
-              <span className="text-danger">CORPORATE </span>
-              <span>SOCIAL RESPONSIBILITY</span>
-            </h2>
-            Each year the firm supports a nominated charity and encourages fund
-            raising activities organized by the Social and Charity Committee.
-            This year our chosen charity is The Children gifted school for the
-            Blind.
-          </Col>
-        </Row>
+                <p>
+                  An expert legal service provider with an excellent success
+                  rate in litigation and resolving complex legal briefs. He
+                  provide consultancy in international law, industrial law,
+                  contracts law, family law, technical consultancy, copyright,
+                  patent and trademarks: music law and piracy.
+                </p>
+              </blockquote>
+            </Col>
+
+            <Col md="6">
+              <h3> SOLOLA AITUAJE ESQ.</h3>
+
+              {/* <p>
+                <strong>OLALEKAN ELUSOJI ESQ (Principal).</strong>
+              </p> */}
+
+              <blockquote>
+                {/* <img
+                  src="images/mls-2.jpg"
+                  alt="what we do"
+                  className="img-fluid rounded float-left"
+                  height="120"
+                  width="130"
+                /> */}
+
+                <p>
+                  An experienced counselor and attorney specialized in legal
+                  analysis, research, possess ability to solve legal questions
+                  with precise answers on our website and other online services
+                  rendered by our Firm and can provide a reliable expert legal
+                  service for all legal problems and Corporate Consultancy
+                  matters.{" "}
+                </p>
+              </blockquote>
+            </Col>
+            <Col md="6">
+              <h3>EMMANUEL ADEBAYO ESQ.</h3>
+
+              <blockquote>
+                {/* <img
+                  src="images/mls-1.jpg"
+                  alt="what we do"
+                  className="img-fluid rounded float-left"
+                  height="120"
+                  width="130"
+                /> */}
+
+                <p>
+                  An expert legal service provider, can provide consultancy in
+                  property and real estate transactions, home buying/ selling,
+                  landlord/tenant, mortgage and foreclosure law, construction
+                  and perfection of title documents.
+                </p>
+              </blockquote>
+            </Col>
+          </Row>
+
+          <Row>
+            <Col>
+              <h2 className="heading mb-3  text-uppercase">
+                <span className="text-danger">Our</span> MISSION & VISION
+              </h2>
+              Our vision is to provide our clients with skilled legal advice in
+              a timely and efficient manner. We strive to handle each matter
+              with accountability and responsiveness, as if we were representing
+              ourselves. ... Our vision reflects our values: integrity, service,
+              excellence and teamwork.
+            </Col>
+            <Col>
+              <h2 className="heading mb-3  text-uppercase">
+                <span className="text-danger">CORPORATE </span>
+                <span>SOCIAL RESPONSIBILITY</span>
+              </h2>
+              Each year the firm supports a nominated charity and encourages
+              fund raising activities organized by the Social and Charity
+              Committee. This year our chosen charity is The Children gifted
+              school for the Blind.
+            </Col>
+          </Row>
         </Container>
-         </section>
+      </section>
     </Fragment>
   );
 };
