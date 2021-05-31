@@ -157,7 +157,7 @@ const Home = () => {
       </section>
 
       {/* <section className="news-event hp-spot-wrap">  */}
-      <section className="section bg-secondary">
+      {/* <section className="section bg-secondary">
         <Container>
           <Row>
             <Col md="5">
@@ -225,7 +225,7 @@ const Home = () => {
             </Col>
           </Row>
         </Container>
-      </section>
+      </section> */}
     </Fragment>
   );
 };

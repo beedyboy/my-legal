@@ -1,22 +1,118 @@
-import React, { Fragment } from "react";
+/* eslint-disable no-use-before-define */
+import React, { Fragment, useState, useEffect } from "react";
 import Helmet from "react-helmet";
-import { Row, Col, Container, Button } from "reactstrap";
+import { Container, Button, FormText, FormGroup } from "reactstrap";
 import { Link } from "react-router-dom";
-import './contact.css';
+import "./contact.css";
+import dataHero from "data-hero";
+import mailer from "../../services/mailer";
+
+const schema = {
+  email: {
+    email: true,
+    message: "Email is required",
+  },
+  message: {
+    isEmpty: false,
+    min: 1,
+    message: "Message is required",
+  },
+};
 const Contact = () => {
+  const [formState, setFormState] = useState({
+    values: {
+      name: "",
+      message: "",
+      phone: "",
+    },
+    touched: {},
+    errors: {},
+  });
+  const { touched, errors, values, isValid } = formState;
+
+  useEffect(() => {
+    const errors = dataHero.validate(schema, values);
+    setFormState((formState) => ({
+      ...formState,
+      isValid: errors.email.error || errors.message.error ? false : true,
+      errors: errors || {},
+    }));
+  }, [values]);
+
+  const handleChange = (event) => {
+    event.persist();
+    setFormState((formState) => ({
+      ...formState,
+      values: {
+        ...formState.values,
+        [event.target.name]: event.target.value,
+      },
+      touched: {
+        ...formState.touched,
+        [event.target.name]: true,
+      },
+    }));
+  };
+  const hasError = (field) => touched[field] && errors[field].error;
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const data = {
+      email: values.email,
+      subject: process.env.REACT_APP_CLIENT_EMAIL_SUBJECT,
+      message: "Thank you for contacting us, we will get back to you shortly",
+    };
+    const name = 'Name: ' + values.name;
+    const phone = <p>{values.phone}</p>
+    const msg = <p>{values.message}</p>
+    const message = name + phone + msg;
+    const data2 = {
+      email: values.email,
+      subject: process.env.REACT_APP_ADMIN_EMAIL,
+      message 
+    };
+    mailer.sendEmail(data);
+    mailer.sendEmail(data2);
+  };
+  const resetForm = () => {
+    setFormState((prev) => ({
+      ...prev,
+      values: {
+        ...prev.values,
+        name: "",
+        message: "",
+        phone: "",
+      },
+      touched: {
+        ...prev.touched,
+        name: false,
+        message: false,
+      },
+      errors: {},
+    }));
+  };
   return (
     <Fragment>
-        <Helmet>
-        <title>MyLegal Solutions - Online Legal Consultants in Nigeria |  Contact</title>
+      <Helmet>
+        <title>
+          MyLegal Solutions - Online Legal Consultants in Nigeria | Contact
+        </title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#000000" />
         <meta property="og:title" content="My Legal Solutions Nigeria" />
         <meta property="og:site_name" content="My Legal Solutions Nigeria" />
-        <meta property="og:image"  content="www.mylegalsolutions.org/facebook.html" />
-        <meta name="description"
-      content="My Legal Solutions is a Nigerian Online law firm that provides more than just high quality and practical legal solutions to our clients. We focus our practice on a wide range of commercial and corporate dispute resolution matters encompassing litigation, arbitration and mediation all online and professional. We also provide corporate law advice encompassing drafting and reviewing of joint venture agreements, wills, partnership agreements as well as banking and security documentation." />
-        <meta name="keywords"
-      content="law,lagos,nigeria,commercial dispute,corporate dispute,litigation,arbitration,mediation,corporate law advice,joint venture agreement,real estate, partnership agreement,banking documentation,security documentation,complex cross-border disputes,simple claims,straight forward claims,Singapore,law,drafting,reviewing" />
+        <meta
+          property="og:image"
+          content="www.mylegalsolutions.org/facebook.html"
+        />
+        <meta
+          name="message"
+          content="My Legal Solutions is a Nigerian Online law firm that provides more than just high quality and practical legal solutions to our clients. We focus our practice on a wide range of commercial and corporate dispute resolution matters encompassing litigation, arbitration and mediation all online and professional. We also provide corporate law advice encompassing drafting and reviewing of joint venture agreements, wills, partnership agreements as well as banking and security documentation."
+        />
+        <meta
+          name="keywords"
+          content="law,lagos,nigeria,commercial dispute,corporate dispute,litigation,arbitration,mediation,corporate law advice,joint venture agreement,real estate, partnership agreement,banking documentation,security documentation,complex cross-border disputes,simple claims,straight forward claims,Singapore,law,drafting,reviewing"
+        />
         <meta name="copyright" content="MyLegal Solutions Nigeria" />
         <meta name="author" content="solution influx limited" />
       </Helmet>
@@ -46,57 +142,31 @@ const Contact = () => {
 
         <div className="divider"></div>
       </section>
-      {/* <section className="py-5 bg-light" id="section-Contact">
-        <Container>
-          <Row className="row align-items-center">
-            <Col
-              md="12"
-              lg="5"
-              className="ml-auto order-lg-2 position-relative mb-3"
-              data-aos="fade-up"
-            >
-              <img
-                src="images/justice-map.jpg"
-                alt="what we do"
-                className="img-fluid rounded"
-                height="120"
-              />
-            </Col>
-            <Col md="12" lg="7" className="order-lg-1" data-aos="fade-up">
-              <h2 className="heading mb-3  text-uppercase">
-                <span className="text-danger">Our</span> Firm!
-              </h2>
-              <p className="mb-5">
-                MyLegal Solutions is an online Legal service provider, created
-                to fill the need for understandable and efficient Legal
-                solutions by offering you the convenience and quality of
-                in-house and business Legal consultancy services and other
-                facilities in the field of Law. Through our services, we give
-                you the opportunity to get answers to all your legal questions
-                On-line, wherever in the world you may be.
-              </p>
-            </Col>
-          </Row>
-        </Container>
-      </section> 
-     */}
-      <section className="py-5 bg-light" id="section-Contact"  data-aos="fade-up">
+
+      <section
+        className="py-5 bg-light"
+        id="section-Contact"
+        data-aos="fade-up"
+      >
         <Container>
           <div className="contactForm">
             <div className="contact-info">
               <h3 className="title">Let's get in touch</h3>
               <p className="text">
                 {" "}
-                We thank you for your interest in MyLegal Soutions Legal and Real Estate Services.
-
-For Further Enquiries, kindly give us a Call ,Email or WhatsApp and we will Provide all Information needed Promptly{" "}
+                We thank you for your interest in MyLegal Soutions Legal and
+                Real Estate Services. For Further Enquiries, kindly give us a
+                Call ,Email or WhatsApp and we will Provide all Information
+                needed Promptly{" "}
               </p>
               <div className="info">
                 <div className="social-information">
                   {" "}
                   <i className="fa fa-map-marker"></i>
-                  <p>11/12 Lore Plaza 1, Olabisi Seriki Street, Majek 1st
-                        Gate, Lekki-Epe Expressway, Lagos.</p>
+                  <p>
+                    11/12 Lore Plaza 1, Olabisi Seriki Street, Majek 1st Gate,
+                    Lekki-Epe Expressway, Lagos.
+                  </p>
                 </div>
                 <div className="social-information">
                   {" "}
@@ -106,12 +176,12 @@ For Further Enquiries, kindly give us a Call ,Email or WhatsApp and we will Prov
                 <div className="social-information">
                   {" "}
                   <i className="fa fa-mobile-phone"></i>
-                  <p>+234-706-589-2902 </p> 
+                  <p>+234-706-589-2902 </p>
                 </div>
                 <div className="social-information">
                   {" "}
                   <i className="fa fa-whatsapp"></i>
-                  <p>+234-808-627-5220 </p> 
+                  <p>+234-808-627-5220 </p>
                 </div>
               </div>
               <div className="social-media">
@@ -150,16 +220,31 @@ For Further Enquiries, kindly give us a Call ,Email or WhatsApp and we will Prov
                     name="name"
                     className="input"
                     placeholder="Name"
+                    value={values.name || ""}
+                    onChange={handleChange}
                   />{" "}
                 </div>
                 <div className="social-input-containers">
                   {" "}
-                  <input
+                  <FormGroup
+                        className={hasError("email") ? "has-danger" : null}
+                      >    <input
                     type="email"
                     name="email"
                     className="input"
+                    value={values.email || ""}
+                    onChange={handleChange}
                     placeholder="Email"
                   />{" "}
+                     <FormText>
+                          <p className="text-danger">
+                            {hasError("email")
+                              ? formState.errors.email &&
+                                formState.errors.email.message
+                              : null}
+                          </p>
+                        </FormText>
+                        </FormGroup>
                 </div>
                 <div className="social-input-containers">
                   {" "}
@@ -168,6 +253,8 @@ For Further Enquiries, kindly give us a Call ,Email or WhatsApp and we will Prov
                     name="phone"
                     className="input"
                     placeholder="Phone"
+                    value={values.phone || ""}
+                    onChange={handleChange}
                   />{" "}
                 </div>
                 <div className="social-input-containers textarea">
@@ -176,10 +263,18 @@ For Further Enquiries, kindly give us a Call ,Email or WhatsApp and we will Prov
                     name="message"
                     className="input"
                     placeholder="Message"
+                    value={values.message || ""}
+                    onChange={handleChange}
                   ></textarea>{" "}
                 </div>{" "}
-                <Button type="submit" color="primary">Send</Button>
-             
+                <Button
+                  type="submit"
+                  color="primary"
+                  onClick={handleSubmit}
+                  disabled={!isValid}
+                >
+                  Send
+                </Button>
               </form>
             </div>
           </div>
