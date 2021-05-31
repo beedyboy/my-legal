@@ -123,7 +123,7 @@ const About = () => {
 
               <blockquote>
                 <img
-                  src="images/mls-2.jpg"
+                  src="images/mls-2.jpeg"
                   alt="what we do"
                   className="img-fluid rounded float-left"
                   height="120"
