@@ -4,9 +4,7 @@ import Helmet from "react-helmet";
 import { Container, Button, FormText, FormGroup } from "reactstrap";
 import { Link } from "react-router-dom";
 import "./contact.css";
-import dataHero from "data-hero";
-import mailer from "../../services/mailer";
-
+import dataHero from "data-hero"; 
 const schema = {
   email: {
     email: true,
@@ -57,22 +55,22 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const data = {
-      email: values.email,
-      subject: process.env.REACT_APP_CLIENT_EMAIL_SUBJECT,
-      message: "Thank you for contacting us, we will get back to you shortly",
-    };
-    const name = 'Name: ' + values.name;
-    const phone = <p>{values.phone}</p>
-    const msg = <p>{values.message}</p>
-    const message = name + phone + msg;
-    const data2 = {
-      email: values.email,
-      subject: process.env.REACT_APP_ADMIN_EMAIL,
-      message 
-    };
-    mailer.sendEmail(data);
-    mailer.sendEmail(data2);
+    // const data = {
+    //   email: values.email,
+    //   subject: process.env.REACT_APP_CLIENT_EMAIL_SUBJECT,
+    //   message: "Thank you for contacting us, we will get back to you shortly",
+    // };
+    // const name = 'Name: ' + values.name;
+    // const phone = <p>{values.phone}</p>
+    // const msg = <p>{values.message}</p>
+    // const message = name + phone + msg;
+    // const data2 = {
+    //   email: values.email,
+    //   subject: process.env.REACT_APP_ADMIN_EMAIL,
+    //   message 
+    // };
+    // mailer.sendEmail(data);
+    // mailer.sendEmail(data2);
   };
   const resetForm = () => {
     setFormState((prev) => ({
