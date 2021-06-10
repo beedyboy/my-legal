@@ -15,7 +15,7 @@ const PrivateRoute = (props) => {
             <Component {...matchProps} {...rest} />
           </Layout>
         ) : (
-          <Redirect to={{ pathname: "/auth/login", state: { from: props.location } }} />
+          <Redirect to={{ pathname: "/admin/login", state: { from: props.location } }} />
         )
       }
     />

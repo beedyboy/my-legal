@@ -13,12 +13,11 @@ import {
   Form,
   FormGroup,
   FormText,
-} from "reactstrap";
-import brand from "../../assets/img/brand.png";
+} from "reactstrap"; 
 import office from "../../assets/img/office.png";
-import "./style.css";
-import UserStore from "../../stores/UserStore";
+import "./style.css"; 
 import { Link } from "react-router-dom";
+import AccountStore from "../../stores/AccountStore";
 
 const schema = {
   email: {
@@ -33,8 +32,8 @@ const schema = {
   },
 };
 
-const SignIn = (props) => {
-  const userStore = useContext(UserStore);
+const Login = (props) => {
+  const userStore = useContext(AccountStore);
   const { login, isAuthenticated, sending } = userStore;
 
   const [formState, setFormState] = useState({
@@ -96,9 +95,7 @@ const SignIn = (props) => {
           <Row className="d-flex">
             <Col lg="6">
               <div className="card1 pb-5">
-                <Row>
-                  <img src={brand} className="logo" alt="brand" />
-                </Row>
+              
                 <Row className="px-3 justify-content-center mt-4 mb-5 border-line">
                   <img src={office} className="image" alt="office" />
                 </Row>
@@ -217,12 +214,7 @@ const SignIn = (props) => {
                       </Button>
                     </Col>
                   </Row>
-                  {/* <Row className="mb-4 px-3">
-              <small className="font-weight-bold">
-                Don't have an account?
-              <a className="text-danger ">Register</a>
-            </small>
-          </Row> */}
+               
                 </Form>
               </div>
             </Col>
@@ -230,7 +222,7 @@ const SignIn = (props) => {
           <div className="bg-blue py-4">
             <Row className="px-3">
               <small className="ml-4 ml-sm-5 mb-2">
-                Copyright &copy; 2020. All rights reserved.
+                Copyright &copy; 2021. All rights reserved.
               </small>
               <div className="social-contact ml-4 ml-sm-auto">
                 <span className="fa fa-facebook mr-4 text-sm"></span>
@@ -246,4 +238,4 @@ const SignIn = (props) => {
   );
 };
 
-export default withRouter(observer(SignIn));
+export default withRouter(observer(Login));
