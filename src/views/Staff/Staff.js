@@ -1,15 +1,16 @@
 import React, { useContext, useState, Fragment, useEffect } from "react";
-import { observer } from "mobx-react";
+import { observer } from "mobx-react-lite";
 import { Card, CardBody, CardHeader, Button, Row, Col } from "reactstrap"; 
 import StaffList from "./Components/StaffList";
 import StaffForm from "./Components/StaffForm"; 
+import {   toast } from 'react-toastify';
 import RoleForm from "./Components/RoleForm";
 import Utility from "../../services/UtilityService"; 
 import AccountStore from "../../stores/AccountStore";
 
 const Staff = () => {
-  const accountStore = useContext(AccountStore);
-  const {  users, getUsers, removeStaff } = accountStore;
+  const store = useContext(AccountStore);
+  const {  users, getUsers, removeStaff } = store;
   const [mode, setMode] = useState("");
   const [rowData, setRowData] = useState();
   const [modal, setModal] = useState(false); 
@@ -29,6 +30,70 @@ const Staff = () => {
       setId(0);
     }
   }; 
+
+  useEffect(() => {
+    if (removed === true) {
+      toast.success(message, {
+        position: toast.POSITION.TOP_RIGHT
+      })
+    }
+    return () => {
+      resetProperty("removed", false);
+      resetProperty("message", "");
+    };
+  }, [removed]);
+  useEffect(() => {
+    if (action === "newStaff") {
+      toast.success(message, {
+        position: toast.POSITION.TOP_RIGHT
+      })
+      setOpen(false);
+    }
+    return () => {
+      resetProperty("message", "");
+      resetProperty("action", "");
+      setOpen(false);
+    };
+  }, [action]);
+  useEffect(() => {
+    if (action === "hasRole") {
+      toast.success(message, {
+        position: toast.POSITION.TOP_RIGHT
+      })
+      setModal(false);
+    }
+    return () => {
+      resetProperty("message", "");
+      resetProperty("action", "");
+      setModal(false);
+    };
+  }, [action]);
+  useEffect(() => {
+    if (error === true && action === "newStaffError") {
+      toast.error(message, {
+        position: toast.POSITION.TOP_RIGHT
+      })
+    }
+    return () => {
+      resetProperty("error", false);
+      resetProperty("message", "");
+      resetProperty("action", "");
+      setOpen(false);
+    };
+  }, [error]);
+  useEffect(() => {
+    if (error === true && action === "hasRoleError") {
+      toast.error(message, {
+        position: toast.POSITION.TOP_RIGHT
+      })
+    }
+    return () => {
+      resetProperty("error", false);
+      resetProperty("message", "");
+      resetProperty("action", "");
+      setModal(false);
+    };
+  }, [error]);
   const createStaff = () => {
     setModal(true);
     setMode("Add");
@@ -81,6 +146,7 @@ const Staff = () => {
             mode={mode}
             open={modal}
             handleClose={handleClose}
+            store={store}
             initial_data={rowData}
           />
          
