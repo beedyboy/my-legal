@@ -1,14 +1,14 @@
 import React, { Fragment, useContext, useEffect } from "react";
-import { Row, Col } from "reactstrap";
-import UserStore from "../../../stores/UserStore";
+import { Row, Col } from "reactstrap"; 
 import { Link } from "react-router-dom";
 import ReactHtmlParser from "react-html-parser";
-import { observer } from "mobx-react";
-import Utility from "../../../services/UtilityService";
+import { observer } from "mobx-react"; 
+import Utils from "../../../shared/localStorage";
+import AccountStore from "../../../stores/AccountStore";
 
 const StaffDetails = (props) => {
-  const userStore = useContext(UserStore);
-  const { profile: data, getProfileById } = userStore;
+  const store = useContext(AccountStore);
+  const { profile: data, getProfileById } = store;
   useEffect(() => {
     let id = parseInt(props.match.params.id);
     getProfileById(id);
@@ -47,7 +47,7 @@ const StaffDetails = (props) => {
     return add;
   };
   
-  let canView = Utility.canAccess("staff", "view");
+  let canView = Utils.canAccess("staff", "view");
   return (
     <Fragment>
       <Row>

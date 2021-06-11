@@ -38,9 +38,9 @@ const schema = {
     message: "A valid email is required",
   },
 };
-const StaffForm = ({ mode, store, open, handleClose, initial_data }) => {
+const StaffForm = ({ mode, store, open, toggle, initial_data }) => {
   const {
-    createStaff,
+    addStaff,
     updateStaff,
     sending,
     close,
@@ -116,7 +116,7 @@ const StaffForm = ({ mode, store, open, handleClose, initial_data }) => {
   useEffect(() => {
     if (close === true) {
       resetForm();
-      handleClose();
+      toggle();
     }
   }, [close]);
 
@@ -143,7 +143,7 @@ const StaffForm = ({ mode, store, open, handleClose, initial_data }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     mode === "Add"
-      ? createStaff(formState.values)
+      ? addStaff(formState.values)
       : updateStaff(formState.values);
   };
   const resetForm = () => {
@@ -172,14 +172,14 @@ const StaffForm = ({ mode, store, open, handleClose, initial_data }) => {
     }));
   };
   const closeBtn = (
-    <Button className="close" onClick={handleClose}>
+    <Button className="close" onClick={toggle}>
       &times;
     </Button>
   );
   return (
     <Fragment>
-      <Modal isOpen={open} toggle={handleClose}>
-        <ModalHeader toggle={handleClose} close={closeBtn}>
+      <Modal isOpen={open} toggle={toggle}>
+        <ModalHeader toggle={toggle} close={closeBtn}>
           {title}
         </ModalHeader>
         <form noValidate autoComplete="off" onSubmit={handleSubmit}>
@@ -236,7 +236,7 @@ const StaffForm = ({ mode, store, open, handleClose, initial_data }) => {
                     <FormGroup>
                       <Label for="email">Email Address</Label>
                       <Input
-                        type="text"
+                        type="email"
                         value={formState.values.email || ""}
                         name="email"
                         id="email"
@@ -298,7 +298,7 @@ const StaffForm = ({ mode, store, open, handleClose, initial_data }) => {
             </Card>
           </ModalBody>
           <ModalFooter>
-            <Button color="secondary" onClick={handleClose}>
+            <Button color="secondary" onClick={toggle}>
               Close
             </Button>{" "}
             <Button

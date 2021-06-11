@@ -8,11 +8,10 @@ import {
   Button, 
 } from "reactstrap";
  
-const StaffList = ({
+const BlogList = ({
   data,
   setMode, 
-  setId,
-  setACL, 
+  setId, 
   removeData,
   rowData,
   toggle,
@@ -21,26 +20,16 @@ const StaffList = ({
 }) => {
   const columns = useMemo(() => [
     {
-      name: "Name",
+      name: "Title",
       sortable: true,
       cell: (row) => (
         <Fragment>
-          <Link to={`/staff/${row.id}/view`} className="text-info">
-            {row.firstname + " " + row.lastname}
+          <Link to={`/blog/${row.id}/view`} className="text-info">
+            {row.title}
           </Link>
         </Fragment>
       ),
-    },
-    {
-      name: "Email",
-      selector: "email",
-      sortable: true,
     }, 
-    {
-      name: "Phone",
-      selector: "phone",
-      sortable: true,
-    },
     {
       name: "Created",
       selector: "created_at",
@@ -56,9 +45,7 @@ const StaffList = ({
               <Button size="sm" color="info" onClick={(e) => editData(e, row)}>
                 <i className="fa fa-edit"></i>
               </Button>{" "}
-              <Button size="sm" color="info" onClick={(e) => assignACL(e, row)}>
-                <i className="fa fa-key"></i> 
-              </Button>{" "}
+              
             </Fragment>
           ) : (
             ""
@@ -69,7 +56,7 @@ const StaffList = ({
                 size="sm"
                 color="danger"
                 onClick={(e) => {
-                  if (window.confirm("Delete this staff?")) {
+                  if (window.confirm("Delete this blog?")) {
                     deleteData(e, row.id);
                   }
                 }}
@@ -91,13 +78,6 @@ const StaffList = ({
     rowData(row);
     toggle(true);
   }; 
-  const assignACL = (e, row) => {
-    e.persist();
-    const d = toJS(row) 
-    rowData(d);
-    setId(d.id);
-    setACL();
-  }; 
  
   const deleteData = (e, id) => {
     removeData(id);
@@ -107,7 +87,7 @@ const StaffList = ({
       <Row>
         <Col md="12">
           <DataTable
-            title="Staff List"
+            title="Blog List"
             columns={columns}
             data={data}
             pagination={true}
@@ -119,4 +99,4 @@ const StaffList = ({
   );
 };
 
-export default StaffList;
+export default BlogList;

@@ -1,48 +1,69 @@
 import React, { Fragment } from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Redirect } from "react-router-dom";
 import Layout from "./templates/Layout";
 import {
   Home as HomeView,
   About as AboutView,
+  Blog as BlogView,
   Contact as ContactView,
   Practise as PractiseView,
   Login as LoginView,
   NotFound as NotFoundView,
+  Staff as StaffView,
 } from "./views";
 import { PrivateRoute, NormalRoute } from "./HOC";
-import NormalLayout from "./templates copy/NormalLayout/NormalLayout";
-import MainLayout from "./templates copy/MainLayout/MainLayout";
+import MainLayout from "./templates/Admin/MainLayout/MainLayout";
+import NormalLayout from "./templates/Admin/NormalLayout/NormalLayout";
 const Routes = () => {
   return (
     <Fragment>
-      <Layout>
-        <Switch>
-          {/* <Redirect exact from="/" to="/dashboard" /> */}
-          <Route component={HomeView} exact path="/" />
-          <Route component={AboutView} exact path="/about" />
-          <Route component={ContactView} exact path="/contact" />
-          <Route component={PractiseView} exact path="/practise-area" />
-          {/* <PrivateRoute
-        component={DashboardView}
-        exact
-        layout={MainLayout}
-        path="/dashboard"
-      /> */}
-          <NormalRoute
-            component={LoginView}
-            exact
-            layout={NormalLayout}
-            path="/login"
-          />
-          <NormalRoute
-            component={NotFoundView}
-            exact
-            layout={NormalLayout}
-            path="/not-found"
-          />
-          <Redirect to="/not-found" />
-        </Switch>
-      </Layout>
+      <Switch>
+        <Redirect exact from="/admin" to="/staff" />
+        <NormalRoute component={HomeView} exact layout={Layout} path="/" />
+        <NormalRoute
+          component={AboutView}
+          exact
+          layout={Layout}
+          path="/about"
+        />
+        <NormalRoute
+          component={ContactView}
+          exact
+          layout={Layout}
+          path="/contact"
+        />
+        <NormalRoute
+          component={PractiseView}
+          exact
+          layout={Layout}
+          path="/practise-area"
+        />
+        <PrivateRoute
+          component={BlogView}
+          exact
+          layout={MainLayout}
+          path="/admin/blog"
+        />
+        <PrivateRoute
+          component={StaffView}
+          exact
+          layout={MainLayout}
+          path="/admin/staff"
+        />
+        <NormalRoute
+          component={LoginView}
+          exact
+          layout={NormalLayout}
+          path="/admin/login"
+        />
+        <NormalRoute
+          component={NotFoundView}
+          exact
+          layout={NormalLayout}
+          path="/not-found"
+        />
+        <Redirect to="/not-found" />
+      </Switch>
     </Fragment>
   );
 };

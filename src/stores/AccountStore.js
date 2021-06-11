@@ -120,7 +120,7 @@ class AccountStore {
             // console.log(res.data.acl)
             Utils.save("name", res.data.lastname + " " + res.data.firstname);
             Utils.save("admin_token", res.data.token);
-            // Utils.save("acl", JSON.stringify(res.data.acl));
+            Utils.save("acl", JSON.stringify(res.data.acl));
             this.message = res.data.message;
             this.isAuthenticated = true;
           } else {

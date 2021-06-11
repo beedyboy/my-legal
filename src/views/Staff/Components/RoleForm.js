@@ -14,16 +14,16 @@ import {
   Row,
   Col,
 } from "reactstrap";
-const RoleForm = ({ handleClose, open, id, initial_data, toggle, store }) => {
+const RoleForm = ({ toggle, open, id, initial_data, store }) => {
   const {
-    assignRole,
-    resetProperty: reset,
-    message,
+    setRole,
+    resetProperty: reset, 
     action,
     error,
     sending,
   } = store;
 
+  const [uid, setId] = useState();
   const [priviledges, setPriviledges] = useState({
     blog: { add: false, view: false, del: false },
     subscriber: { add: false, view: false, del: false },
@@ -31,27 +31,29 @@ const RoleForm = ({ handleClose, open, id, initial_data, toggle, store }) => {
   });
 
   useLayoutEffect(() => {
-    const data = initial_data && initial_data.roles;
+    let data = initial_data && initial_data.roles;
     const id = initial_data && initial_data.id;
+    console.log({data})
     setId(id);
     if (data) {
+      data = data[0]
       setPriviledges((state) => ({
         ...state,
         blog: {
-          add: (data && data.blog.add) || false,
-          view: (data && data.blog.view) || false,
-          del: (data && data.blog.del) || false,
+          add: data && (data.blog && data.blog.add) || false,
+          view: data && (data.blog && data.blog.view) || false,
+          del: data && (data.blog && data.blog.del) || false,
         },
         subscriber: {
-          add: (data && data.subscriber.add) || false,
-          view: (data && data.subscriber.view) || false,
-          del: (data && data.subscriber.del) || false,
+          add: data && (data.subscriber && data.subscriber.add) || false,
+          view: data && (data.subscriber && data.subscriber.view) || false,
+          del: data && (data.subscriber && data.subscriber.del) || false,
         },
         staff: {
-          add: (data && data.staff.add) || false,
-          view: (data && data.staff.view) || false,
-          del: (data && data.staff.del) || false,
-          modify: (data && data.staff.modify) || false,
+          add: data && (data.staff && data.staff.add) || false,
+          view: data && (data.staff && data.staff.view) || false,
+          del: data && (data.staff && data.staff.del) || false,
+          modify: data && (data.staff && data.staff.modify) || false,
         },
       }));
     }
@@ -65,7 +67,7 @@ const RoleForm = ({ handleClose, open, id, initial_data, toggle, store }) => {
       reset("saved", false);
       reset("message", "");
       resetForm();
-      toggle(false);
+      toggle();
     };
   }, [action]);
 
@@ -76,7 +78,7 @@ const RoleForm = ({ handleClose, open, id, initial_data, toggle, store }) => {
       reset("error", false);
       reset("message", "");
       resetForm();
-      toggle(false);
+      toggle();
     };
   }, [error]);
 
@@ -97,7 +99,7 @@ const RoleForm = ({ handleClose, open, id, initial_data, toggle, store }) => {
       priviledges,
       id: parseInt(id),
     };
-    assignRole(data);
+    setRole(data);
   };
   const resetForm = () => {
     setPriviledges((prev) => ({
@@ -111,14 +113,14 @@ const RoleForm = ({ handleClose, open, id, initial_data, toggle, store }) => {
     }));
   };
   const closeBtn = (
-    <Button className="close" onClick={handleClose}>
+    <Button className="close" onClick={toggle}>
       &times;
     </Button>
   );
   return (
     <Fragment>
-      <Modal isOpen={open} toggle={handleClose}>
-        <ModalHeader toggle={handleClose} close={closeBtn}>
+      <Modal isOpen={open} toggle={toggle}>
+        <ModalHeader toggle={toggle} close={closeBtn}>
           {" "}
           Access Level
         </ModalHeader>
@@ -263,7 +265,7 @@ const RoleForm = ({ handleClose, open, id, initial_data, toggle, store }) => {
             </Card>
           </ModalBody>
           <ModalFooter>
-            <Button color="secondary" onClick={handleClose}>
+            <Button color="secondary" onClick={toggle}>
               Close
             </Button>
             <Button color="primary" disabled={sending} type="submit">

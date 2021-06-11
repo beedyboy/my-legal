@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useContext, Fragment } from "react";
 import { withRouter, Redirect } from "react-router-dom";
 import dataHero from "data-hero";
-import { observer } from "mobx-react";
+import { observer } from "mobx-react-lite";
+import {   toast } from 'react-toastify';
 import {
   Container,
   Input,
@@ -33,8 +34,8 @@ const schema = {
 };
 
 const Login = (props) => {
-  const userStore = useContext(AccountStore);
-  const { login, isAuthenticated, sending } = userStore;
+  const store = useContext(AccountStore);
+  const { login, isAuthenticated, sending, resetProperty, message } = store;
 
   const [formState, setFormState] = useState({
     isValid: false,
@@ -57,8 +58,7 @@ const Login = (props) => {
   }, [formState.values]);
 
   const handleChange = (event) => {
-    event.persist();
-
+    event.persist(); 
     setFormState((formState) => ({
       ...formState,
       values: {
@@ -77,10 +77,21 @@ const Login = (props) => {
 
   const handleSignIn = (event) => {
     event.preventDefault();
-    login(formState.values);
-    // isAuthenticated === true ? history.push('/'): null;
+    login(formState.values); 
   };
-  const { from } = props.location.state || { from: { pathname: "/dashboard" } };
+
+  useEffect(() => {
+    if (isAuthenticated === true) {
+      toast.success(message, {
+        position: toast.POSITION.TOP_RIGHT
+      })
+    }
+    return () => {
+      resetProperty("removed", false);
+      resetProperty("message", "");
+    };
+  }, [isAuthenticated]);
+  const { from } = props.location.state || { from: { pathname: "/admin/staff" } };
   if (isAuthenticated === true) {
     return <Redirect to={from} />;
   }

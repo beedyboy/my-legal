@@ -16,11 +16,24 @@ const Utils = {
     remove:(key) => {
         localStorage.removeItem(key);
     },
+    canAccess: (key, priviledge) => {
+      let access = Utils.get("acl");
+      let acl;
+      if (access && access.length > 0 && access !== "null") {
+        acl = JSON.parse(access);
+       if (acl[key] === undefined) {
+         return false;
+       } else {
+         return acl[key][priviledge];
+       } 
+      }
+      return false;
+    },
      logout: () => {
         localStorage.removeItem('admin_token');  
         localStorage.removeItem('acl');  
         localStorage.removeItem('name');  
-        window.location.href = '/#/auth/login'; 
+        window.location.href = '/#/admin/login'; 
     }
 }
  

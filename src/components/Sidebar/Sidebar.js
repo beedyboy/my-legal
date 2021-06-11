@@ -26,13 +26,7 @@ const Sidebar = () => {
   const blogView = acl && acl.blog && acl.blog.view;
 
   let totalBlog = blogAdd && blogDel && blogView;
-
-  let totalStaff =
-    Utils.canAccess("staff", "add") ||
-    Utils.canAccess("staff", "view") ||
-    Utils.canAccess("staff", "del") ||
-    Utils.canAccess("staff", "modify");
-
+ 
   const staffAdd = acl && acl.staff && acl.staff.add;
   const staffDel = acl && acl.staff && acl.staff.del;
   const staffView = acl && acl.staff && acl.staff.view;
@@ -53,7 +47,7 @@ const Sidebar = () => {
 
         {totalBlog ? (
           <li>
-            <Link to="/blog">
+            <Link to="/admin/blog">
               <span className="icon">
                 <i className="fa fa-group" aria-hidden="true"></i>
               </span>
@@ -64,7 +58,7 @@ const Sidebar = () => {
 
         {totalStaff ? (
           <li>
-            <Link to="/staff">
+            <Link to="/admin/staff">
               <span className="icon">
                 <i className="fa fa-group" aria-hidden="true"></i>
               </span>
