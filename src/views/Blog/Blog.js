@@ -92,7 +92,7 @@ const Blog = () => {
                     className="float-right"
                     onClick={createBlog}
                   >
-                    Add blog
+                    Add Blog
                   </Button>{" "}
                 </Fragment>
               ) : (
