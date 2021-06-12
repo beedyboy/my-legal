@@ -1,11 +1,11 @@
 import React, { useContext, useState, Fragment, useEffect } from "react";
 import { observer } from "mobx-react-lite";
-import { Card, CardBody, CardHeader, Button, Row, Col } from "reactstrap"; 
-import { toast } from "react-toastify";  
+import { Card, CardBody, CardHeader, Button, Row, Col } from "reactstrap";
+import { toast } from "react-toastify";
 import Utils from "../../shared/localStorage";
 import BlogStore from "../../stores/BlogStore";
-import BlogList from './Components/BlogList';
-import BlogForm from './Components/BlogForm';
+import BlogList from "./Components/BlogList";
+import BlogForm from "./Components/BlogForm";
 
 const Blog = () => {
   const store = useContext(BlogStore);
@@ -30,7 +30,6 @@ const Blog = () => {
   const handleClose = () => {
     setModal(!modal);
   };
-  
 
   useEffect(() => {
     if (removed === true) {
@@ -55,7 +54,7 @@ const Blog = () => {
       resetProperty("action", "");
       setModal(false);
     };
-  }, [action]); 
+  }, [action]);
   useEffect(() => {
     if (error === true && action === "newBlogError") {
       toast.error(message, {
@@ -68,7 +67,7 @@ const Blog = () => {
       resetProperty("action", "");
       setModal(false);
     };
-  }, [error]); 
+  }, [error]);
   const createBlog = () => {
     setModal(true);
     setMode("Add");
@@ -108,7 +107,7 @@ const Blog = () => {
                 canDel={canDel}
                 canModify={canModify}
                 data={blogs}
-                setMode={setMode} 
+                setMode={setMode}
                 setId={setId}
                 toggle={handleClose}
                 removeData={removeBlog}
@@ -123,7 +122,6 @@ const Blog = () => {
             store={store}
             initial_data={rowData}
           />
- 
         </CardBody>
       </Card>
     </Fragment>
