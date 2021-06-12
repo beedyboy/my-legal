@@ -49,7 +49,7 @@ const Sidebar = () => {
           <li>
             <Link to="/admin/blog">
               <span className="icon">
-                <i className="fa fa-group" aria-hidden="true"></i>
+                <i className="fa fa-blog" aria-hidden="true"></i>
               </span>
               <span className="title">Blog</span>
             </Link>
