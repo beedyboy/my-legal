@@ -1,17 +1,12 @@
 import React, { Fragment, useMemo } from "react";
-import DataTable from "react-data-table-component";
-import { toJS } from "mobx";
+import DataTable from "react-data-table-component"; 
 import { Link } from "react-router-dom";
-import {
-  Row,
-  Col,
-  Button, 
-} from "reactstrap";
- 
+import { Row, Col, Button } from "reactstrap";
+
 const BlogList = ({
   data,
-  setMode, 
-  setId, 
+  setMode,
+  setId,
   removeData,
   rowData,
   toggle,
@@ -29,7 +24,7 @@ const BlogList = ({
           </Link>
         </Fragment>
       ),
-    }, 
+    },
     {
       name: "Created",
       selector: "created_at",
@@ -45,7 +40,6 @@ const BlogList = ({
               <Button size="sm" color="info" onClick={(e) => editData(e, row)}>
                 <i className="fa fa-edit"></i>
               </Button>{" "}
-              
             </Fragment>
           ) : (
             ""
@@ -67,7 +61,6 @@ const BlogList = ({
           ) : (
             ""
           )}
-          
         </div>
       ),
     },
@@ -77,8 +70,8 @@ const BlogList = ({
     setMode("Edit");
     rowData(row);
     toggle(true);
-  }; 
- 
+  };
+
   const deleteData = (e, id) => {
     removeData(id);
   };
