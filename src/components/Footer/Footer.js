@@ -32,8 +32,7 @@ const Footer = () => {
                     <dt>Registered Office</dt>
                     <dd>
                       <address>
-                        11/12 Lore Plaza 1, Olabisi Seriki Street, Majek 1st
-                        Gate, Lekki-Epe Expressway, Lagos.
+                      4  Chief Lukeman Ogunlana Olorunjare St. Harmony Garden Estate, Awoyaya. Lagos
                       </address>
                     </dd>
                     <dt>

@@ -162,8 +162,7 @@ const Contact = () => {
                   {" "}
                   <i className="fa fa-map-marker"></i>
                   <p>
-                    11/12 Lore Plaza 1, Olabisi Seriki Street, Majek 1st Gate,
-                    Lekki-Epe Expressway, Lagos.
+                  4  Chief Lukeman Ogunlana Olorunjare St. Harmony Garden Estate, Awoyaya. Lagos.
                   </p>
                 </div>
                 <div className="social-information">
@@ -174,7 +173,7 @@ const Contact = () => {
                 <div className="social-information">
                   {" "}
                   <i className="fa fa-mobile-phone"></i>
-                  <p>+234-706-589-2902 </p>
+                  <p>+234-907-770-4887 </p>
                 </div>
                 <div className="social-information">
                   {" "}
