@@ -38,7 +38,7 @@ const Footer = () => {
                     <dt>
                       Registered number <i className="fa fa-phone"></i>
                     </dt>
-                    <dd>+(234) 706-589-2902</dd>
+                    <dd>+(234) 907-770-4887</dd>
                     <dt>
                       Mail us
                       <i className="fa fa-mail"></i>
@@ -46,8 +46,9 @@ const Footer = () => {
                     <dd>info@my-legalsolutions.com</dd>
                   </dl>
                   <div className="whatsapp">
+                  {/* 234-907-770-4887 */}
                     <a
-                      href="https://api.whatsapp.com/send?phone=2348086275220&amp;text=hello guys;source=&amp;data=&amp;app_absent="
+                      href="https://api.whatsapp.com/send?phone=2349077704887&amp;text=Hello my legal-solutions;source=&amp;data=&amp;app_absent="
                       className="float"
                       target="_blank"
                     >

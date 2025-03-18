@@ -175,11 +175,11 @@ const Contact = () => {
                   <i className="fa fa-mobile-phone"></i>
                   <p>+234-907-770-4887 </p>
                 </div>
-                <div className="social-information">
+                {/* <div className="social-information">
                   {" "}
                   <i className="fa fa-whatsapp"></i>
                   <p>+234-808-627-5220 </p>
-                </div>
+                </div> */}
               </div>
               <div className="social-media">
                 <p>Connect with us :</p>
